@@ -3,1542 +3,1358 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Karen Test</title>
-  <meta name="color-scheme" content="light dark" />
+  <title>Fotógrafo Profesional | Santiago, Chile</title>
+  <meta name="description" content="Fotografía y videografía profesional en Santiago: bodas, corporativo, estudio, maternidad, productos y más. Reserva tu sesión." />
+  <meta name="theme-color" content="#0b0f17" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
   <style>
     :root{
-      --bg: #0b1020;
-      --panel:#111a33;
-      --panel-2:#0f1730;
-      --text:#e9eefc;
-      --muted:#a9b4d0;
-      --border: rgba(255,255,255,.10);
-      --shadow: 0 12px 30px rgba(0,0,0,.30);
-      --accent:#6ee7b7;
-      --accent-2:#60a5fa;
-      --danger:#fb7185;
-      --warn:#fbbf24;
-      --ok:#34d399;
-      --chip:#1a2550;
-      --focus: 0 0 0 3px rgba(96,165,250,.35);
-      --radius: 16px;
-      --radius2: 22px;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
-    }
-    [data-theme="light"]{
-      --bg:#f6f7fb;
-      --panel:#ffffff;
-      --panel-2:#fbfcff;
-      --text:#0b1020;
-      --muted:#4b5563;
-      --border: rgba(15,23,42,.12);
-      --shadow: 0 10px 24px rgba(15,23,42,.08);
-      --chip:#eef2ff;
-      --focus: 0 0 0 3px rgba(37,99,235,.18);
+      --bg:#070a10;
+      --panel:#0b0f17;
+      --panel-2:#0e1422;
+      --text:#e9edf7;
+      --muted:rgba(233,237,247,.72);
+      --muted2:rgba(233,237,247,.55);
+      --line:rgba(233,237,247,.10);
+      --brand:#f6c453;
+      --brand2:#6ee7ff;
+      --shadow: 0 18px 55px rgba(0,0,0,.45);
+      --r:18px;
+      --r2:28px;
+      --max:1160px;
     }
 
     *{box-sizing:border-box}
-    html,body{height:100%}
+    html{scroll-behavior:smooth}
     body{
       margin:0;
-      font-family: var(--sans);
-      background: radial-gradient(1200px 800px at 20% 0%, rgba(96,165,250,.18), transparent 55%),
-                  radial-gradient(900px 700px at 100% 20%, rgba(110,231,183,.14), transparent 55%),
-                  var(--bg);
-      color: var(--text);
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 680px at 80% -10%, rgba(110,231,255,.14), transparent 60%),
+        radial-gradient(980px 540px at 10% 0%, rgba(246,196,83,.12), transparent 55%),
+        radial-gradient(900px 600px at 50% 120%, rgba(122,92,255,.10), transparent 65%),
+        var(--bg);
+      overflow-x:hidden;
     }
+
     a{color:inherit;text-decoration:none}
-    button, input, select{
-      font: inherit;
-      color: inherit;
+    img{max-width:100%;display:block}
+
+    /* Layout helpers */
+    .container{width:min(var(--max), calc(100% - 40px)); margin-inline:auto;}
+    .section{padding:86px 0;}
+    .section.compact{padding:64px 0;}
+    .grid{display:grid; gap:22px;}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:12px 16px;
+      border-radius:999px;
+      border:1px solid rgba(233,237,247,.14);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      font-weight:600;
+      letter-spacing:.2px;
+      transition:transform .15s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      cursor:pointer;
+      user-select:none;
     }
-    :focus-visible{outline:none; box-shadow: var(--focus); border-radius: 10px;}
-    .app{
-      display:grid;
-      grid-template-columns: 280px 1fr;
-      min-height:100vh;
+    .btn:hover{transform:translateY(-1px); border-color:rgba(233,237,247,.22); background:rgba(255,255,255,.06); box-shadow:0 18px 55px rgba(0,0,0,.25);}
+    .btn.primary{
+      background:linear-gradient(135deg, rgba(246,196,83,.95), rgba(110,231,255,.85));
+      color:#0b0f17;
+      border:0;
     }
-    /* Sidebar */
-    .sidebar{
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      padding: 18px 14px;
-      border-right: 1px solid var(--border);
-      background: linear-gradient(180deg, rgba(17,26,51,.90), rgba(17,26,51,.70));
+    .btn.primary:hover{filter:saturate(1.05); transform:translateY(-1px);}
+    .pill{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(233,237,247,.12);
+      background:rgba(255,255,255,.03);
+      color:var(--muted);
+      font-weight:600;
+      font-size:13px;
+    }
+
+    .card{
+      border-radius:var(--r2);
+      border:1px solid rgba(233,237,247,.10);
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .card .inner{padding:22px;}
+    .kicker{color:var(--muted2); font-weight:700; letter-spacing:.14em; text-transform:uppercase; font-size:12px;}
+    h1,h2,h3{margin:0}
+    h1{
+      font-family:"Playfair Display", serif;
+      font-weight:700;
+      letter-spacing:-.02em;
+      line-height:1.02;
+      font-size: clamp(38px, 5vw, 64px);
+    }
+    h2{
+      font-family:"Playfair Display", serif;
+      font-weight:700;
+      letter-spacing:-.02em;
+      font-size: clamp(28px, 3.5vw, 42px);
+      line-height:1.1;
+    }
+    h3{font-size:18px; line-height:1.25}
+    p{margin:0; color:var(--muted); line-height:1.65}
+    .muted{color:var(--muted)}
+    .muted2{color:var(--muted2)}
+    .divider{
+      height:1px; background:linear-gradient(90deg, transparent, rgba(233,237,247,.10), transparent);
+      margin:18px 0 0;
+    }
+
+    /* Top bar */
+    .navwrap{
+      position:sticky; top:0; z-index:50;
       backdrop-filter: blur(10px);
+      background: rgba(7,10,16,.55);
+      border-bottom: 1px solid rgba(233,237,247,.08);
     }
-    [data-theme="light"] .sidebar{
-      background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.75));
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+      gap:16px;
     }
     .brand{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      padding: 10px 10px 14px;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 14px;
+      display:flex; align-items:center; gap:12px;
+      min-width:220px;
     }
     .logo{
-      width:36px; height:36px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--accent-2), var(--accent));
-      box-shadow: 0 10px 20px rgba(0,0,0,.18);
+      width:42px; height:42px; border-radius:12px;
+      background:
+        radial-gradient(12px 12px at 30% 30%, rgba(255,255,255,.45), transparent 60%),
+        linear-gradient(135deg, rgba(246,196,83,.95), rgba(110,231,255,.75));
+      box-shadow:0 18px 55px rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.18);
     }
-    .brand h1{
-      font-size: 14px;
-      margin:0;
-      line-height: 1.1;
-      letter-spacing: .2px;
-    }
-    .brand p{
-      margin:2px 0 0;
-      font-size: 12px;
-      color: var(--muted);
-    }
+    .brand b{font-weight:800; letter-spacing:.2px}
+    .brand small{display:block; font-size:12px; color:var(--muted2); margin-top:2px}
 
-    .nav{
-      display:flex;
-      flex-direction:column;
-      gap: 6px;
-      padding: 6px;
+    .navlinks{
+      display:flex; align-items:center; gap:18px;
     }
-    .nav .section{
-      margin-top: 10px;
-      padding: 8px 10px 6px;
-      font-size: 11px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: .12em;
+    .navlinks a{
+      font-size:13px;
+      color:rgba(233,237,247,.78);
+      font-weight:700;
+      padding:10px 10px;
+      border-radius:999px;
+      transition:background .2s ease, color .2s ease;
     }
-    .nav a{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      padding: 10px 10px;
-      border-radius: 14px;
-      border: 1px solid transparent;
-      background: transparent;
-      transition: .2s ease;
-    }
-    .nav a:hover{
-      background: rgba(96,165,250,.10);
-      border-color: rgba(96,165,250,.18);
-    }
-    .nav a[aria-current="page"]{
-      background: rgba(110,231,183,.13);
-      border-color: rgba(110,231,183,.22);
-    }
-    .ico{
-      width: 28px; height: 28px;
-      border-radius: 10px;
-      display:grid;
-      place-items:center;
-      background: rgba(255,255,255,.06);
-      border: 1px solid var(--border);
-      font-size: 14px;
-    }
-    [data-theme="light"] .ico{background: rgba(15,23,42,.04)}
-    .nav span{font-size: 13px}
-    .nav small{
-      margin-left:auto;
-      font-size: 11px;
-      color: var(--muted);
-      font-family: var(--mono);
-    }
+    .navlinks a:hover{background:rgba(255,255,255,.06); color:var(--text);}
+    .navcta{display:flex; align-items:center; gap:10px;}
 
-    /* Main */
-    .main{
-      padding: 18px 18px 26px;
-    }
-    .topbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 10px;
-      padding: 10px 8px 14px;
-    }
-    .hello{
-      display:flex;
-      flex-direction:column;
-      gap:2px;
-    }
-    .hello strong{font-size: 16px}
-    .hello span{font-size: 12px; color: var(--muted)}
-    .actions{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      gap: 8px;
-      padding: 10px 12px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.04);
+    .burger{
+      display:none;
+      width:44px; height:44px;
+      border-radius:14px;
+      border:1px solid rgba(233,237,247,.14);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      align-items:center; justify-content:center;
       cursor:pointer;
-      transition: .2s ease;
-      box-shadow: 0 8px 18px rgba(0,0,0,.12);
     }
-    [data-theme="light"] .btn{background: rgba(15,23,42,.03)}
-    .btn:hover{transform: translateY(-1px); border-color: rgba(96,165,250,.25)}
-    .btn.primary{
-      background: linear-gradient(135deg, rgba(96,165,250,.25), rgba(110,231,183,.20));
-      border-color: rgba(110,231,183,.25);
-    }
-    .btn.danger{
-      background: rgba(251,113,133,.10);
-      border-color: rgba(251,113,133,.22);
-    }
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.04);
-      font-size: 12px;
-      color: var(--muted);
-    }
-    .dot{width:8px;height:8px;border-radius:50%}
-    .dot.ok{background: var(--ok)}
-    .dot.warn{background: var(--warn)}
-    .dot.danger{background: var(--danger)}
 
-    /* Filters */
-    .panel{
-      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
-      border: 1px solid var(--border);
-      border-radius: var(--radius2);
-      box-shadow: var(--shadow);
+    /* Mobile menu */
+    .mobileMenu{
+      display:none;
+      padding:0 0 14px;
     }
-    [data-theme="light"] .panel{
-      background: linear-gradient(180deg, rgba(15,23,42,.02), rgba(15,23,42,.01));
+    .mobileMenu .panel{
+      border-radius:18px;
+      border:1px solid rgba(233,237,247,.10);
+      background:rgba(11,15,23,.78);
+      overflow:hidden;
     }
-    .filters{
-      display:grid;
-      grid-template-columns: 1.2fr .7fr .7fr 1fr auto;
-      gap: 12px;
-      padding: 14px;
-      align-items:end;
+    .mobileMenu a{
+      display:flex;
+      padding:14px 16px;
+      border-top:1px solid rgba(233,237,247,.08);
+      color:rgba(233,237,247,.82);
+      font-weight:700;
+      font-size:14px;
     }
-    .field{display:flex;flex-direction:column;gap:6px}
-    label{
-      font-size: 12px;
-      color: var(--muted);
-    }
-    select, input[type="search"]{
-      width:100%;
-      padding: 10px 12px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.03);
-    }
-    [data-theme="light"] select,[data-theme="light"] input[type="search"]{
-      background: rgba(15,23,42,.02);
-    }
-    .hint{
-      font-size: 11px; color: var(--muted);
-      margin-top: 6px;
-    }
-    .filters .btn{height: 42px; justify-content:center}
+    .mobileMenu a:first-child{border-top:0}
+    .mobileMenu a:hover{background:rgba(255,255,255,.05); color:var(--text);}
 
-    /* KPI Grid */
-    .grid{
-      display:grid;
-      grid-template-columns: 1.4fr 1fr 1fr 1fr;
-      gap: 12px;
-      margin-top: 14px;
-    }
-    .card{
-      padding: 14px;
-      border-radius: var(--radius2);
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.03);
-      box-shadow: var(--shadow);
+    /* Hero */
+    .hero{
+      padding:34px 0 72px;
       position:relative;
       overflow:hidden;
     }
-    [data-theme="light"] .card{background: rgba(15,23,42,.02)}
-    .card::before{
-      content:"";
-      position:absolute;
-      inset: -60px -60px auto auto;
-      width: 160px; height: 160px;
-      background: radial-gradient(circle at 30% 30%, rgba(96,165,250,.22), transparent 65%);
-      transform: rotate(15deg);
-      pointer-events:none;
-    }
-    .kpi{
-      display:flex;
-      gap: 12px;
-      align-items:flex-start;
-      cursor: pointer;
-    }
-    .kpi .ico{
-      width: 44px; height: 44px;
-      border-radius: 16px;
-      font-size: 18px;
-      background: rgba(96,165,250,.12);
-      border-color: rgba(96,165,250,.18);
-    }
-    .kpi .ico.ok{background: rgba(52,211,153,.12); border-color: rgba(52,211,153,.18)}
-    .kpi .ico.warn{background: rgba(251,191,36,.12); border-color: rgba(251,191,36,.18)}
-    .kpi .ico.danger{background: rgba(251,113,133,.12); border-color: rgba(251,113,133,.18)}
-    .kpi h3{
-      margin:0;
-      font-size: 13px;
-      color: var(--muted);
-      font-weight: 600;
-    }
-    .kpi .value{
-      margin-top: 6px;
-      font-size: 24px;
-      font-weight: 760;
-      letter-spacing: -0.02em;
-    }
-    .kpi .sub{
-      margin-top: 4px;
-      font-size: 12px;
-      color: var(--muted);
-      display:flex;
-      gap: 10px;
-      flex-wrap:wrap;
-    }
-    .mini{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding: 4px 8px;
-      border-radius: 999px;
-      background: var(--chip);
-      border: 1px solid var(--border);
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--muted);
-    }
-    .mini b{color: var(--text); font-family: var(--mono)}
-
-    /* Alerts bar */
-    .alerts{
-      margin-top: 12px;
-      display:flex;
-      gap: 10px;
-      flex-wrap:wrap;
-      padding: 12px 14px;
-      align-items:center;
-      justify-content:space-between;
-    }
-    .alerts .left{
-      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
-    }
-    .alert{
-      display:inline-flex;
-      align-items:center;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: 16px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.03);
-      max-width: 520px;
-    }
-    .alert strong{font-size: 13px}
-    .alert span{font-size: 12px; color: var(--muted)}
-    .alert .badge{
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-family: var(--mono);
-      border: 1px solid var(--border);
-      background: var(--chip);
-      white-space:nowrap;
-    }
-    .badge.danger{border-color: rgba(251,113,133,.3)}
-    .badge.warn{border-color: rgba(251,191,36,.3)}
-    .badge.ok{border-color: rgba(52,211,153,.3)}
-
-    /* Split area */
-    .split{
+    .heroGrid{
       display:grid;
       grid-template-columns: 1.2fr .8fr;
-      gap: 12px;
-      margin-top: 12px;
+      gap:26px;
+      align-items:stretch;
     }
-    .panelHeader{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding: 12px 14px;
-      border-bottom: 1px solid var(--border);
+    .heroCard{
+      border-radius:var(--r2);
+      border:1px solid rgba(233,237,247,.12);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)),
+        radial-gradient(900px 500px at 20% 0%, rgba(246,196,83,.10), transparent 60%),
+        radial-gradient(900px 500px at 80% 40%, rgba(110,231,255,.10), transparent 55%);
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
     }
-    .panelHeader h2{
-      margin:0;
-      font-size: 13px;
-      letter-spacing:.2px;
-      color: var(--muted);
-      text-transform: uppercase;
+    .heroCard::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(800px 380px at 30% 10%, rgba(255,255,255,.10), transparent 60%),
+        linear-gradient(135deg, rgba(246,196,83,.22), rgba(110,231,255,.18));
+      pointer-events:none;
+      opacity:.65;
+      mask: linear-gradient(#000, transparent 88%);
     }
-    .panelBody{padding: 14px}
+    .heroInner{position:relative; padding:34px;}
+    .heroTitle{margin-top:14px}
+    .heroSubtitle{
+      font-size:16px;
+      margin-top:14px;
+      max-width:56ch;
+      color:rgba(233,237,247,.78);
+    }
+    .heroActions{display:flex; flex-wrap:wrap; gap:12px; margin-top:22px;}
+    .heroStats{
+      margin-top:22px;
+      display:grid; grid-template-columns: repeat(3, minmax(0,1fr));
+      gap:12px;
+    }
+    .stat{
+      border-radius:18px;
+      border:1px solid rgba(233,237,247,.10);
+      background:rgba(255,255,255,.03);
+      padding:14px 14px 12px;
+    }
+    .stat b{display:block; font-size:16px; letter-spacing:-.01em;}
+    .stat span{display:block; font-size:12px; color:var(--muted2); margin-top:4px; line-height:1.35}
 
-    /* Donut + legend */
-    .donutWrap{
+    .heroSide{
+      border-radius:var(--r2);
+      border:1px solid rgba(233,237,247,.10);
+      background:rgba(255,255,255,.02);
+      overflow:hidden;
+      position:relative;
+      box-shadow:var(--shadow);
+    }
+    .heroSide .photo{
+      height:100%;
+      min-height:380px;
+      background:
+        linear-gradient(180deg, rgba(7,10,16,.10), rgba(7,10,16,.65)),
+        url("https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1400&q=80");
+      background-size:cover;
+      background-position:center;
+    }
+    .heroSide .badge{
+      position:absolute; left:18px; bottom:18px;
+      right:18px;
+      border-radius:22px;
+      border:1px solid rgba(233,237,247,.12);
+      background:rgba(11,15,23,.65);
+      backdrop-filter: blur(10px);
+      padding:16px;
+      display:flex;
+      gap:14px;
+      align-items:flex-start;
+    }
+    .badge i{
+      width:42px; height:42px;
+      border-radius:14px;
+      display:flex; align-items:center; justify-content:center;
+      background:rgba(246,196,83,.18);
+      border:1px solid rgba(246,196,83,.25);
+      color:var(--brand);
+    }
+    .badge b{display:block; font-size:15px}
+    .badge p{margin-top:4px; font-size:13px}
+
+    /* Services */
+    .servicesGrid{grid-template-columns:repeat(3, minmax(0,1fr));}
+    .service .icon{
+      width:46px; height:46px;
+      border-radius:16px;
+      display:flex; align-items:center; justify-content:center;
+      background:rgba(110,231,255,.12);
+      border:1px solid rgba(110,231,255,.20);
+      color:var(--brand2);
+      margin-bottom:14px;
+      box-shadow:0 18px 55px rgba(0,0,0,.25);
+    }
+    .service h3{margin-bottom:8px}
+    .service p{font-size:14px}
+
+    /* Portfolio */
+    .portfolioHead{
+      display:flex; justify-content:space-between; align-items:flex-end; gap:14px;
+      margin-bottom:18px;
+    }
+    .portfolioGrid{grid-template-columns:repeat(12, 1fr); gap:16px;}
+    .work{
+      grid-column: span 4;
+      border-radius:26px;
+      overflow:hidden;
+      border:1px solid rgba(233,237,247,.10);
+      background:rgba(255,255,255,.02);
+      box-shadow:var(--shadow);
+      position:relative;
+      min-height:240px;
+    }
+    .work .img{
+      position:absolute; inset:0;
+      background-size:cover;
+      background-position:center;
+      filter:saturate(1.05) contrast(1.02);
+      transform:scale(1.03);
+    }
+    .work::after{
+      content:"";
+      position:absolute; inset:0;
+      background:linear-gradient(180deg, rgba(7,10,16,.08), rgba(7,10,16,.82));
+    }
+    .work .label{
+      position:absolute; inset:auto 16px 16px 16px;
+      z-index:2;
+      display:flex; justify-content:space-between; align-items:center; gap:14px;
+      padding:14px 14px;
+      border-radius:18px;
+      border:1px solid rgba(233,237,247,.10);
+      background:rgba(11,15,23,.55);
+      backdrop-filter: blur(10px);
+    }
+    .work .label b{font-size:14px}
+    .work .label span{font-size:12px; color:var(--muted2); display:block; margin-top:4px}
+    .work .label i{
+      width:38px; height:38px;
+      border-radius:14px;
+      display:flex; align-items:center; justify-content:center;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(233,237,247,.12);
+    }
+    .work:hover{transform:translateY(-2px); transition:transform .18s ease;}
+    .work:hover .img{transform:scale(1.07); transition:transform .35s ease;}
+
+    /* Video CTA */
+    .cta{
+      border-radius:var(--r2);
+      border:1px solid rgba(233,237,247,.10);
+      background:
+        radial-gradient(900px 380px at 10% 0%, rgba(246,196,83,.14), transparent 65%),
+        radial-gradient(860px 380px at 90% 40%, rgba(110,231,255,.12), transparent 60%),
+        rgba(255,255,255,.02);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .ctaInner{
       display:grid;
-      grid-template-columns: 240px 1fr;
-      gap: 14px;
+      grid-template-columns: 1.2fr .8fr;
+      gap:22px;
+      padding:26px;
       align-items:center;
     }
-    .legend{
-      display:flex;
-      flex-direction:column;
-      gap: 10px;
+    .ctaMedia{
+      border-radius:22px;
+      overflow:hidden;
+      border:1px solid rgba(233,237,247,.10);
+      background:
+        linear-gradient(180deg, rgba(7,10,16,.15), rgba(7,10,16,.85)),
+        url("https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=1400&q=80");
+      background-size:cover;
+      background-position:center;
+      min-height:280px;
+      position:relative;
     }
-    .legendRow{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: 16px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.02);
+    .play{
+      position:absolute; inset:0;
+      display:flex; align-items:center; justify-content:center;
     }
-    .legendRow .name{flex:1;font-size: 13px}
-    .legendRow .count{font-family: var(--mono); color: var(--muted)}
-    .legendRow button{
-      margin-left:auto;
-      padding: 8px 10px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.02);
+    .play button{
+      width:76px; height:76px;
+      border-radius:28px;
+      border:1px solid rgba(233,237,247,.18);
+      background:rgba(11,15,23,.55);
+      backdrop-filter: blur(10px);
+      color:var(--text);
+      cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      font-size:20px;
+      box-shadow:0 18px 55px rgba(0,0,0,.35);
+      transition:transform .15s ease, background .2s ease;
+    }
+    .play button:hover{transform:translateY(-2px); background:rgba(11,15,23,.68);}
+    .cta p{max-width:62ch}
+
+    /* About */
+    .aboutGrid{grid-template-columns: .9fr 1.1fr; align-items:stretch;}
+    .aboutPhoto{
+      border-radius:var(--r2);
+      border:1px solid rgba(233,237,247,.10);
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      background:
+        linear-gradient(180deg, rgba(7,10,16,.10), rgba(7,10,16,.80)),
+        url("https://images.unsplash.com/photo-1520975693419-b9f5c3d0e6f2?auto=format&fit=crop&w=1400&q=80");
+      background-size:cover;
+      background-position:center;
+      min-height:420px;
+      position:relative;
+    }
+    .aboutQuote{
+      position:absolute; left:18px; right:18px; bottom:18px;
+      border-radius:22px;
+      border:1px solid rgba(233,237,247,.12);
+      background:rgba(11,15,23,.60);
+      backdrop-filter: blur(10px);
+      padding:16px;
+    }
+    blockquote{margin:0; color:rgba(233,237,247,.86); font-weight:700; line-height:1.35}
+    .aboutText .inner{padding:0}
+    .aboutText .box{
+      border-radius:var(--r2);
+      border:1px solid rgba(233,237,247,.10);
+      background:rgba(255,255,255,.02);
+      box-shadow:var(--shadow);
+      padding:26px;
+      height:100%;
+    }
+    .aboutText ul{
+      margin:16px 0 0;
+      padding:0;
+      list-style:none;
+      display:grid;
+      gap:10px;
+    }
+    .aboutText li{
+      display:flex; gap:10px;
+      align-items:flex-start;
+      color:var(--muted);
+      line-height:1.55;
+      font-size:14px;
+    }
+    .aboutText li i{color:var(--brand); margin-top:2px}
+
+    /* Testimonials */
+    .testiWrap{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:16px;
+    }
+    .testiTop{
+      display:flex; justify-content:space-between; align-items:flex-end; gap:12px;
+    }
+    .testiControls{display:flex; gap:10px;}
+    .iconBtn{
+      width:44px; height:44px;
+      border-radius:16px;
+      border:1px solid rgba(233,237,247,.12);
+      background:rgba(255,255,255,.03);
+      color:var(--text);
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer;
+      transition:transform .15s ease, background .2s ease, border-color .2s ease;
+    }
+    .iconBtn:hover{transform:translateY(-1px); background:rgba(255,255,255,.05); border-color:rgba(233,237,247,.18);}
+    .slider{
+      border-radius:var(--r2);
+      border:1px solid rgba(233,237,247,.10);
+      background:rgba(255,255,255,.02);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .slides{
+      display:flex;
+      transition:transform .45s cubic-bezier(.2,.8,.2,1);
+    }
+    .slide{
+      min-width:100%;
+      padding:26px;
+      display:grid;
+      gap:14px;
+    }
+    .stars{color:var(--brand);}
+    .who{display:flex; align-items:center; gap:10px; color:rgba(233,237,247,.86); font-weight:800;}
+    .avatar{
+      width:36px; height:36px; border-radius:14px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(233,237,247,.12);
+      display:flex; align-items:center; justify-content:center;
+    }
+    .dots{display:flex; gap:8px; justify-content:center; padding:12px 0 18px;}
+    .dot{
+      width:8px; height:8px; border-radius:999px;
+      background:rgba(233,237,247,.22);
+      border:1px solid rgba(233,237,247,.10);
       cursor:pointer;
     }
-    .swatch{width:10px;height:10px;border-radius:999px}
+    .dot.active{background:rgba(246,196,83,.95); border-color:rgba(246,196,83,.35);}
 
-    /* Table */
-    .tableWrap{
-      overflow:auto;
-      border-radius: 18px;
-      border: 1px solid var(--border);
+    /* Blog */
+    .blogGrid{grid-template-columns:repeat(3, minmax(0,1fr));}
+    .post .thumb{
+      height:180px;
+      background-size:cover;
+      background-position:center;
+      position:relative;
     }
-    table{
+    .post .thumb::after{
+      content:"";
+      position:absolute; inset:0;
+      background:linear-gradient(180deg, rgba(7,10,16,.05), rgba(7,10,16,.78));
+    }
+    .post .inner{padding:18px 18px 20px}
+    .post h3{font-size:16px; margin:0 0 8px}
+    .post p{font-size:14px}
+    .post .meta{margin-top:12px; display:flex; justify-content:space-between; align-items:center; gap:12px; color:var(--muted2); font-size:12px}
+    .post:hover{transform:translateY(-2px); transition:transform .18s ease;}
+
+    /* Contact */
+    .contactGrid{grid-template-columns: 1fr 1fr; align-items:stretch;}
+    .form{
+      border-radius:var(--r2);
+      border:1px solid rgba(233,237,247,.10);
+      background:rgba(255,255,255,.02);
+      box-shadow:var(--shadow);
+      padding:22px;
+    }
+    label{display:block; font-size:13px; color:rgba(233,237,247,.78); font-weight:700; margin:10px 0 8px}
+    input, textarea{
       width:100%;
-      border-collapse:separate;
-      border-spacing:0;
-      min-width: 560px;
+      border-radius:16px;
+      border:1px solid rgba(233,237,247,.12);
+      background:rgba(255,255,255,.03);
+      color:var(--text);
+      padding:12px 12px;
+      outline:none;
+      font-family:inherit;
+      transition:border-color .2s ease, background .2s ease;
     }
-    thead th{
-      position: sticky;
-      top: 0;
-      background: rgba(17,26,51,.95);
-      backdrop-filter: blur(8px);
-      text-align:left;
-      font-size: 12px;
-      color: var(--muted);
-      padding: 10px 12px;
-      border-bottom: 1px solid var(--border);
-      z-index: 1;
-      white-space:nowrap;
+    input:focus, textarea:focus{border-color:rgba(110,231,255,.30); background:rgba(255,255,255,.04);}
+    textarea{min-height:130px; resize:vertical}
+    .note{font-size:12px; color:var(--muted2); margin-top:10px}
+    .contactCard .inner{padding:22px}
+    .contactList{margin-top:12px; display:grid; gap:10px}
+    .contactItem{
+      display:flex; gap:12px; align-items:flex-start;
+      padding:14px;
+      border-radius:18px;
+      border:1px solid rgba(233,237,247,.10);
+      background:rgba(255,255,255,.02);
     }
-    [data-theme="light"] thead th{background: rgba(255,255,255,.95)}
-    tbody td{
-      padding: 10px 12px;
-      border-bottom: 1px solid var(--border);
-      font-size: 13px;
-      white-space:nowrap;
+    .contactItem i{
+      width:40px; height:40px;
+      border-radius:16px;
+      display:flex; align-items:center; justify-content:center;
+      background:rgba(246,196,83,.14);
+      border:1px solid rgba(246,196,83,.22);
+      color:var(--brand);
+      flex:0 0 auto;
     }
-    tbody tr:hover{background: rgba(96,165,250,.07)}
-    .neg{color: var(--danger); font-family: var(--mono)}
-    .pos{color: var(--ok); font-family: var(--mono)}
-    .mono{font-family: var(--mono)}
-    .muted{color: var(--muted)}
-    .tag{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding: 4px 8px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.03);
-      font-size: 12px;
-      color: var(--muted);
-    }
+    .contactItem b{display:block; font-size:14px}
+    .contactItem span{display:block; color:var(--muted2); font-size:13px; margin-top:4px; line-height:1.35}
 
-    /* Tickets drilldown */
-    .tickets{
-      margin-top: 12px;
+    /* Footer */
+    footer{
+      padding:40px 0 54px;
+      border-top:1px solid rgba(233,237,247,.08);
+      background:rgba(7,10,16,.35);
     }
-    .ticketsHeader{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 10px;
-      padding: 12px 14px;
-      border-bottom: 1px solid var(--border);
+    .footerGrid{
+      display:grid; gap:14px;
+      grid-template-columns: 1.3fr .7fr;
+      align-items:start;
     }
-    .ticketsHeader h2{
-      margin:0;
-      font-size: 13px;
-      letter-spacing:.2px;
-      color: var(--muted);
-      text-transform: uppercase;
+    .footLinks{display:flex; gap:12px; flex-wrap:wrap; justify-content:flex-end;}
+    .footLinks a{
+      font-size:13px; color:rgba(233,237,247,.72);
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(233,237,247,.10);
+      background:rgba(255,255,255,.02);
     }
-    .ticketsBody{padding: 14px}
-    .ticketList{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
+    .footLinks a:hover{background:rgba(255,255,255,.04); color:var(--text);}
+
+    /* WhatsApp floating */
+    .wa{
+      position:fixed;
+      right:18px; bottom:18px;
+      z-index:80;
+      width:56px; height:56px;
+      border-radius:22px;
+      background: linear-gradient(135deg, #25D366, #1fb854);
+      display:flex; align-items:center; justify-content:center;
+      box-shadow:0 18px 55px rgba(0,0,0,.45);
+      border:1px solid rgba(255,255,255,.18);
     }
-    .ticket{
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.02);
-      border-radius: 18px;
-      padding: 12px;
-      display:flex;
-      flex-direction:column;
-      gap: 8px;
-    }
-    .ticketTop{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 10px;
-    }
-    .ticketTitle{
-      display:flex;
-      flex-direction:column;
-      gap: 2px;
-    }
-    .ticketTitle strong{font-size: 13px}
-    .ticketTitle span{font-size: 12px; color: var(--muted)}
-    .sla{
-      display:inline-flex;
-      align-items:center;
-      gap: 8px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      font-family: var(--mono);
-      font-size: 12px;
-      white-space:nowrap;
-    }
-    .sla.ok{border-color: rgba(52,211,153,.25)}
-    .sla.warn{border-color: rgba(251,191,36,.25)}
-    .sla.danger{border-color: rgba(251,113,133,.25)}
-    .ticketMeta{
-      display:flex;
-      gap: 8px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
-    .ticketActions{
-      display:flex;
-      gap: 8px;
-      margin-top: 4px;
-      flex-wrap:wrap;
-    }
-    .ticketActions button{
-      padding: 9px 10px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.02);
-      cursor:pointer;
-    }
-    .ticketActions button.primary{
-      background: rgba(96,165,250,.12);
-      border-color: rgba(96,165,250,.22);
-    }
-    .drawer{
-      margin-top: 10px;
-      border-top: 1px solid var(--border);
-      padding-top: 10px;
-      display:none;
-      gap: 10px;
-      flex-direction:column;
-    }
-    .drawer.open{display:flex}
-    .row{
-      display:flex;
-      gap: 10px;
-      flex-wrap:wrap;
-      align-items:center;
-      justify-content:space-between;
-    }
-    .row .left{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
-    .hr{
-      height:1px; background: var(--border);
-      margin: 10px 0;
-    }
-    .small{font-size: 12px; color: var(--muted)}
-    .kbd{
-      font-family: var(--mono);
-      font-size: 11px;
-      padding: 2px 6px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: rgba(255,255,255,.02);
-      color: var(--muted);
-    }
+    .wa i{font-size:26px; color:#06120a}
+    .wa:hover{filter:saturate(1.05); transform:translateY(-2px); transition:transform .15s ease;}
 
     /* Modal */
-    dialog{
-      width: min(820px, 96vw);
-      border: 1px solid var(--border);
-      background: var(--panel);
-      color: var(--text);
-      border-radius: 22px;
-      box-shadow: 0 30px 80px rgba(0,0,0,.5);
-      padding: 0;
+    .modal{
+      position:fixed; inset:0;
+      display:none;
+      z-index:90;
+      background:rgba(0,0,0,.65);
+      align-items:center; justify-content:center;
+      padding:18px;
     }
-    dialog::backdrop{
-      background: rgba(0,0,0,.55);
-      backdrop-filter: blur(4px);
-    }
-    .modalHead{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 10px;
-      padding: 14px 16px;
-      border-bottom: 1px solid var(--border);
-    }
-    .modalHead h3{margin:0;font-size: 14px}
-    .modalBody{padding: 14px 16px}
-    .modalBody p{margin:0 0 10px; color: var(--muted); font-size: 13px; line-height: 1.45}
-    .modalGrid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
+    .modal.open{display:flex}
     .modalCard{
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.02);
-      border-radius: 18px;
-      padding: 12px;
+      width:min(980px, 100%);
+      border-radius:22px;
+      border:1px solid rgba(233,237,247,.14);
+      background:rgba(11,15,23,.92);
+      backdrop-filter: blur(10px);
+      box-shadow:0 20px 65px rgba(0,0,0,.6);
+      overflow:hidden;
+      position:relative;
     }
-    .modalCard strong{font-size: 13px}
-    .modalCard ul{margin: 10px 0 0; padding-left: 18px; color: var(--muted); font-size: 13px}
-    .closeBtn{
-      padding: 10px 12px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.02);
+    .modalTop{
+      display:flex; justify-content:space-between; align-items:center;
+      padding:14px 16px;
+      border-bottom:1px solid rgba(233,237,247,.10);
+    }
+    .modalTop b{font-size:14px}
+    .close{
+      width:40px; height:40px;
+      border-radius:14px;
+      border:1px solid rgba(233,237,247,.14);
+      background:rgba(255,255,255,.03);
+      color:var(--text);
       cursor:pointer;
+    }
+    .frame{
+      aspect-ratio: 16/9;
+      width:100%;
+      border:0;
+      display:block;
+      background:#000;
     }
 
     /* Responsive */
-    @media (max-width: 1100px){
-      .filters{grid-template-columns: 1fr 1fr 1fr; align-items:stretch}
-      .filters .field:nth-child(4){grid-column: 1 / -1;}
-      .filters .field:nth-child(5){grid-column: 1 / -1;}
-      .grid{grid-template-columns: 1fr 1fr}
-      .split{grid-template-columns: 1fr}
-      .donutWrap{grid-template-columns: 1fr; justify-items:center}
-      .ticketList{grid-template-columns: 1fr}
-      thead th{position: sticky}
+    @media (max-width: 980px){
+      .heroGrid{grid-template-columns: 1fr}
+      .ctaInner{grid-template-columns: 1fr}
+      .aboutGrid{grid-template-columns: 1fr}
+      .servicesGrid{grid-template-columns: 1fr}
+      .blogGrid{grid-template-columns: 1fr}
+      .contactGrid{grid-template-columns: 1fr}
+      .footerGrid{grid-template-columns: 1fr}
+      .footLinks{justify-content:flex-start}
+      .navlinks, .navcta .btn.secondary{display:none}
+      .burger{display:flex}
+      .mobileMenu{display:block}
+      .portfolioGrid{gap:14px}
+      .work{grid-column: span 12}
+      .heroSide .photo{min-height:320px}
     }
-    @media (max-width: 860px){
-      .app{grid-template-columns: 1fr}
-      .sidebar{
-        height:auto;
-        position:relative;
-        border-right:none;
-        border-bottom: 1px solid var(--border);
-      }
-      .main{padding: 14px}
-      .nav{flex-direction:row; flex-wrap:wrap}
-      .nav .section{display:none}
-      .nav a{flex: 1 1 160px}
-      .topbar{flex-direction:column; align-items:flex-start}
-      .actions{justify-content:flex-start}
-    }
-
-    /* Reduce motion */
-    @media (prefers-reduced-motion: reduce){
-      *{transition:none !important; scroll-behavior:auto !important}
+    @media (min-width: 981px){
+      .work:nth-child(1){grid-column: span 6}
+      .work:nth-child(2){grid-column: span 6}
+      .work:nth-child(3){grid-column: span 4}
+      .work:nth-child(4){grid-column: span 4}
+      .work:nth-child(5){grid-column: span 4}
+      .work:nth-child(6){grid-column: span 6}
+      .work:nth-child(7){grid-column: span 6}
     }
   </style>
 </head>
 
 <body>
-  <div class="app" id="app" data-theme="dark">
-    <!-- Sidebar -->
-    <aside class="sidebar" aria-label="Navegación principal">
-      <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
+  <!-- WhatsApp Floating Button (cambia el número) -->
+  <a class="wa" href="https://api.whatsapp.com/send?phone=56900000000&text=Hola!%20Quiero%20cotizar%20una%20sesión%20de%20fotos." target="_blank" rel="noopener">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <!-- NAV -->
+  <div class="navwrap">
+    <div class="container">
+      <div class="nav">
+        <a class="brand" href="#top" aria-label="Inicio">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <b>FotoArte</b>
+            <small>Fotografía & Video · Santiago</small>
+          </div>
+        </a>
+
+        <nav class="navlinks" aria-label="Navegación principal">
+          <a href="#servicios">Servicios</a>
+          <a href="#portafolio">Portafolio</a>
+          <a href="#quien-soy">Quién soy</a>
+          <a href="#testimonios">Testimonios</a>
+          <a href="#blog">Blog</a>
+          <a href="#contacto">Contacto</a>
+        </nav>
+
+        <div class="navcta">
+          <a class="btn secondary" href="#contacto"><i class="fa-regular fa-envelope"></i> Consultar</a>
+          <a class="btn primary" href="#contacto"><i class="fa-solid fa-bolt"></i> Cotiza aquí</a>
+          <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div class="mobileMenu" id="mobileMenu" style="display:none;">
+        <div class="panel">
+          <a href="#servicios" class="mLink">Servicios</a>
+          <a href="#portafolio" class="mLink">Portafolio</a>
+          <a href="#quien-soy" class="mLink">Quién soy</a>
+          <a href="#testimonios" class="mLink">Testimonios</a>
+          <a href="#blog" class="mLink">Blog</a>
+          <a href="#contacto" class="mLink">Contacto</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <header id="top" class="hero">
+    <div class="container">
+      <div class="heroGrid">
+        <div class="heroCard">
+          <div class="heroInner">
+            <span class="pill"><i class="fa-solid fa-camera-retro"></i> Fotógrafo profesional en Santiago, Chile</span>
+            <h1 class="heroTitle">Revive momentos únicos<br/>con imágenes que se sienten.</h1>
+            <p class="heroSubtitle">
+              Reportaje de eventos, sesiones en estudio, maternidad, corporativo, productos y más.
+              Entrego una experiencia cuidada de principio a fin: planificación, dirección y postproducción pro.
+            </p>
+
+            <div class="heroActions">
+              <a class="btn primary" href="#contacto"><i class="fa-solid fa-clipboard-check"></i> Reserva tu sesión</a>
+              <a class="btn" href="#portafolio"><i class="fa-regular fa-images"></i> Ver portafolio</a>
+              <a class="btn" href="#servicios"><i class="fa-solid fa-layer-group"></i> Servicios</a>
+            </div>
+
+            <div class="heroStats">
+              <div class="stat">
+                <b>Foto & Video</b>
+                <span>Paquetes completos para eventos y marca personal.</span>
+              </div>
+              <div class="stat">
+                <b>Edición Pro</b>
+                <span>Color, piel y detalles con look editorial.</span>
+              </div>
+              <div class="stat">
+                <b>Entrega Rápida</b>
+                <span>Flujo optimizado para cumplir plazos.</span>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+            <p style="margin-top:14px" class="muted2">
+              <i class="fa-solid fa-location-dot"></i> Santiago · Regiones (según coordinación) · <i class="fa-solid fa-star"></i> Atención personalizada
+            </p>
+          </div>
+        </div>
+
+        <div class="heroSide" aria-label="Imagen destacada">
+          <div class="photo"></div>
+          <div class="badge">
+            <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>
+            <div>
+              <b>Dirección de poses + guía completa</b>
+              <p>Te acompaño durante toda la sesión para que te veas natural, seguro/a y auténtico/a.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- SERVICIOS -->
+  <section id="servicios" class="section compact">
+    <div class="container">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:14px; margin-bottom:18px;">
         <div>
-          <h1>Portal Clientes</h1>
-          <p>Soporte & Operaciones</p>
+          <div class="kicker">Servicios</div>
+          <h2>Lo que hacemos (muy bien).</h2>
+          <p style="margin-top:10px; max-width:70ch;">
+            Servicios pensados para personas y empresas: fotografía, videografía y entregables listos para redes, web y campañas.
+          </p>
         </div>
+        <a class="btn" href="#contacto"><i class="fa-solid fa-calendar-check"></i> Consultar disponibilidad</a>
       </div>
 
-      <nav class="nav">
-        <div class="section">Soporte</div>
-        <a href="#" aria-current="page" data-nav="dashboard">
-          <div class="ico" aria-hidden="true">📊</div>
-          <span>Dashboard</span>
-          <small>⌘D</small>
-        </a>
-        <a href="#" data-nav="saldos">
-          <div class="ico" aria-hidden="true">🧾</div>
-          <span>Detalle de Saldos</span>
-        </a>
-        <a href="#" data-nav="crear">
-          <div class="ico" aria-hidden="true">➕</div>
-          <span>Crear Ticket</span>
-        </a>
-        <a href="#" data-nav="equipo">
-          <div class="ico" aria-hidden="true">👥</div>
-          <span>Gestionar Mi Equipo</span>
-        </a>
-
-        <div class="section">Operación</div>
-        <a href="#" data-nav="envios">
-          <div class="ico" aria-hidden="true">✉️</div>
-          <span>Envíos de mail</span>
-        </a>
-        <a href="#" data-nav="graficas">
-          <div class="ico" aria-hidden="true">🎨</div>
-          <span>Piezas Gráficas</span>
-        </a>
-        <a href="#" data-nav="admin">
-          <div class="ico" aria-hidden="true">⚙️</div>
-          <span>Administración</span>
-        </a>
-      </nav>
-    </aside>
-
-    <!-- Main -->
-    <main class="main">
-      <header class="topbar">
-        <div class="hello">
-          <strong>Hola, <span id="userName">teran</span></strong>
-          <span id="contextLine">Vista proyecto · Soporte · Resumen ejecutivo + drill-down</span>
-        </div>
-        <div class="actions">
-          <span class="pill" id="healthPill" title="Estado de datos">
-            <span class="dot ok" id="healthDot"></span>
-            <span id="healthText">Datos al día</span>
-          </span>
-          <button class="btn" id="toggleTheme" aria-label="Cambiar modo claro/oscuro">
-            🌗 <span>Modo</span>
-          </button>
-          <button class="btn primary" id="exportBtn" aria-label="Exportar reporte">
-            ⬇️ <span>Exportar</span>
-          </button>
-          <button class="btn danger" id="logoutBtn" aria-label="Cerrar sesión">
-            ⎋ <span>Cerrar sesión</span>
-          </button>
-        </div>
-      </header>
-
-      <!-- Filters Panel -->
-      <section class="panel" aria-label="Filtros">
-        <div class="filters">
-          <div class="field">
-            <label for="project">Proyecto</label>
-            <select id="project" aria-describedby="projectHint">
-              <option>Ariztía</option>
-              <option>Casa.cl</option>
-              <option>DUOC</option>
-              <option>AANT</option>
-              <option>Proyecto Demo</option>
-            </select>
-            <div class="hint" id="projectHint">Se guarda automáticamente para tu próxima visita.</div>
-          </div>
-
-          <div class="field">
-            <label for="year">Año</label>
-            <select id="year">
-              <option>2026</option>
-              <option>2025</option>
-              <option>2024</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label for="month">Mes</label>
-            <select id="month">
-              <option value="02">Febrero</option>
-              <option value="01">Enero</option>
-              <option value="12">Diciembre</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label for="q">Buscar tickets</label>
-            <input id="q" type="search" placeholder="ID, asunto, etiqueta, responsable…" />
-            <div class="hint">Tip: usa <span class="kbd">estado:abierto</span> o <span class="kbd">tag:email</span></div>
-          </div>
-
-          <button class="btn" id="applyFilters">🔎 <span>Aplicar</span></button>
-        </div>
-      </section>
-
-      <!-- KPI Grid (Top priority KPIs bigger) -->
-      <section class="grid" aria-label="Indicadores clave">
-        <article class="card" role="button" tabindex="0" data-kpi="saldo">
-          <div class="kpi">
-            <div class="ico danger" aria-hidden="true">⏱️</div>
-            <div>
-              <h3>Saldo disponible (mes)</h3>
-              <div class="value" id="kpiSaldo">-02:28</div>
-              <div class="sub">
-                <span class="mini">Umbral 90%: <b id="kpiUmbral">-01:00</b></span>
-                <span class="mini">Proyección: <b id="kpiProy">2 días</b></span>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <article class="card" role="button" tabindex="0" data-kpi="consumo">
-          <div class="kpi">
-            <div class="ico warn" aria-hidden="true">🔥</div>
-            <div>
-              <h3>Horas consumidas (mes)</h3>
-              <div class="value" id="kpiConsumidas">01:25</div>
-              <div class="sub">
-                <span class="mini">Velocidad: <b id="kpiRate">0.21 h/día</b></span>
-                <span class="mini">Meta: <b id="kpiMeta">10:00</b></span>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <article class="card" role="button" tabindex="0" data-kpi="sla">
-          <div class="kpi">
-            <div class="ico ok" aria-hidden="true">✅</div>
-            <div>
-              <h3>SLA / Cumplimiento</h3>
-              <div class="value" id="kpiCumpl">14.17%</div>
-              <div class="sub">
-                <span class="mini">Primera resp.: <b>2h</b></span>
-                <span class="mini">Resolución: <b>48h</b></span>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <article class="card" role="button" tabindex="0" data-kpi="abiertos">
-          <div class="kpi">
-            <div class="ico" aria-hidden="true">📌</div>
-            <div>
-              <h3>Backlog actual</h3>
-              <div class="value" id="kpiBacklog">7</div>
-              <div class="sub">
-                <span class="mini">Abiertos: <b id="kpiOpen">3</b></span>
-                <span class="mini">Espera cliente: <b id="kpiWait">2</b></span>
-                <span class="mini">Bloqueados: <b id="kpiBlock">2</b></span>
-              </div>
-            </div>
-          </div>
-        </article>
-      </section>
-
-      <!-- Alerts -->
-      <section class="panel alerts" aria-label="Alertas">
-        <div class="left">
-          <div class="alert" id="alertSaldo">
-            <span class="badge danger">RIESGO</span>
-            <div>
-              <strong>Saldo negativo</strong>
-              <span>Revisa horas imputadas y define aprobación/ajuste para evitar sobregiro.</span>
-            </div>
-          </div>
-
-          <div class="alert" id="alertSLA">
-            <span class="badge warn">ATENCIÓN</span>
-            <div>
-              <strong>SLA bajo en el mes</strong>
-              <span>Prioriza tickets de severidad alta y reduce “Espera cliente”.</span>
-            </div>
+      <div class="grid servicesGrid">
+        <div class="card service">
+          <div class="inner">
+            <div class="icon"><i class="fa-solid fa-camera"></i></div>
+            <h3>Fotografía</h3>
+            <p>Eventos, estudio, maternidad, familia, bodas, productos e imagen corporativa. Dirección durante la toma + edición final.</p>
           </div>
         </div>
 
-        <div class="right">
-          <button class="btn primary" id="createTicketBtn">➕ <span>Crear ticket</span></button>
-        </div>
-      </section>
-
-      <!-- Charts + Monthly table -->
-      <section class="split" aria-label="Resumen y reportes">
-        <article class="panel">
-          <div class="panelHeader">
-            <h2>Estado general (histórico) · Drill-down</h2>
-            <span class="pill"><span class="dot ok"></span><span>Actualizado: hoy</span></span>
-          </div>
-          <div class="panelBody">
-            <div class="donutWrap">
-              <div aria-label="Gráfico donut de estados" title="Resumen por estado">
-                <canvas id="donut" width="240" height="240" role="img" aria-label="Distribución por estados"></canvas>
-              </div>
-              <div class="legend" aria-label="Leyenda de estados">
-                <div class="legendRow">
-                  <span class="swatch" style="background:#60a5fa"></span>
-                  <span class="name">Resueltos</span>
-                  <span class="count mono" id="cResolved">312</span>
-                  <button class="btnLite" data-filter="Resuelto" aria-label="Ver tickets resueltos">Ver</button>
-                </div>
-                <div class="legendRow">
-                  <span class="swatch" style="background:#34d399"></span>
-                  <span class="name">Cerrados</span>
-                  <span class="count mono" id="cClosed">540</span>
-                  <button class="btnLite" data-filter="Cerrado" aria-label="Ver tickets cerrados">Ver</button>
-                </div>
-                <div class="legendRow">
-                  <span class="swatch" style="background:#fbbf24"></span>
-                  <span class="name">Espera cliente</span>
-                  <span class="count mono" id="cWait">120</span>
-                  <button class="btnLite" data-filter="Espera Cliente" aria-label="Ver tickets en espera cliente">Ver</button>
-                </div>
-                <div class="legendRow">
-                  <span class="swatch" style="background:#fb7185"></span>
-                  <span class="name">Abiertos</span>
-                  <span class="count mono" id="cOpen">63</span>
-                  <button class="btnLite" data-filter="Abierto" aria-label="Ver tickets abiertos">Ver</button>
-                </div>
-              </div>
-            </div>
-            <div class="hr"></div>
-            <div class="row">
-              <div class="left">
-                <span class="tag">⏱️ T. primera respuesta: <b class="mono">2h 14m</b></span>
-                <span class="tag">🧩 T. resolución: <b class="mono">31h 02m</b></span>
-                <span class="tag">🧯 Severidad alta: <b class="mono">2</b></span>
-              </div>
-              <div class="small">Clic en “Ver” para filtrar tickets abajo.</div>
-            </div>
-          </div>
-        </article>
-
-        <article class="panel">
-          <div class="panelHeader">
-            <h2>Resumen mensual · horas & saldo</h2>
-            <span class="pill"><span class="dot warn"></span><span>Requiere aprobación</span></span>
-          </div>
-          <div class="panelBody">
-            <div class="tableWrap" aria-label="Tabla de resumen mensual">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Mes</th>
-                    <th>Fee mensual</th>
-                    <th>Acumulación</th>
-                    <th>Consumido</th>
-                    <th>Saldo</th>
-                    <th>Acción</th>
-                  </tr>
-                </thead>
-                <tbody id="monthlyTbody">
-                  <!-- JS -->
-                </tbody>
-              </table>
-            </div>
-            <div class="hint">* “Saldo” incluye fee + acumulación - consumido. Puedes exportar el detalle por ticket.</div>
-          </div>
-        </article>
-      </section>
-
-      <!-- Tickets -->
-      <section class="panel tickets" aria-label="Listado de tickets">
-        <div class="ticketsHeader">
-          <h2>Tickets · Vista accionable</h2>
-          <div class="row" style="gap:8px;justify-content:flex-end">
-            <span class="pill"><span class="dot warn"></span><span id="ticketsInfo">Mostrando: Todos</span></span>
-            <button class="btn" id="clearTicketFilter">🧹 <span>Limpiar filtro</span></button>
+        <div class="card service">
+          <div class="inner">
+            <div class="icon"><i class="fa-solid fa-film"></i></div>
+            <h3>Fotos & Videos</h3>
+            <p>Grabación y edición (reels, trailer, resumen, entrevistas). Storytelling claro y estética premium.</p>
           </div>
         </div>
-        <div class="ticketsBody">
-          <div class="ticketList" id="ticketList" aria-live="polite">
-            <!-- JS -->
+
+        <div class="card service">
+          <div class="inner">
+            <div class="icon"><i class="fa-solid fa-book-open"></i></div>
+            <h3>Diseño de Álbumes</h3>
+            <p>Curaduría + diseño editorial, impresión y despacho. Un recuerdo tangible con look pro.</p>
           </div>
         </div>
-      </section>
-
-      <footer class="hint" style="padding: 10px 4px 0">
-        Accesos rápidos: <span class="kbd">/</span> buscar · <span class="kbd">⌘</span>+<span class="kbd">D</span> dashboard ·
-        <span class="kbd">⌘</span>+<span class="kbd">K</span> comandos · Preferencias guardadas localmente.
-      </footer>
-    </main>
-
-    <!-- Modal: KPI drilldown -->
-    <dialog id="kpiModal" aria-label="Detalle de indicador">
-      <div class="modalHead">
-        <h3 id="modalTitle">Detalle</h3>
-        <button class="closeBtn" id="closeModal">✕</button>
       </div>
-      <div class="modalBody">
-        <p id="modalDesc"></p>
-        <div class="modalGrid" id="modalGrid"></div>
+    </div>
+  </section>
+
+  <!-- PORTAFOLIO -->
+  <section id="portafolio" class="section">
+    <div class="container">
+      <div class="portfolioHead">
+        <div>
+          <div class="kicker">Portafolio fotográfico</div>
+          <h2>Selección de trabajos</h2>
+          <p style="margin-top:10px; max-width:72ch;">
+            Categorías típicas (puedes cambiar títulos, enlaces y fotos). Las imágenes aquí son placeholders de Unsplash.
+          </p>
+        </div>
+        <a class="btn primary" href="#contacto"><i class="fa-solid fa-paper-plane"></i> Cotiza aquí</a>
       </div>
-    </dialog>
+
+      <div class="grid portfolioGrid">
+        <a class="work" href="#contacto" aria-label="Bodas">
+          <div class="img" style="background-image:url('https://images.unsplash.com/photo-1529634806980-85c3dd6d34ac?auto=format&fit=crop&w=1400&q=80')"></div>
+          <div class="label">
+            <div><b>Bodas</b><span>Reportaje + sesión pareja</span></div>
+            <i class="fa-solid fa-arrow-right"></i>
+          </div>
+        </a>
+
+        <a class="work" href="#contacto" aria-label="Matrimonio">
+          <div class="img" style="background-image:url('https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1400&q=80')"></div>
+          <div class="label">
+            <div><b>Matrimonio</b><span>Ceremonia + celebración</span></div>
+            <i class="fa-solid fa-arrow-right"></i>
+          </div>
+        </a>
+
+        <a class="work" href="#contacto" aria-label="Maternidad">
+          <div class="img" style="background-image:url('https://images.unsplash.com/photo-1541795795328-f073b763494e?auto=format&fit=crop&w=1400&q=80')"></div>
+          <div class="label">
+            <div><b>Maternidad</b><span>Embarazo · newborn</span></div>
+            <i class="fa-solid fa-arrow-right"></i>
+          </div>
+        </a>
+
+        <a class="work" href="#contacto" aria-label="LinkedIn & Corporativo">
+          <div class="img" style="background-image:url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1400&q=80')"></div>
+          <div class="label">
+            <div><b>LinkedIn & Corporativo</b><span>Retrato profesional</span></div>
+            <i class="fa-solid fa-arrow-right"></i>
+          </div>
+        </a>
+
+        <a class="work" href="#contacto" aria-label="Estudio / Book">
+          <div class="img" style="background-image:url('https://images.unsplash.com/photo-1520975916090-3105956dac38?auto=format&fit=crop&w=1400&q=80')"></div>
+          <div class="label">
+            <div><b>Estudio / Book</b><span>Modelos · marca personal</span></div>
+            <i class="fa-solid fa-arrow-right"></i>
+          </div>
+        </a>
+
+        <a class="work" href="#contacto" aria-label="Boudoir / Artístico">
+          <div class="img" style="background-image:url('https://images.unsplash.com/photo-1508182314998-3bd49473002f?auto=format&fit=crop&w=1400&q=80')"></div>
+          <div class="label">
+            <div><b>Boudoir / Artístico</b><span>Elegante y cuidado</span></div>
+            <i class="fa-solid fa-arrow-right"></i>
+          </div>
+        </a>
+
+        <a class="work" href="#contacto" aria-label="Producto / Publicitaria">
+          <div class="img" style="background-image:url('https://images.unsplash.com/photo-1512446816042-444d64126732?auto=format&fit=crop&w=1400&q=80')"></div>
+          <div class="label">
+            <div><b>Producto / Publicitaria</b><span>E-commerce · catálogos</span></div>
+            <i class="fa-solid fa-arrow-right"></i>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEO CTA -->
+  <section class="section compact">
+    <div class="container">
+      <div class="cta">
+        <div class="ctaInner">
+          <div>
+            <div class="kicker">Servicio de videografía</div>
+            <h2 style="margin-top:6px;">Sube de nivel: video + foto</h2>
+            <p style="margin-top:12px;">
+              Revive tu evento o potencia tu negocio con un video pensado para redes y web: reel, trailer, demo, entrevista o resumen.
+              Cuéntame tu objetivo y te propongo un concepto + guion simple para grabar con intención.
+            </p>
+
+            <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:18px;">
+              <button class="btn primary" id="openVideo"><i class="fa-solid fa-circle-play"></i> Ver demo</button>
+              <a class="btn" href="#contacto"><i class="fa-solid fa-bolt"></i> Cotizar video</a>
+            </div>
+
+            <p class="muted2" style="margin-top:12px;">
+              Tip: si quieres, puedo dejar reels listos en formato 9:16 + versiones 1:1 y 16:9.
+            </p>
+          </div>
+
+          <div class="ctaMedia" role="img" aria-label="Preview de video">
+            <div class="play">
+              <button type="button" id="openVideo2" aria-label="Reproducir video">
+                <i class="fa-solid fa-play"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIÉN SOY -->
+  <section id="quien-soy" class="section">
+    <div class="container">
+      <div class="grid aboutGrid">
+        <div class="aboutPhoto">
+          <div class="aboutQuote">
+            <blockquote>“Estoy enfocado en generar el contenido que necesitas y darle solución a tus requerimientos.”</blockquote>
+            <p class="muted2" style="margin-top:10px; font-size:13px;">
+              — Tu nombre / Marca personal
+            </p>
+          </div>
+        </div>
+
+        <div class="aboutText">
+          <div class="box">
+            <div class="kicker">¿Quién soy?</div>
+            <h2 style="margin-top:6px;">Un enfoque pro, cercano y muy humano.</h2>
+            <p style="margin-top:12px;">
+              Me dedico a fotografía y video para personas y empresas: retratos corporativos, sesiones en estudio,
+              coberturas de eventos y contenido para campañas. Cuido la preproducción, dirección durante la sesión
+              y una edición final limpia y consistente.
+            </p>
+
+            <ul>
+              <li><i class="fa-solid fa-check"></i> <span><b>Dirección durante la sesión</b> para que no dependas “de saber posar”.</span></li>
+              <li><i class="fa-solid fa-check"></i> <span><b>Workflow eficiente</b> para entregar en tiempos acordados.</span></li>
+              <li><i class="fa-solid fa-check"></i> <span><b>Estética premium</b> (color/skin retouch) sin perder naturalidad.</span></li>
+            </ul>
+
+            <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:18px;">
+              <a class="btn primary" href="#contacto"><i class="fa-solid fa-paper-plane"></i> Hablemos</a>
+              <a class="btn" href="#testimonios"><i class="fa-regular fa-star"></i> Ver testimonios</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIOS -->
+  <section id="testimonios" class="section compact">
+    <div class="container">
+      <div class="testiWrap">
+        <div class="testiTop">
+          <div>
+            <div class="kicker">Testimonios</div>
+            <h2>Clientes felices (y fotos mejores).</h2>
+            <p style="margin-top:10px; max-width:70ch;">Un carrusel simple, rápido y elegante. Cambia los textos por los reales.</p>
+          </div>
+
+          <div class="testiControls">
+            <button class="iconBtn" id="prev" aria-label="Anterior"><i class="fa-solid fa-chevron-left"></i></button>
+            <button class="iconBtn" id="next" aria-label="Siguiente"><i class="fa-solid fa-chevron-right"></i></button>
+          </div>
+        </div>
+
+        <div class="slider" aria-label="Carrusel de testimonios">
+          <div class="slides" id="slides">
+            <div class="slide">
+              <div class="stars" aria-label="5 estrellas">★★★★★</div>
+              <p>
+                “Excelente trabajo: profesional, puntual y muy dedicado. Nos guió en todo momento y el resultado superó nuestras expectativas.”
+              </p>
+              <div class="who">
+                <div class="avatar"><i class="fa-solid fa-user"></i></div>
+                <span>Andrés B.</span>
+              </div>
+            </div>
+
+            <div class="slide">
+              <div class="stars">★★★★★</div>
+              <p>
+                “La sesión fue cómoda y entretenida. La edición quedó impecable y la entrega fue rápida. 100% recomendable.”
+              </p>
+              <div class="who">
+                <div class="avatar"><i class="fa-solid fa-user"></i></div>
+                <span>Ivette P.</span>
+              </div>
+            </div>
+
+            <div class="slide">
+              <div class="stars">★★★★★</div>
+              <p>
+                “Muy amable y atento. Captó perfecto lo que queríamos, y el álbum impreso quedó precioso.”
+              </p>
+              <div class="who">
+                <div class="avatar"><i class="fa-solid fa-user"></i></div>
+                <span>Erika B.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="dots" id="dots" aria-label="Paginación de testimonios"></div>
+        </div>
+
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <a class="btn" href="#contacto"><i class="fa-solid fa-message"></i> Quiero cotizar</a>
+          <a class="btn" href="#blog"><i class="fa-regular fa-newspaper"></i> Ver blog</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOG -->
+  <section id="blog" class="section">
+    <div class="container">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:14px; margin-bottom:18px;">
+        <div>
+          <div class="kicker">Blog de fotografía</div>
+          <h2>Tips, guía y experiencia</h2>
+          <p style="margin-top:10px; max-width:72ch;">
+            Estructura estilo “cards” para destacar 3 artículos. Puedes convertir esto en un CMS después.
+          </p>
+        </div>
+        <a class="btn" href="#contacto"><i class="fa-solid fa-bolt"></i> Reserva tu sesión</a>
+      </div>
+
+      <div class="grid blogGrid">
+        <article class="card post">
+          <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=1400&q=80');"></div>
+          <div class="inner">
+            <h3>¿Cuánto cuesta un fotógrafo para bodas?</h3>
+            <p>Cómo evaluar presupuesto, estilo, entregables, plazos y la experiencia completa (no solo “cantidad de fotos”).</p>
+            <div class="meta">
+              <span><i class="fa-regular fa-clock"></i> 5 min</span>
+              <a class="btn" style="padding:10px 12px;" href="#contacto">Leer más</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card post">
+          <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1520975916090-3105956dac38?auto=format&fit=crop&w=1400&q=80');"></div>
+          <div class="inner">
+            <h3>Antes de tu sesión: checklist esencial</h3>
+            <p>Vestuario, maquillaje, referencias, horarios y cómo llegar con confianza para lograr resultados top.</p>
+            <div class="meta">
+              <span><i class="fa-regular fa-clock"></i> 6 min</span>
+              <a class="btn" style="padding:10px 12px;" href="#contacto">Leer más</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card post">
+          <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1400&q=80');"></div>
+          <div class="inner">
+            <h3>Foto perfecta para LinkedIn (sin parecer rígido)</h3>
+            <p>Poses, expresiones, color y encuadre. Tu retrato puede comunicar confianza sin perder naturalidad.</p>
+            <div class="meta">
+              <span><i class="fa-regular fa-clock"></i> 4 min</span>
+              <a class="btn" style="padding:10px 12px;" href="#contacto">Leer más</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto" class="section compact">
+    <div class="container">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:14px; margin-bottom:18px;">
+        <div>
+          <div class="kicker">Contacto</div>
+          <h2>Reserva tu sesión ahora</h2>
+          <p style="margin-top:10px; max-width:72ch;">
+            Este formulario es “frontend only” para que lo pruebes. Puedes conectarlo a tu backend, a Google Forms o a WhatsApp.
+          </p>
+        </div>
+        <a class="btn primary" href="https://forms.gle/" target="_blank" rel="noopener"><i class="fa-solid fa-clipboard-list"></i> Cotiza (Google Form)</a>
+      </div>
+
+      <div class="grid contactGrid">
+        <div class="form">
+          <form id="leadForm">
+            <label for="name">Nombre</label>
+            <input id="name" name="name" placeholder="Tu nombre" required>
+
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="tucorreo@dominio.cl" required>
+
+            <label for="type">¿Qué necesitas?</label>
+            <input id="type" name="type" placeholder="Boda / LinkedIn / Estudio / Producto / Video..." required>
+
+            <label for="msg">Mensaje</label>
+            <textarea id="msg" name="msg" placeholder="Cuéntame fecha, lugar, idea y referencias si tienes."></textarea>
+
+            <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:14px;">
+              <button class="btn primary" type="submit"><i class="fa-solid fa-paper-plane"></i> Enviar</button>
+              <a class="btn" id="waLead" href="#" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Enviar por WhatsApp</a>
+            </div>
+
+            <p class="note">* Demo: al enviar, se abrirá un “preview” (no se envía a ningún servidor).</p>
+          </form>
+        </div>
+
+        <div class="card contactCard">
+          <div class="inner">
+            <h3 style="margin-bottom:8px;">Datos rápidos</h3>
+            <p>Personaliza esto con tu número real, dirección de estudio, horarios y enlaces sociales.</p>
+
+            <div class="contactList">
+              <div class="contactItem">
+                <i class="fa-solid fa-phone"></i>
+                <div>
+                  <b>WhatsApp</b>
+                  <span>+56 9 0000 0000</span>
+                </div>
+              </div>
+
+              <div class="contactItem">
+                <i class="fa-solid fa-location-dot"></i>
+                <div>
+                  <b>Ubicación</b>
+                  <span>Santiago, Chile (estudio / exterior)</span>
+                </div>
+              </div>
+
+              <div class="contactItem">
+                <i class="fa-regular fa-clock"></i>
+                <div>
+                  <b>Horario</b>
+                  <span>Lun–Sáb · 10:00–19:00</span>
+                </div>
+              </div>
+
+              <div class="contactItem">
+                <i class="fa-solid fa-link"></i>
+                <div>
+                  <b>Redes</b>
+                  <span>@tuinstagram · @tiktok · YouTube</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top:16px; display:flex; gap:12px; flex-wrap:wrap;">
+              <a class="btn" href="#portafolio"><i class="fa-regular fa-images"></i> Ver trabajos</a>
+              <a class="btn" href="#servicios"><i class="fa-solid fa-layer-group"></i> Ver servicios</a>
+            </div>
+
+            <div class="divider"></div>
+            <p class="muted2" style="margin-top:12px; font-size:13px;">
+              Nota: si quieres que quede 1:1 con tu referencia, puedo ajustar tipografías, espaciado, fotos, y dejarlo listo para WordPress/Elementor o para Next.js.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footerGrid">
+        <div>
+          <div style="display:flex; align-items:center; gap:12px;">
+            <div class="logo" aria-hidden="true"></div>
+            <div>
+              <b style="font-size:15px;">FotoArte</b>
+              <div class="muted2" style="font-size:13px; margin-top:4px;">Fotógrafo & Videógrafo · Santiago, Chile</div>
+            </div>
+          </div>
+
+          <p class="muted2" style="margin-top:12px; max-width:80ch;">
+            © <span id="year"></span> · Todos los derechos reservados · Hecho con cariño y obsesión por los detalles.
+          </p>
+        </div>
+
+        <div class="footLinks">
+          <a href="#servicios">Servicios</a>
+          <a href="#portafolio">Portafolio</a>
+          <a href="#quien-soy">Quién soy</a>
+          <a href="#testimonios">Testimonios</a>
+          <a href="#blog">Blog</a>
+          <a href="#contacto">Contacto</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- VIDEO MODAL -->
+  <div class="modal" id="modal" aria-hidden="true" role="dialog" aria-label="Video demo">
+    <div class="modalCard">
+      <div class="modalTop">
+        <b><i class="fa-solid fa-circle-play"></i> Demo (YouTube)</b>
+        <button class="close" id="close" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <!-- Cambia el ID por tu video -->
+      <iframe
+        id="yt"
+        class="frame"
+        src="about:blank"
+        title="Video demo"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      ></iframe>
+    </div>
   </div>
 
   <script>
-    // ---------- Utilities ----------
-    const $ = (q, el=document) => el.querySelector(q);
-    const $$ = (q, el=document) => Array.from(el.querySelectorAll(q));
-    const fmtHhMm = (mins) => {
-      const sign = mins < 0 ? "-" : "";
-      mins = Math.abs(mins);
-      const h = String(Math.floor(mins/60)).padStart(2,"0");
-      const m = String(mins%60).padStart(2,"0");
-      return `${sign}${h}:${m}`;
-    };
-    const toMins = (hhmm) => {
-      const neg = hhmm.startsWith("-");
-      const v = hhmm.replace("-","");
-      const [h,m] = v.split(":").map(Number);
-      const mins = h*60+m;
-      return neg ? -mins : mins;
-    };
-    const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
+    // Year
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-    // ---------- Persisted state ----------
-    const STORAGE_KEY = "portal_pro_mock_v1";
-    const state = {
-      theme: "dark",
-      project: "Ariztía",
-      year: "2026",
-      month: "02",
-      query: "",
-      ticketFilter: "Todos"
-    };
+    // Mobile menu
+    const burger = document.getElementById("burger");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const mLinks = document.querySelectorAll(".mLink");
 
-    function loadState(){
-      try{
-        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-        Object.assign(state, saved);
-      }catch(e){}
+    function toggleMenu(force) {
+      const isOpen = mobileMenu.style.display === "block";
+      const next = (typeof force === "boolean") ? force : !isOpen;
+      mobileMenu.style.display = next ? "block" : "none";
+      burger.setAttribute("aria-expanded", next ? "true" : "false");
     }
-    function saveState(){
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    }
+    burger?.addEventListener("click", () => toggleMenu());
+    mLinks.forEach(a => a.addEventListener("click", () => toggleMenu(false)));
 
-    // ---------- Mock data ----------
-    const kpis = {
-      feeMensual: toMins("10:00"),            // 600
-      consumidoMes: toMins("01:25"),          // 85
-      saldoMes: toMins("-02:28"),             // -148
-      acumulacionPermitidaPct: 100,           // %
-      cumplimientoPct: 14.17,
-      ticketsCreadosMes: 1,
-      ticketsHistoricos: 1035
-    };
+    // Testimonials slider
+    const slides = document.getElementById("slides");
+    const total = slides.children.length;
+    const dots = document.getElementById("dots");
+    let index = 0;
 
-    const monthly = [
-      { mes: "Enero", fee: "05:00", acumulacion: "00:00", consumido: "16:03" },
-      { mes: "Febrero", fee: "10:00", acumulacion: "-11:03", consumido: "01:25" }
-    ];
-
-    const tickets = [
-      {
-        id:"SUP-1042",
-        title:"Integración reportes mail marketing",
-        subtitle:"tag:email · responsable: Ana · severidad: alta",
-        status:"Abierto",
-        sla:"Vence en 6h",
-        slaLevel:"warn",
-        hours:"01:10",
-        created:"2026-02-02",
-        category:"Email marketing",
-        tags:["email","integración","alta"],
-        waiting:"No",
-      },
-      {
-        id:"SUP-1039",
-        title:"Ajuste dashboard saldo negativo",
-        subtitle:"tag:finanzas · responsable: Diego · severidad: media",
-        status:"Bloqueado",
-        sla:"SLA vencido",
-        slaLevel:"danger",
-        hours:"00:35",
-        created:"2026-02-01",
-        category:"Soporte",
-        tags:["finanzas","ui"],
-        waiting:"No",
-      },
-      {
-        id:"SUP-1033",
-        title:"Cliente solicita validación de horas imputadas",
-        subtitle:"tag:aprobación · responsable: Paula · severidad: media",
-        status:"Espera Cliente",
-        sla:"En espera cliente",
-        slaLevel:"warn",
-        hours:"00:15",
-        created:"2026-01-28",
-        category:"Operación",
-        tags:["aprobación","horas"],
-        waiting:"Sí",
-      },
-      {
-        id:"SUP-1027",
-        title:"Mejora accesibilidad: contraste y foco visible",
-        subtitle:"tag:ui · responsable: Ana · severidad: baja",
-        status:"En progreso",
-        sla:"Vence en 22h",
-        slaLevel:"ok",
-        hours:"00:25",
-        created:"2026-01-26",
-        category:"UX/UI",
-        tags:["ui","a11y"],
-        waiting:"No",
-      },
-      {
-        id:"SUP-1012",
-        title:"Reporte mensual automatizado por email",
-        subtitle:"tag:reportes · responsable: Diego · severidad: baja",
-        status:"Cerrado",
-        sla:"Cumplido",
-        slaLevel:"ok",
-        hours:"00:40",
-        created:"2026-01-18",
-        category:"Reportería",
-        tags:["reportes","email"],
-        waiting:"No",
-      },
-      {
-        id:"SUP-1009",
-        title:"Filtro avanzado en tickets históricos",
-        subtitle:"tag:busqueda · responsable: Paula · severidad: baja",
-        status:"Resuelto",
-        sla:"Cumplido",
-        slaLevel:"ok",
-        hours:"00:18",
-        created:"2026-01-15",
-        category:"Soporte",
-        tags:["busqueda","performance"],
-        waiting:"No",
-      }
-    ];
-
-    const donutData = [
-      {label:"Resueltos", value:312, color:"#60a5fa"},
-      {label:"Cerrados", value:540, color:"#34d399"},
-      {label:"Espera Cliente", value:120, color:"#fbbf24"},
-      {label:"Abiertos", value:63, color:"#fb7185"}
-    ];
-
-    // ---------- Init ----------
-    loadState();
-    const app = $("#app");
-    app.setAttribute("data-theme", state.theme);
-
-    // Fill filters
-    $("#project").value = state.project;
-    $("#year").value = state.year;
-    $("#month").value = state.month;
-    $("#q").value = state.query;
-
-    // ---------- KPI calculations ----------
-    function updateKpis(){
-      $("#kpiConsumidas").textContent = fmtHhMm(kpis.consumidoMes);
-      $("#kpiSaldo").textContent = fmtHhMm(kpis.saldoMes);
-      $("#kpiCumpl").textContent = `${kpis.cumplimientoPct.toFixed(2)}%`;
-
-      // burn rate: simplistic (consumido / días transcurridos) mock
-      const days = 4; // demo
-      const rateHPerDay = (kpis.consumidoMes/60) / days;
-      $("#kpiRate").textContent = `${rateHPerDay.toFixed(2)} h/día`;
-      $("#kpiMeta").textContent = fmtHhMm(kpis.feeMensual);
-
-      // projection: if saldo negative -> "0" days, else estimate
-      const remaining = kpis.feeMensual - kpis.consumidoMes + 0; // no carry for demo
-      const daysLeft = rateHPerDay > 0 ? Math.floor((remaining/60)/rateHPerDay) : 0;
-      $("#kpiProy").textContent = kpis.saldoMes < 0 ? "0 días" : `${clamp(daysLeft,0,99)} días`;
-
-      // threshold sample
-      $("#kpiUmbral").textContent = "-01:00";
-
-      // backlog mock
-      $("#kpiBacklog").textContent = "7";
-      $("#kpiOpen").textContent = "3";
-      $("#kpiWait").textContent = "2";
-      $("#kpiBlock").textContent = "2";
-
-      // Alerts
-      const alertSaldo = $("#alertSaldo");
-      const badge = alertSaldo.querySelector(".badge");
-      if(kpis.saldoMes < 0){
-        badge.className = "badge danger";
-        badge.textContent = "RIESGO";
-      } else if(kpis.saldoMes < 60){
-        badge.className = "badge warn";
-        badge.textContent = "ATENCIÓN";
-      } else {
-        badge.className = "badge ok";
-        badge.textContent = "OK";
-      }
-
-      const alertSLA = $("#alertSLA");
-      const badgeSLA = alertSLA.querySelector(".badge");
-      if(kpis.cumplimientoPct < 60){
-        badgeSLA.className = "badge warn";
-        badgeSLA.textContent = "ATENCIÓN";
-      } else {
-        badgeSLA.className = "badge ok";
-        badgeSLA.textContent = "OK";
-      }
-
-      // Health pill mock
-      $("#healthDot").className = "dot ok";
-      $("#healthText").textContent = "Datos al día";
-    }
-
-    // ---------- Monthly table ----------
-    function renderMonthly(){
-      const tbody = $("#monthlyTbody");
-      tbody.innerHTML = "";
-      monthly.forEach((r, idx)=>{
-        const fee = toMins(r.fee);
-        const acc = toMins(r.acumulacion);
-        const cons = toMins(r.consumido);
-        const saldo = fee + acc - cons;
-
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${r.mes}</td>
-          <td class="mono">${r.fee}</td>
-          <td class="mono">${r.acumulacion}</td>
-          <td class="mono">${r.consumido}</td>
-          <td class="${saldo<0?'neg':'pos'}">${fmtHhMm(saldo)}</td>
-          <td>
-            <button class="btn" style="padding:8px 10px" data-export-month="${idx}">
-              📄 Detalle
-            </button>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-
-      $$("button[data-export-month]").forEach(btn=>{
-        btn.addEventListener("click", ()=>{
-          const i = btn.getAttribute("data-export-month");
-          alert(`(Maqueta) Exportar detalle por ticket del mes #${Number(i)+1}.`);
-        });
-      });
-    }
-
-    // ---------- Tickets ----------
-    function matchesQuery(t, q){
-      if(!q) return true;
-      q = q.toLowerCase().trim();
-
-      // simple operators: estado:xxx, tag:xxx, responsable:xxx
-      const parts = q.split(/\s+/);
-      for(const p of parts){
-        if(p.startsWith("estado:")){
-          const v = p.replace("estado:","").toLowerCase();
-          if(!t.status.toLowerCase().includes(v)) return false;
-        } else if(p.startsWith("tag:")){
-          const v = p.replace("tag:","").toLowerCase();
-          if(!t.tags.some(x=>x.toLowerCase().includes(v))) return false;
-        } else if(p.startsWith("responsable:")){
-          const v = p.replace("responsable:","").toLowerCase();
-          if(!t.subtitle.toLowerCase().includes(v)) return false;
-        } else {
-          const hay = (t.id+" "+t.title+" "+t.subtitle+" "+t.status+" "+t.category).toLowerCase();
-          if(!hay.includes(p)) return false;
-        }
-      }
-      return true;
-    }
-
-    function renderTickets(){
-      const list = $("#ticketList");
-      list.innerHTML = "";
-
-      const q = state.query;
-      const filter = state.ticketFilter;
-
-      const filtered = tickets.filter(t=>{
-        if(filter !== "Todos" && t.status !== filter) return false;
-        return matchesQuery(t, q);
-      });
-
-      $("#ticketsInfo").textContent = `Mostrando: ${filter}${q?` · búsqueda activa`:``}`;
-
-      filtered.forEach(t=>{
-        const el = document.createElement("article");
-        el.className = "ticket";
-        el.innerHTML = `
-          <div class="ticketTop">
-            <div class="ticketTitle">
-              <strong>${t.id} · ${t.title}</strong>
-              <span>${t.subtitle}</span>
-            </div>
-            <span class="sla ${t.slaLevel}">
-              ${t.slaLevel==="danger"?"⛔":t.slaLevel==="warn"?"⚠️":"✅"} ${t.sla}
-            </span>
-          </div>
-          <div class="ticketMeta">
-            <span class="tag">📌 ${t.status}</span>
-            <span class="tag">🏷️ ${t.category}</span>
-            <span class="tag">⏱️ ${t.hours}</span>
-            <span class="tag">📅 ${t.created}</span>
-            <span class="tag">${t.waiting==="Sí"?"🕒 Espera cliente":"🚀 Activo"}</span>
-          </div>
-          <div class="ticketActions">
-            <button class="primary" data-open="${t.id}">Ver detalle</button>
-            <button data-approve="${t.id}">Aprobar horas</button>
-            <button data-close="${t.id}">Cerrar</button>
-          </div>
-          <div class="drawer" id="drawer-${t.id}">
-            <div class="row">
-              <div class="left">
-                <span class="tag">SLA: <b class="mono">${t.sla}</b></span>
-                <span class="tag">Etiquetas: <b class="mono">${t.tags.join(", ")}</b></span>
-              </div>
-              <span class="small">Bitácora: cambios de estado/horas/auditoría (demo)</span>
-            </div>
-            <div class="modalCard">
-              <strong>Checklist de cierre (demo)</strong>
-              <ul>
-                <li>Causa documentada</li>
-                <li>Solución aplicada</li>
-                <li>Horas imputadas y aprobadas</li>
-                <li>Prevención / notas</li>
-              </ul>
-            </div>
-          </div>
-        `;
-        list.appendChild(el);
-      });
-
-      // Drawer toggles
-      $$("[data-open]").forEach(b=>{
-        b.addEventListener("click", ()=>{
-          const id = b.getAttribute("data-open");
-          const d = $("#drawer-"+CSS.escape(id));
-          d.classList.toggle("open");
-        });
-      });
-
-      // Approve & Close demo
-      $$("[data-approve]").forEach(b=>{
-        b.addEventListener("click", ()=> alert("(Maqueta) Flujo de aprobación de horas: enviar al cliente, registrar auditoría, actualizar saldo."));
-      });
-      $$("[data-close]").forEach(b=>{
-        b.addEventListener("click", ()=> alert("(Maqueta) Cerrar ticket: checklist + auditoría + notificación."));
-      });
-
-      if(filtered.length === 0){
-        const empty = document.createElement("div");
-        empty.className = "modalCard";
-        empty.style.gridColumn = "1 / -1";
-        empty.innerHTML = `<strong>Sin resultados</strong><p class="small" style="margin:8px 0 0">Prueba quitar filtros o buscar por <span class="kbd">estado:abierto</span>.</p>`;
-        list.appendChild(empty);
+    function renderDots() {
+      dots.innerHTML = "";
+      for (let i = 0; i < total; i++) {
+        const d = document.createElement("button");
+        d.className = "dot" + (i === index ? " active" : "");
+        d.setAttribute("aria-label", `Ir al testimonio ${i + 1}`);
+        d.addEventListener("click", () => goTo(i));
+        dots.appendChild(d);
       }
     }
 
-    // ---------- Donut drawing ----------
-    function drawDonut(){
-      const canvas = $("#donut");
-      const ctx = canvas.getContext("2d");
-      const total = donutData.reduce((a,b)=>a+b.value,0);
-      const cx = canvas.width/2, cy = canvas.height/2;
-      const r = 92;
-      const thickness = 26;
-
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-
-      let start = -Math.PI/2;
-      donutData.forEach(s=>{
-        const ang = (s.value/total) * Math.PI*2;
-        ctx.beginPath();
-        ctx.strokeStyle = s.color;
-        ctx.lineWidth = thickness;
-        ctx.lineCap = "round";
-        ctx.arc(cx, cy, r, start, start+ang);
-        ctx.stroke();
-        start += ang;
-      });
-
-      // inner text
-      ctx.fillStyle = getComputedStyle(document.body).getPropertyValue("--text");
-      ctx.font = "700 16px " + getComputedStyle(document.body).getPropertyValue("--sans");
-      ctx.textAlign = "center";
-      ctx.fillText("Tickets", cx, cy-6);
-
-      ctx.fillStyle = getComputedStyle(document.body).getPropertyValue("--muted");
-      ctx.font = "12px " + getComputedStyle(document.body).getPropertyValue("--sans");
-      ctx.fillText(total.toLocaleString("es-CL"), cx, cy+14);
+    function goTo(i) {
+      index = (i + total) % total;
+      slides.style.transform = `translateX(-${index * 100}%)`;
+      renderDots();
     }
 
-    // ---------- Modal drilldowns ----------
-    const modal = $("#kpiModal");
-    const modalTitle = $("#modalTitle");
-    const modalDesc = $("#modalDesc");
-    const modalGrid = $("#modalGrid");
+    document.getElementById("prev")?.addEventListener("click", () => goTo(index - 1));
+    document.getElementById("next")?.addEventListener("click", () => goTo(index + 1));
+    renderDots();
 
-    const kpiContent = {
-      saldo: {
-        title: "Saldo disponible (mes) · Detalle y acciones",
-        desc: "Transparencia total del cálculo, alertas por umbral y acciones sugeridas para evitar sobregiro.",
-        cards: [
-          {t:"Cálculo", items:["Saldo = Fee + Acumulación - Consumido","Ver detalle por ticket y auditoría de cambios"]},
-          {t:"Acciones", items:["Solicitar aprobación de horas","Ajustar imputación / reclasificar tickets","Definir límites y alertas 70/90/100%"]},
-          {t:"Riesgos", items:["Sobregiro del fee mensual","Aumento de 'Espera cliente' afecta SLA y consumo"]},
-          {t:"Exportables", items:["PDF/Excel mensual","Detalle por ticket + horas + SLA"]}
-        ]
-      },
-      consumo: {
-        title: "Horas consumidas (mes) · Tendencias",
-        desc: "Velocidad de consumo, proyección y comparativas (mes actual vs anterior).",
-        cards: [
-          {t:"Velocidad", items:["Consumo/día (estimado)","Proyección de días restantes"]},
-          {t:"Comparativas", items:["Mes actual vs mes anterior","Tickets creados vs resueltos"]},
-          {t:"Control", items:["Aprobación de horas antes de imputar","Auditoría por usuario/fecha"]}
-        ]
-      },
-      sla: {
-        title: "SLA / Cumplimiento · Diagnóstico",
-        desc: "SLA visible por ticket, vencimientos y recomendaciones para mejorar el cumplimiento.",
-        cards: [
-          {t:"Métricas", items:["Primera respuesta promedio","Resolución promedio","% SLA vencido"]},
-          {t:"Recomendaciones", items:["Priorizar severidad alta","Reducir tickets en 'Espera Cliente'","Automatizar notificaciones"]},
-          {t:"Operación", items:["Estados con reglas + SLA por estado","Etiquetas/categorías para reportes"]}
-        ]
-      },
-      abiertos: {
-        title: "Backlog actual · Accionable",
-        desc: "Backlog segmentado por estado + drill-down instantáneo para gestión diaria.",
-        cards: [
-          {t:"Segmentación", items:["Abiertos / Bloqueados / Espera cliente","Severidad y categoría"]},
-          {t:"Gestión", items:["Asignación y prioridades","Macrosc/plantillas de respuesta","Checklist de cierre"]},
-          {t:"Productividad", items:["Resoluciones por responsable","Tendencia semanal","Top causas recurrentes"]}
-        ]
-      }
-    };
+    // Auto-rotate (optional)
+    let timer = setInterval(() => goTo(index + 1), 6500);
+    document.querySelector(".slider")?.addEventListener("mouseenter", () => clearInterval(timer));
+    document.querySelector(".slider")?.addEventListener("mouseleave", () => timer = setInterval(() => goTo(index + 1), 6500));
 
-    function openKpiModal(key){
-      const c = kpiContent[key];
-      if(!c) return;
-      modalTitle.textContent = c.title;
-      modalDesc.textContent = c.desc;
-      modalGrid.innerHTML = "";
-      c.cards.forEach(card=>{
-        const div = document.createElement("div");
-        div.className = "modalCard";
-        div.innerHTML = `<strong>${card.t}</strong><ul>${card.items.map(i=>`<li>${i}</li>`).join("")}</ul>`;
-        modalGrid.appendChild(div);
-      });
-      modal.showModal();
+    // Video modal
+    const modal = document.getElementById("modal");
+    const yt = document.getElementById("yt");
+    const openVideo = document.getElementById("openVideo");
+    const openVideo2 = document.getElementById("openVideo2");
+    const close = document.getElementById("close");
+
+    const YT_ID = "dQw4w9WgXcQ"; // <-- cambia esto por tu video real
+
+    function openModal() {
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+      yt.src = `https://www.youtube.com/embed/${YT_ID}?autoplay=1&rel=0`;
+      document.body.style.overflow = "hidden";
+    }
+    function closeModal() {
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+      yt.src = "about:blank";
+      document.body.style.overflow = "";
+    }
+    openVideo?.addEventListener("click", openModal);
+    openVideo2?.addEventListener("click", openModal);
+    close?.addEventListener("click", closeModal);
+    modal?.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && modal.classList.contains("open")) closeModal(); });
+
+    // Contact form demo
+    const leadForm = document.getElementById("leadForm");
+    const waLead = document.getElementById("waLead");
+
+    function buildWALink({name, email, type, msg}) {
+      const phone = "56900000000"; // <-- cambia número
+      const text = `Hola! Soy ${name}.%0AEmail: ${email}%0ANecesito: ${type}%0A%0AMensaje:%0A${encodeURIComponent(msg || "")}`;
+      return `https://api.whatsapp.com/send?phone=${phone}&text=${text}`;
     }
 
-    // ---------- Events ----------
-    $("#toggleTheme").addEventListener("click", ()=>{
-      state.theme = (state.theme === "dark") ? "light" : "dark";
-      app.setAttribute("data-theme", state.theme);
-      saveState();
-      drawDonut();
+    leadForm?.addEventListener("input", () => {
+      const data = {
+        name: document.getElementById("name").value || "",
+        email: document.getElementById("email").value || "",
+        type: document.getElementById("type").value || "",
+        msg: document.getElementById("msg").value || ""
+      };
+      waLead.href = buildWALink(data);
     });
 
-    $("#applyFilters").addEventListener("click", ()=>{
-      state.project = $("#project").value;
-      state.year = $("#year").value;
-      state.month = $("#month").value;
-      state.query = $("#q").value;
-      saveState();
-      renderTickets();
+    leadForm?.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const data = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        type: document.getElementById("type").value,
+        msg: document.getElementById("msg").value
+      };
+
+      const preview =
+        `✅ Demo enviado (no backend)\n\n` +
+        `Nombre: ${data.name}\n` +
+        `Email: ${data.email}\n` +
+        `Necesita: ${data.type}\n` +
+        `Mensaje: ${data.msg || "(vacío)"}\n\n` +
+        `Tip: conecta esto a un endpoint o a tu Google Form/CRM.`;
+
+      alert(preview);
     });
 
-    $("#project").addEventListener("change", ()=>{
-      state.project = $("#project").value;
-      saveState();
-    });
-    $("#year").addEventListener("change", ()=>{
-      state.year = $("#year").value; saveState();
-    });
-    $("#month").addEventListener("change", ()=>{
-      state.month = $("#month").value; saveState();
-    });
-
-    $("#q").addEventListener("keydown", (e)=>{
-      if(e.key === "Enter"){
-        state.query = $("#q").value;
-        saveState();
-        renderTickets();
-      }
-    });
-
-    $("#clearTicketFilter").addEventListener("click", ()=>{
-      state.ticketFilter = "Todos";
-      saveState();
-      renderTickets();
-    });
-
-    $("#exportBtn").addEventListener("click", ()=>{
-      alert("(Maqueta) Exportar reporte ejecutivo: KPIs + tabla mensual + detalle por ticket.");
-    });
-
-    $("#createTicketBtn").addEventListener("click", ()=>{
-      alert("(Maqueta) Crear ticket: formulario con severidad/impacto/adjuntos + validaciones.");
-    });
-
-    $("#logoutBtn").addEventListener("click", ()=>{
-      alert("(Maqueta) Cerrar sesión.");
-    });
-
-    // Legend filter buttons
-    $$(".legendRow button").forEach(b=>{
-      b.addEventListener("click", ()=>{
-        state.ticketFilter = b.getAttribute("data-filter");
-        saveState();
-        renderTickets();
-      });
-    });
-
-    // KPI click opens modal
-    $$("[data-kpi]").forEach(card=>{
-      const key = card.getAttribute("data-kpi");
-      card.addEventListener("click", ()=> openKpiModal(key));
-      card.addEventListener("keydown", (e)=>{
-        if(e.key === "Enter" || e.key === " "){
-          e.preventDefault();
-          openKpiModal(key);
-        }
-      });
-    });
-    $("#closeModal").addEventListener("click", ()=> modal.close());
-    modal.addEventListener("click", (e)=>{
-      const rect = modal.getBoundingClientRect();
-      const inDialog = rect.top <= e.clientY && e.clientY <= rect.bottom &&
-                       rect.left <= e.clientX && e.clientX <= rect.right;
-      if(!inDialog) modal.close();
-    });
-
-    // Shortcuts
-    document.addEventListener("keydown", (e)=>{
-      const isCmd = e.metaKey || e.ctrlKey;
-      if(e.key === "/" && document.activeElement !== $("#q")){
-        e.preventDefault();
-        $("#q").focus();
-      }
-      if(isCmd && e.key.toLowerCase() === "d"){
-        e.preventDefault();
-        alert("(Maqueta) Ir a Dashboard.");
-      }
-      if(isCmd && e.key.toLowerCase() === "k"){
-        e.preventDefault();
-        alert("(Maqueta) Command palette (demo).");
-      }
-    });
-
-    // ---------- First render ----------
-    updateKpis();
-    renderMonthly();
-    renderTickets();
-    // counts
-    $("#cResolved").textContent = donutData[0].value;
-    $("#cClosed").textContent = donutData[1].value;
-    $("#cWait").textContent = donutData[2].value;
-    $("#cOpen").textContent = donutData[3].value;
-    drawDonut();
+    // Init WA link on load
+    waLead.href = buildWALink({name:"", email:"", type:"", msg:""});
   </script>
 </body>
 </html>
