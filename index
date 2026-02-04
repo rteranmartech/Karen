@@ -1,1544 +1,208 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Portal Clientes — Soporte (Maqueta Pro)</title>
-  <meta name="color-scheme" content="light dark" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title></title>
+
   <style>
-    :root{
-      --bg: #0b1020;
-      --panel:#111a33;
-      --panel-2:#0f1730;
-      --text:#e9eefc;
-      --muted:#a9b4d0;
-      --border: rgba(255,255,255,.10);
-      --shadow: 0 12px 30px rgba(0,0,0,.30);
-      --accent:#6ee7b7;
-      --accent-2:#60a5fa;
-      --danger:#fb7185;
-      --warn:#fbbf24;
-      --ok:#34d399;
-      --chip:#1a2550;
-      --focus: 0 0 0 3px rgba(96,165,250,.35);
-      --radius: 16px;
-      --radius2: 22px;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
-    }
-    [data-theme="light"]{
-      --bg:#f6f7fb;
-      --panel:#ffffff;
-      --panel-2:#fbfcff;
-      --text:#0b1020;
-      --muted:#4b5563;
-      --border: rgba(15,23,42,.12);
-      --shadow: 0 10px 24px rgba(15,23,42,.08);
-      --chip:#eef2ff;
-      --focus: 0 0 0 3px rgba(37,99,235,.18);
+    :root {
+      --brand-orange: #F28C28;
+      --brand-orange-hover: #cf741f;
+      --text-dark: #222;
+      --text-gray: #666;
+      --radius: 14px;
     }
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family: var(--sans);
-      background: radial-gradient(1200px 800px at 20% 0%, rgba(96,165,250,.18), transparent 55%),
-                  radial-gradient(900px 700px at 100% 20%, rgba(110,231,183,.14), transparent 55%),
-                  var(--bg);
-      color: var(--text);
-    }
-    a{color:inherit;text-decoration:none}
-    button, input, select{
-      font: inherit;
-      color: inherit;
-    }
-    :focus-visible{outline:none; box-shadow: var(--focus); border-radius: 10px;}
-    .app{
-      display:grid;
-      grid-template-columns: 280px 1fr;
-      min-height:100vh;
-    }
-    /* Sidebar */
-    .sidebar{
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      padding: 18px 14px;
-      border-right: 1px solid var(--border);
-      background: linear-gradient(180deg, rgba(17,26,51,.90), rgba(17,26,51,.70));
-      backdrop-filter: blur(10px);
-    }
-    [data-theme="light"] .sidebar{
-      background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.75));
-    }
-    .brand{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      padding: 10px 10px 14px;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 14px;
-    }
-    .logo{
-      width:36px; height:36px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--accent-2), var(--accent));
-      box-shadow: 0 10px 20px rgba(0,0,0,.18);
-    }
-    .brand h1{
-      font-size: 14px;
-      margin:0;
-      line-height: 1.1;
-      letter-spacing: .2px;
-    }
-    .brand p{
-      margin:2px 0 0;
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .nav{
-      display:flex;
-      flex-direction:column;
-      gap: 6px;
-      padding: 6px;
-    }
-    .nav .section{
-      margin-top: 10px;
-      padding: 8px 10px 6px;
-      font-size: 11px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: .12em;
-    }
-    .nav a{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      padding: 10px 10px;
-      border-radius: 14px;
-      border: 1px solid transparent;
-      background: transparent;
-      transition: .2s ease;
-    }
-    .nav a:hover{
-      background: rgba(96,165,250,.10);
-      border-color: rgba(96,165,250,.18);
-    }
-    .nav a[aria-current="page"]{
-      background: rgba(110,231,183,.13);
-      border-color: rgba(110,231,183,.22);
-    }
-    .ico{
-      width: 28px; height: 28px;
-      border-radius: 10px;
-      display:grid;
-      place-items:center;
-      background: rgba(255,255,255,.06);
-      border: 1px solid var(--border);
-      font-size: 14px;
-    }
-    [data-theme="light"] .ico{background: rgba(15,23,42,.04)}
-    .nav span{font-size: 13px}
-    .nav small{
-      margin-left:auto;
-      font-size: 11px;
-      color: var(--muted);
-      font-family: var(--mono);
-    }
-
-    /* Main */
-    .main{
-      padding: 18px 18px 26px;
-    }
-    .topbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 10px;
-      padding: 10px 8px 14px;
-    }
-    .hello{
-      display:flex;
-      flex-direction:column;
-      gap:2px;
-    }
-    .hello strong{font-size: 16px}
-    .hello span{font-size: 12px; color: var(--muted)}
-    .actions{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      gap: 8px;
-      padding: 10px 12px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.04);
-      cursor:pointer;
-      transition: .2s ease;
-      box-shadow: 0 8px 18px rgba(0,0,0,.12);
-    }
-    [data-theme="light"] .btn{background: rgba(15,23,42,.03)}
-    .btn:hover{transform: translateY(-1px); border-color: rgba(96,165,250,.25)}
-    .btn.primary{
-      background: linear-gradient(135deg, rgba(96,165,250,.25), rgba(110,231,183,.20));
-      border-color: rgba(110,231,183,.25);
-    }
-    .btn.danger{
-      background: rgba(251,113,133,.10);
-      border-color: rgba(251,113,133,.22);
-    }
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.04);
-      font-size: 12px;
-      color: var(--muted);
-    }
-    .dot{width:8px;height:8px;border-radius:50%}
-    .dot.ok{background: var(--ok)}
-    .dot.warn{background: var(--warn)}
-    .dot.danger{background: var(--danger)}
-
-    /* Filters */
-    .panel{
-      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
-      border: 1px solid var(--border);
-      border-radius: var(--radius2);
-      box-shadow: var(--shadow);
-    }
-    [data-theme="light"] .panel{
-      background: linear-gradient(180deg, rgba(15,23,42,.02), rgba(15,23,42,.01));
-    }
-    .filters{
-      display:grid;
-      grid-template-columns: 1.2fr .7fr .7fr 1fr auto;
-      gap: 12px;
-      padding: 14px;
-      align-items:end;
-    }
-    .field{display:flex;flex-direction:column;gap:6px}
-    label{
-      font-size: 12px;
-      color: var(--muted);
-    }
-    select, input[type="search"]{
-      width:100%;
-      padding: 10px 12px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.03);
-    }
-    [data-theme="light"] select,[data-theme="light"] input[type="search"]{
-      background: rgba(15,23,42,.02);
-    }
-    .hint{
-      font-size: 11px; color: var(--muted);
-      margin-top: 6px;
-    }
-    .filters .btn{height: 42px; justify-content:center}
-
-    /* KPI Grid */
-    .grid{
-      display:grid;
-      grid-template-columns: 1.4fr 1fr 1fr 1fr;
-      gap: 12px;
-      margin-top: 14px;
-    }
-    .card{
-      padding: 14px;
-      border-radius: var(--radius2);
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.03);
-      box-shadow: var(--shadow);
-      position:relative;
-      overflow:hidden;
-    }
-    [data-theme="light"] .card{background: rgba(15,23,42,.02)}
-    .card::before{
-      content:"";
-      position:absolute;
-      inset: -60px -60px auto auto;
-      width: 160px; height: 160px;
-      background: radial-gradient(circle at 30% 30%, rgba(96,165,250,.22), transparent 65%);
-      transform: rotate(15deg);
-      pointer-events:none;
-    }
-    .kpi{
-      display:flex;
-      gap: 12px;
-      align-items:flex-start;
-      cursor: pointer;
-    }
-    .kpi .ico{
-      width: 44px; height: 44px;
-      border-radius: 16px;
-      font-size: 18px;
-      background: rgba(96,165,250,.12);
-      border-color: rgba(96,165,250,.18);
-    }
-    .kpi .ico.ok{background: rgba(52,211,153,.12); border-color: rgba(52,211,153,.18)}
-    .kpi .ico.warn{background: rgba(251,191,36,.12); border-color: rgba(251,191,36,.18)}
-    .kpi .ico.danger{background: rgba(251,113,133,.12); border-color: rgba(251,113,133,.18)}
-    .kpi h3{
-      margin:0;
-      font-size: 13px;
-      color: var(--muted);
-      font-weight: 600;
-    }
-    .kpi .value{
-      margin-top: 6px;
-      font-size: 24px;
-      font-weight: 760;
-      letter-spacing: -0.02em;
-    }
-    .kpi .sub{
-      margin-top: 4px;
-      font-size: 12px;
-      color: var(--muted);
-      display:flex;
-      gap: 10px;
-      flex-wrap:wrap;
-    }
-    .mini{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding: 4px 8px;
-      border-radius: 999px;
-      background: var(--chip);
-      border: 1px solid var(--border);
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--muted);
-    }
-    .mini b{color: var(--text); font-family: var(--mono)}
-
-    /* Alerts bar */
-    .alerts{
-      margin-top: 12px;
-      display:flex;
-      gap: 10px;
-      flex-wrap:wrap;
-      padding: 12px 14px;
-      align-items:center;
-      justify-content:space-between;
-    }
-    .alerts .left{
-      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
-    }
-    .alert{
-      display:inline-flex;
-      align-items:center;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: 16px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.03);
-      max-width: 520px;
-    }
-    .alert strong{font-size: 13px}
-    .alert span{font-size: 12px; color: var(--muted)}
-    .alert .badge{
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-family: var(--mono);
-      border: 1px solid var(--border);
-      background: var(--chip);
-      white-space:nowrap;
-    }
-    .badge.danger{border-color: rgba(251,113,133,.3)}
-    .badge.warn{border-color: rgba(251,191,36,.3)}
-    .badge.ok{border-color: rgba(52,211,153,.3)}
-
-    /* Split area */
-    .split{
-      display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap: 12px;
-      margin-top: 12px;
-    }
-    .panelHeader{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding: 12px 14px;
-      border-bottom: 1px solid var(--border);
-    }
-    .panelHeader h2{
-      margin:0;
-      font-size: 13px;
-      letter-spacing:.2px;
-      color: var(--muted);
-      text-transform: uppercase;
-    }
-    .panelBody{padding: 14px}
-
-    /* Donut + legend */
-    .donutWrap{
-      display:grid;
-      grid-template-columns: 240px 1fr;
-      gap: 14px;
-      align-items:center;
-    }
-    .legend{
-      display:flex;
-      flex-direction:column;
-      gap: 10px;
-    }
-    .legendRow{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: 16px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.02);
-    }
-    .legendRow .name{flex:1;font-size: 13px}
-    .legendRow .count{font-family: var(--mono); color: var(--muted)}
-    .legendRow button{
-      margin-left:auto;
-      padding: 8px 10px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.02);
-      cursor:pointer;
-    }
-    .swatch{width:10px;height:10px;border-radius:999px}
-
-    /* Table */
-    .tableWrap{
-      overflow:auto;
-      border-radius: 18px;
-      border: 1px solid var(--border);
-    }
-    table{
-      width:100%;
-      border-collapse:separate;
-      border-spacing:0;
-      min-width: 560px;
-    }
-    thead th{
-      position: sticky;
-      top: 0;
-      background: rgba(17,26,51,.95);
-      backdrop-filter: blur(8px);
-      text-align:left;
-      font-size: 12px;
-      color: var(--muted);
-      padding: 10px 12px;
-      border-bottom: 1px solid var(--border);
-      z-index: 1;
-      white-space:nowrap;
-    }
-    [data-theme="light"] thead th{background: rgba(255,255,255,.95)}
-    tbody td{
-      padding: 10px 12px;
-      border-bottom: 1px solid var(--border);
-      font-size: 13px;
-      white-space:nowrap;
-    }
-    tbody tr:hover{background: rgba(96,165,250,.07)}
-    .neg{color: var(--danger); font-family: var(--mono)}
-    .pos{color: var(--ok); font-family: var(--mono)}
-    .mono{font-family: var(--mono)}
-    .muted{color: var(--muted)}
-    .tag{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding: 4px 8px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.03);
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    /* Tickets drilldown */
-    .tickets{
-      margin-top: 12px;
-    }
-    .ticketsHeader{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 10px;
-      padding: 12px 14px;
-      border-bottom: 1px solid var(--border);
-    }
-    .ticketsHeader h2{
-      margin:0;
-      font-size: 13px;
-      letter-spacing:.2px;
-      color: var(--muted);
-      text-transform: uppercase;
-    }
-    .ticketsBody{padding: 14px}
-    .ticketList{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-    .ticket{
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.02);
-      border-radius: 18px;
-      padding: 12px;
-      display:flex;
-      flex-direction:column;
-      gap: 8px;
-    }
-    .ticketTop{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 10px;
-    }
-    .ticketTitle{
-      display:flex;
-      flex-direction:column;
-      gap: 2px;
-    }
-    .ticketTitle strong{font-size: 13px}
-    .ticketTitle span{font-size: 12px; color: var(--muted)}
-    .sla{
-      display:inline-flex;
-      align-items:center;
-      gap: 8px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      font-family: var(--mono);
-      font-size: 12px;
-      white-space:nowrap;
-    }
-    .sla.ok{border-color: rgba(52,211,153,.25)}
-    .sla.warn{border-color: rgba(251,191,36,.25)}
-    .sla.danger{border-color: rgba(251,113,133,.25)}
-    .ticketMeta{
-      display:flex;
-      gap: 8px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
-    .ticketActions{
-      display:flex;
-      gap: 8px;
-      margin-top: 4px;
-      flex-wrap:wrap;
-    }
-    .ticketActions button{
-      padding: 9px 10px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.02);
-      cursor:pointer;
-    }
-    .ticketActions button.primary{
-      background: rgba(96,165,250,.12);
-      border-color: rgba(96,165,250,.22);
-    }
-    .drawer{
-      margin-top: 10px;
-      border-top: 1px solid var(--border);
-      padding-top: 10px;
-      display:none;
-      gap: 10px;
-      flex-direction:column;
-    }
-    .drawer.open{display:flex}
-    .row{
-      display:flex;
-      gap: 10px;
-      flex-wrap:wrap;
-      align-items:center;
-      justify-content:space-between;
-    }
-    .row .left{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
-    .hr{
-      height:1px; background: var(--border);
-      margin: 10px 0;
-    }
-    .small{font-size: 12px; color: var(--muted)}
-    .kbd{
-      font-family: var(--mono);
-      font-size: 11px;
-      padding: 2px 6px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: rgba(255,255,255,.02);
-      color: var(--muted);
-    }
-
-    /* Modal */
-    dialog{
-      width: min(820px, 96vw);
-      border: 1px solid var(--border);
-      background: var(--panel);
-      color: var(--text);
-      border-radius: 22px;
-      box-shadow: 0 30px 80px rgba(0,0,0,.5);
+    * {
+      box-sizing: border-box;
+      margin: 0;
       padding: 0;
     }
-    dialog::backdrop{
-      background: rgba(0,0,0,.55);
-      backdrop-filter: blur(4px);
-    }
-    .modalHead{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 10px;
-      padding: 14px 16px;
-      border-bottom: 1px solid var(--border);
-    }
-    .modalHead h3{margin:0;font-size: 14px}
-    .modalBody{padding: 14px 16px}
-    .modalBody p{margin:0 0 10px; color: var(--muted); font-size: 13px; line-height: 1.45}
-    .modalGrid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-    .modalCard{
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.02);
-      border-radius: 18px;
-      padding: 12px;
-    }
-    .modalCard strong{font-size: 13px}
-    .modalCard ul{margin: 10px 0 0; padding-left: 18px; color: var(--muted); font-size: 13px}
-    .closeBtn{
-      padding: 10px 12px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.02);
-      cursor:pointer;
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: #fff;
+      color: var(--text-dark);
+      line-height: 1.5;
     }
 
-    /* Responsive */
-    @media (max-width: 1100px){
-      .filters{grid-template-columns: 1fr 1fr 1fr; align-items:stretch}
-      .filters .field:nth-child(4){grid-column: 1 / -1;}
-      .filters .field:nth-child(5){grid-column: 1 / -1;}
-      .grid{grid-template-columns: 1fr 1fr}
-      .split{grid-template-columns: 1fr}
-      .donutWrap{grid-template-columns: 1fr; justify-items:center}
-      .ticketList{grid-template-columns: 1fr}
-      thead th{position: sticky}
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 40px 20px;
     }
-    @media (max-width: 860px){
-      .app{grid-template-columns: 1fr}
-      .sidebar{
-        height:auto;
-        position:relative;
-        border-right:none;
-        border-bottom: 1px solid var(--border);
+
+    h1.title {
+      font-size: clamp(1.8rem, 1.2rem + 2vw, 2.5rem);
+      font-weight: 800;
+      color: var(--brand-orange);
+      text-align: left;
+      margin-bottom: 40px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 24px;
+      grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 768px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
       }
-      .main{padding: 14px}
-      .nav{flex-direction:row; flex-wrap:wrap}
-      .nav .section{display:none}
-      .nav a{flex: 1 1 160px}
-      .topbar{flex-direction:column; align-items:flex-start}
-      .actions{justify-content:flex-start}
     }
 
-    /* Reduce motion */
-    @media (prefers-reduced-motion: reduce){
-      *{transition:none !important; scroll-behavior:auto !important}
+    @media (min-width: 1024px) {
+      .grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow .3s ease, transform .3s ease;
+    }
+
+    .card:hover {
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
+      transform: translateY(-4px);
+    }
+
+    .card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .card-body {
+      padding: 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .card-text {
+      font-size: 0.95rem;
+      color: var(--text-gray);
+      margin-bottom: 20px;
+      flex: 1;
+      white-space: pre-line;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      flex: 1 1 auto;
+      text-align: center;
+      padding: 10px 14px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      transition: background .3s ease, color .3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    @media (max-width: 480px) {
+      .card-actions {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+
+    .btn-primary {
+      background: var(--brand-orange);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--brand-orange-hover);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--brand-orange);
+      border: 2px solid var(--brand-orange);
+    }
+
+    .btn-secondary:hover {
+      background: var(--brand-orange);
+      color: #fff;
     }
   </style>
 </head>
 
 <body>
-  <div class="app" id="app" data-theme="dark">
-    <!-- Sidebar -->
-    <aside class="sidebar" aria-label="Navegación principal">
-      <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
-        <div>
-          <h1>Portal Clientes</h1>
-          <p>Soporte & Operaciones</p>
+  <section class="container">
+    <h1 class="title">Tenedor Libre</h1>
+
+    <div class="grid">
+      <!-- Card 1 Providencia -->
+      <div class="card">
+        <img src="https://i.postimg.cc/25NVWR6G/Whats-App-Image-2025-08-18-at-21-56-06-1.jpg"
+             alt="Providencia - interior de local de sushi">
+        <div class="card-body">
+          <h2 class="card-title">Providencia</h2>
+          <p class="card-text">Direccion: Av. Antonio varas #303 - Local 8
+Horario: Lunes a Sabado de 12:00 a 22:30
+Feriados y festivos de Cerrado</p>
+          <div class="card-actions">
+            <a href="https://menu.fu.do/musukoprovidencia/qr-menu" target="_blank" class="btn btn-primary">Ver Menú →</a>
+          </div>
         </div>
       </div>
 
-      <nav class="nav">
-        <div class="section">Soporte</div>
-        <a href="#" aria-current="page" data-nav="dashboard">
-          <div class="ico" aria-hidden="true">📊</div>
-          <span>Dashboard</span>
-          <small>⌘D</small>
-        </a>
-        <a href="#" data-nav="saldos">
-          <div class="ico" aria-hidden="true">🧾</div>
-          <span>Detalle de Saldos</span>
-        </a>
-        <a href="#" data-nav="crear">
-          <div class="ico" aria-hidden="true">➕</div>
-          <span>Crear Ticket</span>
-        </a>
-        <a href="#" data-nav="equipo">
-          <div class="ico" aria-hidden="true">👥</div>
-          <span>Gestionar Mi Equipo</span>
-        </a>
-
-        <div class="section">Operación</div>
-        <a href="#" data-nav="envios">
-          <div class="ico" aria-hidden="true">✉️</div>
-          <span>Envíos de mail</span>
-        </a>
-        <a href="#" data-nav="graficas">
-          <div class="ico" aria-hidden="true">🎨</div>
-          <span>Piezas Gráficas</span>
-        </a>
-        <a href="#" data-nav="admin">
-          <div class="ico" aria-hidden="true">⚙️</div>
-          <span>Administración</span>
-        </a>
-      </nav>
-    </aside>
-
-    <!-- Main -->
-    <main class="main">
-      <header class="topbar">
-        <div class="hello">
-          <strong>Hola, <span id="userName">teran</span></strong>
-          <span id="contextLine">Vista proyecto · Soporte · Resumen ejecutivo + drill-down</span>
-        </div>
-        <div class="actions">
-          <span class="pill" id="healthPill" title="Estado de datos">
-            <span class="dot ok" id="healthDot"></span>
-            <span id="healthText">Datos al día</span>
-          </span>
-          <button class="btn" id="toggleTheme" aria-label="Cambiar modo claro/oscuro">
-            🌗 <span>Modo</span>
-          </button>
-          <button class="btn primary" id="exportBtn" aria-label="Exportar reporte">
-            ⬇️ <span>Exportar</span>
-          </button>
-          <button class="btn danger" id="logoutBtn" aria-label="Cerrar sesión">
-            ⎋ <span>Cerrar sesión</span>
-          </button>
-        </div>
-      </header>
-
-      <!-- Filters Panel -->
-      <section class="panel" aria-label="Filtros">
-        <div class="filters">
-          <div class="field">
-            <label for="project">Proyecto</label>
-            <select id="project" aria-describedby="projectHint">
-              <option>Ariztía</option>
-              <option>Casa.cl</option>
-              <option>DUOC</option>
-              <option>AANT</option>
-              <option>Proyecto Demo</option>
-            </select>
-            <div class="hint" id="projectHint">Se guarda automáticamente para tu próxima visita.</div>
-          </div>
-
-          <div class="field">
-            <label for="year">Año</label>
-            <select id="year">
-              <option>2026</option>
-              <option>2025</option>
-              <option>2024</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label for="month">Mes</label>
-            <select id="month">
-              <option value="02">Febrero</option>
-              <option value="01">Enero</option>
-              <option value="12">Diciembre</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label for="q">Buscar tickets</label>
-            <input id="q" type="search" placeholder="ID, asunto, etiqueta, responsable…" />
-            <div class="hint">Tip: usa <span class="kbd">estado:abierto</span> o <span class="kbd">tag:email</span></div>
-          </div>
-
-          <button class="btn" id="applyFilters">🔎 <span>Aplicar</span></button>
-        </div>
-      </section>
-
-      <!-- KPI Grid (Top priority KPIs bigger) -->
-      <section class="grid" aria-label="Indicadores clave">
-        <article class="card" role="button" tabindex="0" data-kpi="saldo">
-          <div class="kpi">
-            <div class="ico danger" aria-hidden="true">⏱️</div>
-            <div>
-              <h3>Saldo disponible (mes)</h3>
-              <div class="value" id="kpiSaldo">-02:28</div>
-              <div class="sub">
-                <span class="mini">Umbral 90%: <b id="kpiUmbral">-01:00</b></span>
-                <span class="mini">Proyección: <b id="kpiProy">2 días</b></span>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <article class="card" role="button" tabindex="0" data-kpi="consumo">
-          <div class="kpi">
-            <div class="ico warn" aria-hidden="true">🔥</div>
-            <div>
-              <h3>Horas consumidas (mes)</h3>
-              <div class="value" id="kpiConsumidas">01:25</div>
-              <div class="sub">
-                <span class="mini">Velocidad: <b id="kpiRate">0.21 h/día</b></span>
-                <span class="mini">Meta: <b id="kpiMeta">10:00</b></span>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <article class="card" role="button" tabindex="0" data-kpi="sla">
-          <div class="kpi">
-            <div class="ico ok" aria-hidden="true">✅</div>
-            <div>
-              <h3>SLA / Cumplimiento</h3>
-              <div class="value" id="kpiCumpl">14.17%</div>
-              <div class="sub">
-                <span class="mini">Primera resp.: <b>2h</b></span>
-                <span class="mini">Resolución: <b>48h</b></span>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <article class="card" role="button" tabindex="0" data-kpi="abiertos">
-          <div class="kpi">
-            <div class="ico" aria-hidden="true">📌</div>
-            <div>
-              <h3>Backlog actual</h3>
-              <div class="value" id="kpiBacklog">7</div>
-              <div class="sub">
-                <span class="mini">Abiertos: <b id="kpiOpen">3</b></span>
-                <span class="mini">Espera cliente: <b id="kpiWait">2</b></span>
-                <span class="mini">Bloqueados: <b id="kpiBlock">2</b></span>
-              </div>
-            </div>
-          </div>
-        </article>
-      </section>
-
-      <!-- Alerts -->
-      <section class="panel alerts" aria-label="Alertas">
-        <div class="left">
-          <div class="alert" id="alertSaldo">
-            <span class="badge danger">RIESGO</span>
-            <div>
-              <strong>Saldo negativo</strong>
-              <span>Revisa horas imputadas y define aprobación/ajuste para evitar sobregiro.</span>
-            </div>
-          </div>
-
-          <div class="alert" id="alertSLA">
-            <span class="badge warn">ATENCIÓN</span>
-            <div>
-              <strong>SLA bajo en el mes</strong>
-              <span>Prioriza tickets de severidad alta y reduce “Espera cliente”.</span>
-            </div>
+      <!-- Card 2 Santiago -->
+      <div class="card">
+        <img src="https://i.postimg.cc/bYVrT2rs/Whats-App-Image-2025-08-18-at-21-57-23-1.jpg"
+             alt="Santiago - sushi bar en restaurante">
+        <div class="card-body">
+          <h2 class="card-title">Santiago</h2>
+          <p class="card-text">Direccion: Av. Portugal 412 - Piso 3 - Local 20
+Horario: Lunes a Sabado de 12:00 a 22:30
+Feriados y festivos de 13:00 a 20:00</p>
+          <div class="card-actions">
+            <a href="https://menu.fu.do/musukoportugal/qr-menu" target="_blank" class="btn btn-primary">Ver Menú →</a>
           </div>
         </div>
-
-        <div class="right">
-          <button class="btn primary" id="createTicketBtn">➕ <span>Crear ticket</span></button>
-        </div>
-      </section>
-
-      <!-- Charts + Monthly table -->
-      <section class="split" aria-label="Resumen y reportes">
-        <article class="panel">
-          <div class="panelHeader">
-            <h2>Estado general (histórico) · Drill-down</h2>
-            <span class="pill"><span class="dot ok"></span><span>Actualizado: hoy</span></span>
-          </div>
-          <div class="panelBody">
-            <div class="donutWrap">
-              <div aria-label="Gráfico donut de estados" title="Resumen por estado">
-                <canvas id="donut" width="240" height="240" role="img" aria-label="Distribución por estados"></canvas>
-              </div>
-              <div class="legend" aria-label="Leyenda de estados">
-                <div class="legendRow">
-                  <span class="swatch" style="background:#60a5fa"></span>
-                  <span class="name">Resueltos</span>
-                  <span class="count mono" id="cResolved">312</span>
-                  <button class="btnLite" data-filter="Resuelto" aria-label="Ver tickets resueltos">Ver</button>
-                </div>
-                <div class="legendRow">
-                  <span class="swatch" style="background:#34d399"></span>
-                  <span class="name">Cerrados</span>
-                  <span class="count mono" id="cClosed">540</span>
-                  <button class="btnLite" data-filter="Cerrado" aria-label="Ver tickets cerrados">Ver</button>
-                </div>
-                <div class="legendRow">
-                  <span class="swatch" style="background:#fbbf24"></span>
-                  <span class="name">Espera cliente</span>
-                  <span class="count mono" id="cWait">120</span>
-                  <button class="btnLite" data-filter="Espera Cliente" aria-label="Ver tickets en espera cliente">Ver</button>
-                </div>
-                <div class="legendRow">
-                  <span class="swatch" style="background:#fb7185"></span>
-                  <span class="name">Abiertos</span>
-                  <span class="count mono" id="cOpen">63</span>
-                  <button class="btnLite" data-filter="Abierto" aria-label="Ver tickets abiertos">Ver</button>
-                </div>
-              </div>
-            </div>
-            <div class="hr"></div>
-            <div class="row">
-              <div class="left">
-                <span class="tag">⏱️ T. primera respuesta: <b class="mono">2h 14m</b></span>
-                <span class="tag">🧩 T. resolución: <b class="mono">31h 02m</b></span>
-                <span class="tag">🧯 Severidad alta: <b class="mono">2</b></span>
-              </div>
-              <div class="small">Clic en “Ver” para filtrar tickets abajo.</div>
-            </div>
-          </div>
-        </article>
-
-        <article class="panel">
-          <div class="panelHeader">
-            <h2>Resumen mensual · horas & saldo</h2>
-            <span class="pill"><span class="dot warn"></span><span>Requiere aprobación</span></span>
-          </div>
-          <div class="panelBody">
-            <div class="tableWrap" aria-label="Tabla de resumen mensual">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Mes</th>
-                    <th>Fee mensual</th>
-                    <th>Acumulación</th>
-                    <th>Consumido</th>
-                    <th>Saldo</th>
-                    <th>Acción</th>
-                  </tr>
-                </thead>
-                <tbody id="monthlyTbody">
-                  <!-- JS -->
-                </tbody>
-              </table>
-            </div>
-            <div class="hint">* “Saldo” incluye fee + acumulación - consumido. Puedes exportar el detalle por ticket.</div>
-          </div>
-        </article>
-      </section>
-
-      <!-- Tickets -->
-      <section class="panel tickets" aria-label="Listado de tickets">
-        <div class="ticketsHeader">
-          <h2>Tickets · Vista accionable</h2>
-          <div class="row" style="gap:8px;justify-content:flex-end">
-            <span class="pill"><span class="dot warn"></span><span id="ticketsInfo">Mostrando: Todos</span></span>
-            <button class="btn" id="clearTicketFilter">🧹 <span>Limpiar filtro</span></button>
-          </div>
-        </div>
-        <div class="ticketsBody">
-          <div class="ticketList" id="ticketList" aria-live="polite">
-            <!-- JS -->
-          </div>
-        </div>
-      </section>
-
-      <footer class="hint" style="padding: 10px 4px 0">
-        Accesos rápidos: <span class="kbd">/</span> buscar · <span class="kbd">⌘</span>+<span class="kbd">D</span> dashboard ·
-        <span class="kbd">⌘</span>+<span class="kbd">K</span> comandos · Preferencias guardadas localmente.
-      </footer>
-    </main>
-
-    <!-- Modal: KPI drilldown -->
-    <dialog id="kpiModal" aria-label="Detalle de indicador">
-      <div class="modalHead">
-        <h3 id="modalTitle">Detalle</h3>
-        <button class="closeBtn" id="closeModal">✕</button>
       </div>
-      <div class="modalBody">
-        <p id="modalDesc"></p>
-        <div class="modalGrid" id="modalGrid"></div>
+
+      <!-- Card 3 Ñuñoa -->
+      <div class="card">
+        <img src="https://i.postimg.cc/pdkRLgnp/Whats-App-Image-2025-08-18-at-21-56-06-2-1.jpg"
+             alt="Ñuñoa - mesa servida en local de sushi">
+        <div class="card-body">
+          <h2 class="card-title">Ñuñoa</h2>
+          <p class="card-text">Direccion: Pedro de Oña 88
+Horario: Lunes a Sabado de 13:00 a 22:00
+Feriados y festivos cerrado</p>
+          <div class="card-actions">
+            <a href="https://menu.fu.do/musuko%C3%B1u%C3%B1oa/qr-menu" target="_blank" class="btn btn-primary">Ver Menú →</a>
+          </div>
+        </div>
       </div>
-    </dialog>
-  </div>
-
-  <script>
-    // ---------- Utilities ----------
-    const $ = (q, el=document) => el.querySelector(q);
-    const $$ = (q, el=document) => Array.from(el.querySelectorAll(q));
-    const fmtHhMm = (mins) => {
-      const sign = mins < 0 ? "-" : "";
-      mins = Math.abs(mins);
-      const h = String(Math.floor(mins/60)).padStart(2,"0");
-      const m = String(mins%60).padStart(2,"0");
-      return `${sign}${h}:${m}`;
-    };
-    const toMins = (hhmm) => {
-      const neg = hhmm.startsWith("-");
-      const v = hhmm.replace("-","");
-      const [h,m] = v.split(":").map(Number);
-      const mins = h*60+m;
-      return neg ? -mins : mins;
-    };
-    const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
-
-    // ---------- Persisted state ----------
-    const STORAGE_KEY = "portal_pro_mock_v1";
-    const state = {
-      theme: "dark",
-      project: "Ariztía",
-      year: "2026",
-      month: "02",
-      query: "",
-      ticketFilter: "Todos"
-    };
-
-    function loadState(){
-      try{
-        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-        Object.assign(state, saved);
-      }catch(e){}
-    }
-    function saveState(){
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    }
-
-    // ---------- Mock data ----------
-    const kpis = {
-      feeMensual: toMins("10:00"),            // 600
-      consumidoMes: toMins("01:25"),          // 85
-      saldoMes: toMins("-02:28"),             // -148
-      acumulacionPermitidaPct: 100,           // %
-      cumplimientoPct: 14.17,
-      ticketsCreadosMes: 1,
-      ticketsHistoricos: 1035
-    };
-
-    const monthly = [
-      { mes: "Enero", fee: "05:00", acumulacion: "00:00", consumido: "16:03" },
-      { mes: "Febrero", fee: "10:00", acumulacion: "-11:03", consumido: "01:25" }
-    ];
-
-    const tickets = [
-      {
-        id:"SUP-1042",
-        title:"Integración reportes mail marketing",
-        subtitle:"tag:email · responsable: Ana · severidad: alta",
-        status:"Abierto",
-        sla:"Vence en 6h",
-        slaLevel:"warn",
-        hours:"01:10",
-        created:"2026-02-02",
-        category:"Email marketing",
-        tags:["email","integración","alta"],
-        waiting:"No",
-      },
-      {
-        id:"SUP-1039",
-        title:"Ajuste dashboard saldo negativo",
-        subtitle:"tag:finanzas · responsable: Diego · severidad: media",
-        status:"Bloqueado",
-        sla:"SLA vencido",
-        slaLevel:"danger",
-        hours:"00:35",
-        created:"2026-02-01",
-        category:"Soporte",
-        tags:["finanzas","ui"],
-        waiting:"No",
-      },
-      {
-        id:"SUP-1033",
-        title:"Cliente solicita validación de horas imputadas",
-        subtitle:"tag:aprobación · responsable: Paula · severidad: media",
-        status:"Espera Cliente",
-        sla:"En espera cliente",
-        slaLevel:"warn",
-        hours:"00:15",
-        created:"2026-01-28",
-        category:"Operación",
-        tags:["aprobación","horas"],
-        waiting:"Sí",
-      },
-      {
-        id:"SUP-1027",
-        title:"Mejora accesibilidad: contraste y foco visible",
-        subtitle:"tag:ui · responsable: Ana · severidad: baja",
-        status:"En progreso",
-        sla:"Vence en 22h",
-        slaLevel:"ok",
-        hours:"00:25",
-        created:"2026-01-26",
-        category:"UX/UI",
-        tags:["ui","a11y"],
-        waiting:"No",
-      },
-      {
-        id:"SUP-1012",
-        title:"Reporte mensual automatizado por email",
-        subtitle:"tag:reportes · responsable: Diego · severidad: baja",
-        status:"Cerrado",
-        sla:"Cumplido",
-        slaLevel:"ok",
-        hours:"00:40",
-        created:"2026-01-18",
-        category:"Reportería",
-        tags:["reportes","email"],
-        waiting:"No",
-      },
-      {
-        id:"SUP-1009",
-        title:"Filtro avanzado en tickets históricos",
-        subtitle:"tag:busqueda · responsable: Paula · severidad: baja",
-        status:"Resuelto",
-        sla:"Cumplido",
-        slaLevel:"ok",
-        hours:"00:18",
-        created:"2026-01-15",
-        category:"Soporte",
-        tags:["busqueda","performance"],
-        waiting:"No",
-      }
-    ];
-
-    const donutData = [
-      {label:"Resueltos", value:312, color:"#60a5fa"},
-      {label:"Cerrados", value:540, color:"#34d399"},
-      {label:"Espera Cliente", value:120, color:"#fbbf24"},
-      {label:"Abiertos", value:63, color:"#fb7185"}
-    ];
-
-    // ---------- Init ----------
-    loadState();
-    const app = $("#app");
-    app.setAttribute("data-theme", state.theme);
-
-    // Fill filters
-    $("#project").value = state.project;
-    $("#year").value = state.year;
-    $("#month").value = state.month;
-    $("#q").value = state.query;
-
-    // ---------- KPI calculations ----------
-    function updateKpis(){
-      $("#kpiConsumidas").textContent = fmtHhMm(kpis.consumidoMes);
-      $("#kpiSaldo").textContent = fmtHhMm(kpis.saldoMes);
-      $("#kpiCumpl").textContent = `${kpis.cumplimientoPct.toFixed(2)}%`;
-
-      // burn rate: simplistic (consumido / días transcurridos) mock
-      const days = 4; // demo
-      const rateHPerDay = (kpis.consumidoMes/60) / days;
-      $("#kpiRate").textContent = `${rateHPerDay.toFixed(2)} h/día`;
-      $("#kpiMeta").textContent = fmtHhMm(kpis.feeMensual);
-
-      // projection: if saldo negative -> "0" days, else estimate
-      const remaining = kpis.feeMensual - kpis.consumidoMes + 0; // no carry for demo
-      const daysLeft = rateHPerDay > 0 ? Math.floor((remaining/60)/rateHPerDay) : 0;
-      $("#kpiProy").textContent = kpis.saldoMes < 0 ? "0 días" : `${clamp(daysLeft,0,99)} días`;
-
-      // threshold sample
-      $("#kpiUmbral").textContent = "-01:00";
-
-      // backlog mock
-      $("#kpiBacklog").textContent = "7";
-      $("#kpiOpen").textContent = "3";
-      $("#kpiWait").textContent = "2";
-      $("#kpiBlock").textContent = "2";
-
-      // Alerts
-      const alertSaldo = $("#alertSaldo");
-      const badge = alertSaldo.querySelector(".badge");
-      if(kpis.saldoMes < 0){
-        badge.className = "badge danger";
-        badge.textContent = "RIESGO";
-      } else if(kpis.saldoMes < 60){
-        badge.className = "badge warn";
-        badge.textContent = "ATENCIÓN";
-      } else {
-        badge.className = "badge ok";
-        badge.textContent = "OK";
-      }
-
-      const alertSLA = $("#alertSLA");
-      const badgeSLA = alertSLA.querySelector(".badge");
-      if(kpis.cumplimientoPct < 60){
-        badgeSLA.className = "badge warn";
-        badgeSLA.textContent = "ATENCIÓN";
-      } else {
-        badgeSLA.className = "badge ok";
-        badgeSLA.textContent = "OK";
-      }
-
-      // Health pill mock
-      $("#healthDot").className = "dot ok";
-      $("#healthText").textContent = "Datos al día";
-    }
-
-    // ---------- Monthly table ----------
-    function renderMonthly(){
-      const tbody = $("#monthlyTbody");
-      tbody.innerHTML = "";
-      monthly.forEach((r, idx)=>{
-        const fee = toMins(r.fee);
-        const acc = toMins(r.acumulacion);
-        const cons = toMins(r.consumido);
-        const saldo = fee + acc - cons;
-
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${r.mes}</td>
-          <td class="mono">${r.fee}</td>
-          <td class="mono">${r.acumulacion}</td>
-          <td class="mono">${r.consumido}</td>
-          <td class="${saldo<0?'neg':'pos'}">${fmtHhMm(saldo)}</td>
-          <td>
-            <button class="btn" style="padding:8px 10px" data-export-month="${idx}">
-              📄 Detalle
-            </button>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-
-      $$("button[data-export-month]").forEach(btn=>{
-        btn.addEventListener("click", ()=>{
-          const i = btn.getAttribute("data-export-month");
-          alert(`(Maqueta) Exportar detalle por ticket del mes #${Number(i)+1}.`);
-        });
-      });
-    }
-
-    // ---------- Tickets ----------
-    function matchesQuery(t, q){
-      if(!q) return true;
-      q = q.toLowerCase().trim();
-
-      // simple operators: estado:xxx, tag:xxx, responsable:xxx
-      const parts = q.split(/\s+/);
-      for(const p of parts){
-        if(p.startsWith("estado:")){
-          const v = p.replace("estado:","").toLowerCase();
-          if(!t.status.toLowerCase().includes(v)) return false;
-        } else if(p.startsWith("tag:")){
-          const v = p.replace("tag:","").toLowerCase();
-          if(!t.tags.some(x=>x.toLowerCase().includes(v))) return false;
-        } else if(p.startsWith("responsable:")){
-          const v = p.replace("responsable:","").toLowerCase();
-          if(!t.subtitle.toLowerCase().includes(v)) return false;
-        } else {
-          const hay = (t.id+" "+t.title+" "+t.subtitle+" "+t.status+" "+t.category).toLowerCase();
-          if(!hay.includes(p)) return false;
-        }
-      }
-      return true;
-    }
-
-    function renderTickets(){
-      const list = $("#ticketList");
-      list.innerHTML = "";
-
-      const q = state.query;
-      const filter = state.ticketFilter;
-
-      const filtered = tickets.filter(t=>{
-        if(filter !== "Todos" && t.status !== filter) return false;
-        return matchesQuery(t, q);
-      });
-
-      $("#ticketsInfo").textContent = `Mostrando: ${filter}${q?` · búsqueda activa`:``}`;
-
-      filtered.forEach(t=>{
-        const el = document.createElement("article");
-        el.className = "ticket";
-        el.innerHTML = `
-          <div class="ticketTop">
-            <div class="ticketTitle">
-              <strong>${t.id} · ${t.title}</strong>
-              <span>${t.subtitle}</span>
-            </div>
-            <span class="sla ${t.slaLevel}">
-              ${t.slaLevel==="danger"?"⛔":t.slaLevel==="warn"?"⚠️":"✅"} ${t.sla}
-            </span>
-          </div>
-          <div class="ticketMeta">
-            <span class="tag">📌 ${t.status}</span>
-            <span class="tag">🏷️ ${t.category}</span>
-            <span class="tag">⏱️ ${t.hours}</span>
-            <span class="tag">📅 ${t.created}</span>
-            <span class="tag">${t.waiting==="Sí"?"🕒 Espera cliente":"🚀 Activo"}</span>
-          </div>
-          <div class="ticketActions">
-            <button class="primary" data-open="${t.id}">Ver detalle</button>
-            <button data-approve="${t.id}">Aprobar horas</button>
-            <button data-close="${t.id}">Cerrar</button>
-          </div>
-          <div class="drawer" id="drawer-${t.id}">
-            <div class="row">
-              <div class="left">
-                <span class="tag">SLA: <b class="mono">${t.sla}</b></span>
-                <span class="tag">Etiquetas: <b class="mono">${t.tags.join(", ")}</b></span>
-              </div>
-              <span class="small">Bitácora: cambios de estado/horas/auditoría (demo)</span>
-            </div>
-            <div class="modalCard">
-              <strong>Checklist de cierre (demo)</strong>
-              <ul>
-                <li>Causa documentada</li>
-                <li>Solución aplicada</li>
-                <li>Horas imputadas y aprobadas</li>
-                <li>Prevención / notas</li>
-              </ul>
-            </div>
-          </div>
-        `;
-        list.appendChild(el);
-      });
-
-      // Drawer toggles
-      $$("[data-open]").forEach(b=>{
-        b.addEventListener("click", ()=>{
-          const id = b.getAttribute("data-open");
-          const d = $("#drawer-"+CSS.escape(id));
-          d.classList.toggle("open");
-        });
-      });
-
-      // Approve & Close demo
-      $$("[data-approve]").forEach(b=>{
-        b.addEventListener("click", ()=> alert("(Maqueta) Flujo de aprobación de horas: enviar al cliente, registrar auditoría, actualizar saldo."));
-      });
-      $$("[data-close]").forEach(b=>{
-        b.addEventListener("click", ()=> alert("(Maqueta) Cerrar ticket: checklist + auditoría + notificación."));
-      });
-
-      if(filtered.length === 0){
-        const empty = document.createElement("div");
-        empty.className = "modalCard";
-        empty.style.gridColumn = "1 / -1";
-        empty.innerHTML = `<strong>Sin resultados</strong><p class="small" style="margin:8px 0 0">Prueba quitar filtros o buscar por <span class="kbd">estado:abierto</span>.</p>`;
-        list.appendChild(empty);
-      }
-    }
-
-    // ---------- Donut drawing ----------
-    function drawDonut(){
-      const canvas = $("#donut");
-      const ctx = canvas.getContext("2d");
-      const total = donutData.reduce((a,b)=>a+b.value,0);
-      const cx = canvas.width/2, cy = canvas.height/2;
-      const r = 92;
-      const thickness = 26;
-
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-
-      let start = -Math.PI/2;
-      donutData.forEach(s=>{
-        const ang = (s.value/total) * Math.PI*2;
-        ctx.beginPath();
-        ctx.strokeStyle = s.color;
-        ctx.lineWidth = thickness;
-        ctx.lineCap = "round";
-        ctx.arc(cx, cy, r, start, start+ang);
-        ctx.stroke();
-        start += ang;
-      });
-
-      // inner text
-      ctx.fillStyle = getComputedStyle(document.body).getPropertyValue("--text");
-      ctx.font = "700 16px " + getComputedStyle(document.body).getPropertyValue("--sans");
-      ctx.textAlign = "center";
-      ctx.fillText("Tickets", cx, cy-6);
-
-      ctx.fillStyle = getComputedStyle(document.body).getPropertyValue("--muted");
-      ctx.font = "12px " + getComputedStyle(document.body).getPropertyValue("--sans");
-      ctx.fillText(total.toLocaleString("es-CL"), cx, cy+14);
-    }
-
-    // ---------- Modal drilldowns ----------
-    const modal = $("#kpiModal");
-    const modalTitle = $("#modalTitle");
-    const modalDesc = $("#modalDesc");
-    const modalGrid = $("#modalGrid");
-
-    const kpiContent = {
-      saldo: {
-        title: "Saldo disponible (mes) · Detalle y acciones",
-        desc: "Transparencia total del cálculo, alertas por umbral y acciones sugeridas para evitar sobregiro.",
-        cards: [
-          {t:"Cálculo", items:["Saldo = Fee + Acumulación - Consumido","Ver detalle por ticket y auditoría de cambios"]},
-          {t:"Acciones", items:["Solicitar aprobación de horas","Ajustar imputación / reclasificar tickets","Definir límites y alertas 70/90/100%"]},
-          {t:"Riesgos", items:["Sobregiro del fee mensual","Aumento de 'Espera cliente' afecta SLA y consumo"]},
-          {t:"Exportables", items:["PDF/Excel mensual","Detalle por ticket + horas + SLA"]}
-        ]
-      },
-      consumo: {
-        title: "Horas consumidas (mes) · Tendencias",
-        desc: "Velocidad de consumo, proyección y comparativas (mes actual vs anterior).",
-        cards: [
-          {t:"Velocidad", items:["Consumo/día (estimado)","Proyección de días restantes"]},
-          {t:"Comparativas", items:["Mes actual vs mes anterior","Tickets creados vs resueltos"]},
-          {t:"Control", items:["Aprobación de horas antes de imputar","Auditoría por usuario/fecha"]}
-        ]
-      },
-      sla: {
-        title: "SLA / Cumplimiento · Diagnóstico",
-        desc: "SLA visible por ticket, vencimientos y recomendaciones para mejorar el cumplimiento.",
-        cards: [
-          {t:"Métricas", items:["Primera respuesta promedio","Resolución promedio","% SLA vencido"]},
-          {t:"Recomendaciones", items:["Priorizar severidad alta","Reducir tickets en 'Espera Cliente'","Automatizar notificaciones"]},
-          {t:"Operación", items:["Estados con reglas + SLA por estado","Etiquetas/categorías para reportes"]}
-        ]
-      },
-      abiertos: {
-        title: "Backlog actual · Accionable",
-        desc: "Backlog segmentado por estado + drill-down instantáneo para gestión diaria.",
-        cards: [
-          {t:"Segmentación", items:["Abiertos / Bloqueados / Espera cliente","Severidad y categoría"]},
-          {t:"Gestión", items:["Asignación y prioridades","Macrosc/plantillas de respuesta","Checklist de cierre"]},
-          {t:"Productividad", items:["Resoluciones por responsable","Tendencia semanal","Top causas recurrentes"]}
-        ]
-      }
-    };
-
-    function openKpiModal(key){
-      const c = kpiContent[key];
-      if(!c) return;
-      modalTitle.textContent = c.title;
-      modalDesc.textContent = c.desc;
-      modalGrid.innerHTML = "";
-      c.cards.forEach(card=>{
-        const div = document.createElement("div");
-        div.className = "modalCard";
-        div.innerHTML = `<strong>${card.t}</strong><ul>${card.items.map(i=>`<li>${i}</li>`).join("")}</ul>`;
-        modalGrid.appendChild(div);
-      });
-      modal.showModal();
-    }
-
-    // ---------- Events ----------
-    $("#toggleTheme").addEventListener("click", ()=>{
-      state.theme = (state.theme === "dark") ? "light" : "dark";
-      app.setAttribute("data-theme", state.theme);
-      saveState();
-      drawDonut();
-    });
-
-    $("#applyFilters").addEventListener("click", ()=>{
-      state.project = $("#project").value;
-      state.year = $("#year").value;
-      state.month = $("#month").value;
-      state.query = $("#q").value;
-      saveState();
-      renderTickets();
-    });
-
-    $("#project").addEventListener("change", ()=>{
-      state.project = $("#project").value;
-      saveState();
-    });
-    $("#year").addEventListener("change", ()=>{
-      state.year = $("#year").value; saveState();
-    });
-    $("#month").addEventListener("change", ()=>{
-      state.month = $("#month").value; saveState();
-    });
-
-    $("#q").addEventListener("keydown", (e)=>{
-      if(e.key === "Enter"){
-        state.query = $("#q").value;
-        saveState();
-        renderTickets();
-      }
-    });
-
-    $("#clearTicketFilter").addEventListener("click", ()=>{
-      state.ticketFilter = "Todos";
-      saveState();
-      renderTickets();
-    });
-
-    $("#exportBtn").addEventListener("click", ()=>{
-      alert("(Maqueta) Exportar reporte ejecutivo: KPIs + tabla mensual + detalle por ticket.");
-    });
-
-    $("#createTicketBtn").addEventListener("click", ()=>{
-      alert("(Maqueta) Crear ticket: formulario con severidad/impacto/adjuntos + validaciones.");
-    });
-
-    $("#logoutBtn").addEventListener("click", ()=>{
-      alert("(Maqueta) Cerrar sesión.");
-    });
-
-    // Legend filter buttons
-    $$(".legendRow button").forEach(b=>{
-      b.addEventListener("click", ()=>{
-        state.ticketFilter = b.getAttribute("data-filter");
-        saveState();
-        renderTickets();
-      });
-    });
-
-    // KPI click opens modal
-    $$("[data-kpi]").forEach(card=>{
-      const key = card.getAttribute("data-kpi");
-      card.addEventListener("click", ()=> openKpiModal(key));
-      card.addEventListener("keydown", (e)=>{
-        if(e.key === "Enter" || e.key === " "){
-          e.preventDefault();
-          openKpiModal(key);
-        }
-      });
-    });
-    $("#closeModal").addEventListener("click", ()=> modal.close());
-    modal.addEventListener("click", (e)=>{
-      const rect = modal.getBoundingClientRect();
-      const inDialog = rect.top <= e.clientY && e.clientY <= rect.bottom &&
-                       rect.left <= e.clientX && e.clientX <= rect.right;
-      if(!inDialog) modal.close();
-    });
-
-    // Shortcuts
-    document.addEventListener("keydown", (e)=>{
-      const isCmd = e.metaKey || e.ctrlKey;
-      if(e.key === "/" && document.activeElement !== $("#q")){
-        e.preventDefault();
-        $("#q").focus();
-      }
-      if(isCmd && e.key.toLowerCase() === "d"){
-        e.preventDefault();
-        alert("(Maqueta) Ir a Dashboard.");
-      }
-      if(isCmd && e.key.toLowerCase() === "k"){
-        e.preventDefault();
-        alert("(Maqueta) Command palette (demo).");
-      }
-    });
-
-    // ---------- First render ----------
-    updateKpis();
-    renderMonthly();
-    renderTickets();
-    // counts
-    $("#cResolved").textContent = donutData[0].value;
-    $("#cClosed").textContent = donutData[1].value;
-    $("#cWait").textContent = donutData[2].value;
-    $("#cOpen").textContent = donutData[3].value;
-    drawDonut();
-  </script>
+    </div>
+  </section>
 </body>
 </html>
