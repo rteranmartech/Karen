@@ -290,6 +290,7 @@
       font-weight: 700;
       white-space: nowrap;
     }
+
     .profile-grid{
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -299,6 +300,17 @@
     @media (max-width: 520px){
       .profile-grid{ grid-template-columns: 1fr; }
     }
+
+    /* ✅ En progreso: forzar 2x2 también en mobile */
+    .profile-grid.prog-grid{
+      grid-template-columns: 1fr 1fr;
+    }
+    @media (max-width: 520px){
+      .profile-grid.prog-grid{
+        grid-template-columns: 1fr 1fr; /* no colapsa */
+      }
+    }
+
     .kv{
       background: rgba(255,255,255,.08);
       border: 1px solid rgba(255,255,255,.14);
@@ -319,6 +331,97 @@
       min-height: 18px;
       white-space: pre-line;
       line-height: 1.35;
+    }
+
+    /* ✅ Mini gráfico progreso */
+    .chart{
+      margin-top: 10px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.14);
+      padding: 10px 10px 8px;
+    }
+    .chart-top{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .chart-title{
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.72);
+      font-weight: 800;
+    }
+    .chart-legend{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      font-size: 11px;
+      color: rgba(255,255,255,.72);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .dot{
+      width: 8px; height: 8px; border-radius: 999px;
+      display:inline-block;
+      background: rgba(255,255,255,.75);
+      box-shadow: 0 0 0 3px rgba(255,255,255,.10);
+    }
+    .dot.peso{ background: rgba(255,255,255,.92); }
+    .dot.pct{ background: rgba(39,174,96,.95); box-shadow: 0 0 0 3px rgba(39,174,96,.14); }
+
+    .bars{
+      display:flex;
+      align-items:flex-end;
+      justify-content: space-between;
+      gap: 8px;
+      height: 86px;
+      padding: 0 2px;
+    }
+    .bar-col{
+      flex: 1 1 0;
+      min-width: 0;
+      display:flex;
+      flex-direction: column;
+      align-items:center;
+      gap: 6px;
+    }
+    .bar-pair{
+      width: 100%;
+      display:flex;
+      align-items:flex-end;
+      justify-content:center;
+      gap: 4px;
+      height: 66px;
+    }
+    .bar{
+      width: 46%;
+      border-radius: 10px;
+      background: rgba(255,255,255,.22);
+      border: 1px solid rgba(255,255,255,.18);
+      height: calc(var(--h, 0) * 1%);
+      min-height: 10px;
+      transition: height .2s ease;
+    }
+    .bar.peso{
+      background: rgba(255,255,255,.28);
+    }
+    .bar.pct{
+      background: rgba(39,174,96,.26);
+      border-color: rgba(39,174,96,.30);
+    }
+    .bar-label{
+      font-size: 10.5px;
+      color: rgba(255,255,255,.72);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
     }
 
     .section-head{
@@ -496,6 +599,8 @@
       .card{ padding: 14px; }
       .card h3{ letter-spacing: .12em; }
       .mini-tabs{ gap: 8px; }
+      .bars{ height: 82px; }
+      .bar-pair{ height: 62px; }
     }
 
     /* Modal (Entrenamiento Próximamente) */
@@ -595,7 +700,6 @@
           ANIFIT
         </a>
 
-        <!-- Cerrar sesión arriba a la derecha (solo post-login) -->
         <div class="nav-actions">
           <button id="logout-top" class="btn btn-ghost" type="button" aria-label="Cerrar sesión" style="display:none;">
             ⎋ Cerrar sesión
@@ -619,14 +723,13 @@
               <p>Información general sobre tu plan de alimentación.</p>
             </div>
 
-            <!-- CARD ADJUNTA: aquí alterna Perfil vs Progreso -->
             <aside class="profile" aria-label="Resumen del alumno" id="perfil-card">
               <div class="profile-title">
                 <span>Resumen del alumno</span>
                 <span class="tag">Personalizado</span>
               </div>
 
-              <!-- Vista: Perfil -->
+              <!-- Perfil -->
               <div id="perfil-view">
                 <div class="profile-grid">
                   <div class="kv">
@@ -648,16 +751,90 @@
                 </div>
               </div>
 
-              <!-- Vista: Progreso (mismo estilo dentro de la card) -->
+              <!-- Progreso -->
               <div id="progreso-view" style="display:none;">
-                <div class="kv" style="grid-column: 1 / -1;">
-                  <div class="k">Mi Progreso</div>
-                  <div class="v">Próximamente 📈
-Estamos preparando tu panel de progreso con métricas y avances.</div>
+                <!-- ✅ 2x2 real (siempre), para que NO se alargue la tarjeta -->
+                <div class="profile-grid prog-grid">
+                  <div class="kv">
+                    <div class="k">Peso Actual</div>
+                    <div class="v" id="prog-peso-actual">0 kg</div>
+                  </div>
+                  <div class="kv">
+                    <div class="k">Peso Promedio</div>
+                    <div class="v" id="prog-peso-promedio">0 kg</div>
+                  </div>
+                  <div class="kv">
+                    <div class="k">Peso Ideal</div>
+                    <div class="v" id="prog-peso-ideal">0 kg</div>
+                  </div>
+                  <div class="kv">
+                    <div class="k">Avance</div>
+                    <div class="v" id="prog-avance">0%</div>
+                  </div>
+
+                  <div class="kv" style="grid-column: 1 / -1;">
+                    <div class="k">Resumen Mensual</div>
+
+                    <div class="chart" aria-label="Gráfico de avance mensual">
+                      <div class="chart-top">
+                        <div class="chart-title">Barras de avance</div>
+                        <div class="chart-legend">
+                          <span><span class="dot peso"></span> Peso</span>
+                          <span><span class="dot pct"></span> %</span>
+                        </div>
+                      </div>
+
+                      <!-- Valores ficticios -->
+                      <div class="bars">
+                        <div class="bar-col">
+                          <div class="bar-pair">
+                            <div class="bar peso" style="--h: 35"></div>
+                            <div class="bar pct"  style="--h: 22"></div>
+                          </div>
+                          <div class="bar-label">Ene</div>
+                        </div>
+                        <div class="bar-col">
+                          <div class="bar-pair">
+                            <div class="bar peso" style="--h: 48"></div>
+                            <div class="bar pct"  style="--h: 30"></div>
+                          </div>
+                          <div class="bar-label">Feb</div>
+                        </div>
+                        <div class="bar-col">
+                          <div class="bar-pair">
+                            <div class="bar peso" style="--h: 28"></div>
+                            <div class="bar pct"  style="--h: 18"></div>
+                          </div>
+                          <div class="bar-label">Mar</div>
+                        </div>
+                        <div class="bar-col">
+                          <div class="bar-pair">
+                            <div class="bar peso" style="--h: 56"></div>
+                            <div class="bar pct"  style="--h: 40"></div>
+                          </div>
+                          <div class="bar-label">Abr</div>
+                        </div>
+                        <div class="bar-col">
+                          <div class="bar-pair">
+                            <div class="bar peso" style="--h: 42"></div>
+                            <div class="bar pct"  style="--h: 34"></div>
+                          </div>
+                          <div class="bar-label">May</div>
+                        </div>
+                        <div class="bar-col">
+                          <div class="bar-pair">
+                            <div class="bar peso" style="--h: 62"></div>
+                            <div class="bar pct"  style="--h: 46"></div>
+                          </div>
+                          <div class="bar-label">Jun</div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
                 </div>
               </div>
 
-              <!-- Botones Perfil/Progreso (uno al lado del otro) -->
               <div class="mini-tabs" role="tablist" aria-label="Vistas del perfil">
                 <button id="btn-perfil" class="mini-btn active" type="button" aria-selected="true">👤 Mi Perfil</button>
                 <button id="btn-progreso" class="mini-btn" type="button" aria-selected="false">📈 Mi Progreso</button>
@@ -666,7 +843,6 @@ Estamos preparando tu panel de progreso con métricas y avances.</div>
           </div>
         </section>
 
-        <!-- ON/OFF Alimentación / Entrenamiento centrado encima del plan -->
         <div class="center-tabs" id="main-tabs" style="display:none;">
           <div class="segmented" role="tablist" aria-label="Secciones">
             <button class="seg-btn active" id="tab-alimentacion" type="button" aria-selected="true">
@@ -678,7 +854,6 @@ Estamos preparando tu panel de progreso con métricas y avances.</div>
           </div>
         </div>
 
-        <!-- Título abajo -->
         <div class="section-head" id="section-title">
           <h2 class="attn">Tu dieta personalizada</h2>
         </div>
@@ -695,7 +870,6 @@ Estamos preparando tu panel de progreso con métricas y avances.</div>
     </footer>
   </div>
 
-  <!-- Modal Entrenamiento "Próximamente" -->
   <div class="modal" id="modal-prox" aria-hidden="true" role="dialog" aria-modal="true">
     <div class="modal-backdrop" data-close="true"></div>
     <div class="modal-card" role="document" aria-label="Próximamente">
@@ -722,7 +896,7 @@ Estamos preparando tu panel de progreso con métricas y avances.</div>
 
     let __PLAN_CACHE__ = [];
     let __ALUMNO_CACHE__ = null;
-    let __PROFILE_TAB__ = 'perfil'; // 'perfil' | 'progreso'
+    let __PROFILE_TAB__ = 'perfil';
 
     function showLogin(message) {
       document.getElementById('app-content').style.display = 'none';
@@ -832,7 +1006,6 @@ Estamos preparando tu panel de progreso con métricas y avances.</div>
         perfilView.style.display = 'none';
         progresoView.style.display = 'block';
 
-        // En progreso: ocultar el plan y el título
         sectionTitle.style.display = 'none';
         document.getElementById('plan-nutricional').innerHTML = '';
       } else {
@@ -841,7 +1014,6 @@ Estamos preparando tu panel de progreso con métricas y avances.</div>
         perfilView.style.display = 'block';
         progresoView.style.display = 'none';
 
-        // En perfil: mostrar título y dieta
         sectionTitle.style.display = 'flex';
         renderDiet(__PLAN_CACHE__);
       }
@@ -879,7 +1051,6 @@ Estamos preparando tu panel de progreso con métricas y avances.</div>
       const modal = document.getElementById('modal-prox');
       modal.classList.remove('show');
       modal.setAttribute('aria-hidden', 'true');
-      // Volver visualmente a Alimentación
       setMainTab('alimentacion');
     }
 
@@ -889,16 +1060,10 @@ Estamos preparando tu panel de progreso con métricas y avances.</div>
 
       tabAli.onclick = () => {
         setMainTab('alimentacion');
-
-        // ✅ SIEMPRE al click en Alimentación:
-        // - Mostrar el título
-        // - Mostrar las cards del plan desde el cache (mismo data del Sheets)
         const sectionTitle = document.getElementById('section-title');
         sectionTitle.style.display = 'flex';
         sectionTitle.innerHTML = '<h2 class="attn">Tu dieta personalizada</h2>';
-
         renderDiet(__PLAN_CACHE__);
-
         window.scrollTo({ top: 0, behavior: 'smooth' });
       };
 
@@ -952,7 +1117,6 @@ Estamos preparando tu panel de progreso con métricas y avances.</div>
         document.getElementById('login-screen').style.display = 'none';
         document.getElementById('app-content').style.display = 'block';
 
-        // Mostrar logout arriba derecha + tabs encima del plan
         document.getElementById('logout-top').style.display = 'inline-flex';
         document.getElementById('main-tabs').style.display = 'flex';
 
@@ -985,9 +1149,8 @@ Estamos preparando tu panel de progreso con métricas y avances.</div>
 
         document.title = alumno.nombre ? `Plan Nutricional - ${alumno.nombre}` : 'Plan Nutricional';
 
-        // Defaults
         setMainTab('alimentacion');
-        setProfileTab('perfil'); // Esto también renderiza la dieta abajo
+        setProfileTab('perfil');
 
       } catch (e) {
         showLogin('Error al conectar con Google Sheets.');
