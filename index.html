@@ -41,6 +41,13 @@
     * { box-sizing: border-box; }
     html, body { height: 100%; }
 
+    /* Prevent iOS input zoom: enforce 16px on form controls */
+    input, select, textarea {
+      font-size: 16px !important;
+    }
+
+    /* Smoothly restore view when changing screens */
+    html { scroll-behavior: smooth; }
     body{
       margin: 0;
       color: var(--text);
@@ -55,7 +62,6 @@
     a{ color: inherit; text-decoration: none; }
     .wrap{ min-height: 100%; display: flex; flex-direction: column; }
 
-    /* App-like topbar */
     .topbar{
       position: sticky;
       top: 0;
@@ -136,7 +142,6 @@
     }
     .btn-primary:hover{ box-shadow: 0 14px 30px rgba(17,24,39,.22); }
 
-    /* Segmented control look */
     .segmented{
       display: inline-flex;
       align-items: center;
@@ -164,9 +169,7 @@
     }
     .segmented .seg-btn:hover{ transform: translateY(-1px); }
     .segmented .seg-btn:active{ transform: translateY(0px); }
-    .segmented .seg-btn.active{
-      background: rgba(255,255,255,.14);
-    }
+    .segmented .seg-btn.active{ background: rgba(255,255,255,.14); }
     .segmented .seg-btn.disabled{
       opacity: .45;
       cursor: not-allowed;
@@ -181,7 +184,6 @@
       padding: 18px var(--pad-x) 46px;
     }
 
-    /* Hero */
     .hero{
       margin-top: 8px;
       border-radius: var(--radius-xl);
@@ -227,7 +229,6 @@
       max-width: 60ch;
     }
 
-    /* Profile card */
     .profile{
       background: rgba(255,255,255,.10);
       border: 1px solid rgba(255,255,255,.16);
@@ -287,7 +288,6 @@
       min-height: 18px;
     }
 
-    /* Section heading */
     .section-head{
       display: flex;
       align-items: flex-end;
@@ -316,7 +316,6 @@
       .cards{ grid-template-columns: 1fr 1fr; }
     }
 
-    /* Diet cards */
     .card{
       position: relative;
       border-radius: var(--radius-lg);
@@ -365,7 +364,6 @@
       line-height: 1.6;
     }
 
-    /* Login */
     .login-wrap{
       display: grid;
       place-items: center;
@@ -401,7 +399,6 @@
       border-radius: 14px;
       border: 1px solid rgba(11,15,25,.12);
       background: rgba(255,255,255,.95);
-      font-size: 14px;
       outline: none;
       transition: box-shadow .12s ease, border-color .12s ease;
     }
@@ -410,7 +407,6 @@
       box-shadow: 0 0 0 4px rgba(39,174,96,.14);
     }
 
-    /* Toast-like loader in button */
     .spinner{
       width: 14px;
       height: 14px;
@@ -424,7 +420,6 @@
       to{ transform: rotate(360deg); }
     }
 
-    /* Profile logout (app-like) */
     .logout-row{
       display:flex;
       justify-content:center;
@@ -456,7 +451,6 @@
     }
     .footer strong{ color: rgba(11,15,25,.78); }
 
-    /* Mobile polish */
     @media (max-width: 480px){
       .topbar-inner{ padding: 10px var(--pad-x); }
       .brand{ letter-spacing: .10em; }
@@ -482,15 +476,11 @@
           ANIFIT
         </a>
 
-        <!-- Botones tipo app: Alimentación activo / Entrenamiento desactivado -->
         <div class="nav-actions">
           <div class="segmented" role="tablist" aria-label="Secciones">
-            <!-- Alimentación: NO cambia funcionamiento, solo visual; mantiene en la misma vista -->
             <button class="seg-btn active" type="button" aria-selected="true">
               🍽️ Alimentación
             </button>
-
-            <!-- Entrenamiento: visible pero desactivado -->
             <button class="seg-btn disabled" type="button" aria-disabled="true">
               💪 Entrenamiento
             </button>
@@ -500,18 +490,12 @@
     </header>
 
     <main class="main">
-      <!-- =========================
-           PANTALLA LOGIN (solo esto al inicio)
-      ========================== -->
       <section id="login-screen" class="section" aria-label="Acceso a mis Planes" style="margin-top: 10px;">
         <div class="login-wrap">
           <div class="cards login-card" id="login-container"></div>
         </div>
       </section>
 
-      <!-- =========================
-           CONTENIDO (oculto hasta login OK)
-      ========================== -->
       <div id="app-content" style="display:none;">
         <section class="hero" aria-label="Encabezado del plan nutricional">
           <div class="hero-inner">
@@ -547,7 +531,6 @@
                 </div>
               </div>
 
-              <!-- Cerrar sesión (solo en esta sección) -->
               <div class="logout-row">
                 <button id="logout-btn" class="btn btn-ghost" type="button" aria-label="Cerrar sesión">
                   ⎋ Cerrar sesión
@@ -577,21 +560,13 @@
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 
-  <!-- =========================================================
-       NO CAMBIÉ el funcionamiento:
-       - Login sigue igual (pantalla 1)
-       - Validación contra Apps Script sigue igual
-       - Plan se pinta igual
-  ========================================================== -->
   <script>
     const URL_SCRIPT = 'https://script.google.com/macros/s/AKfycbxpAUI0Ffg5Zas-4f1nieUhu_CsprdsIjcGchoxX1c3D_x1WdV9GKZEaSgzuF9VgxIA/exec';
 
     function showLogin(message) {
-      // Oculta todo el contenido
       document.getElementById('app-content').style.display = 'none';
       document.getElementById('login-screen').style.display = 'block';
 
-      // Limpia UI (por si venía de sesión previa)
       document.title = 'Plan Nutricional';
       const lc = document.getElementById('login-container');
       lc.innerHTML = '';
@@ -634,14 +609,12 @@
           return;
         }
 
-        // Estado "ingresando..."
         btn.disabled = true;
         btn.style.opacity = "0.78";
         btn.style.cursor = "not-allowed";
         btn.innerHTML = `<span class="spinner" aria-hidden="true"></span> Ingresando…`;
 
         await cargarPlan(user);
-        // Si hay error, showLogin() re-renderiza el botón.
       };
 
       input.addEventListener('keydown', (ev) => {
@@ -650,7 +623,6 @@
     }
 
     function logout() {
-      // Limpia datos visuales
       document.getElementById('alumno-nombre').textContent = '';
       document.getElementById('alumno-peso').textContent = '';
       document.getElementById('alumno-objetivo').textContent = '';
@@ -658,12 +630,18 @@
       const contenedor = document.getElementById('plan-nutricional');
       if (contenedor) contenedor.innerHTML = '';
 
-      // Vuelve al login
+      // Ensure any iOS zoom/focus is released
+      try { document.activeElement && document.activeElement.blur && document.activeElement.blur(); } catch(e) {}
+
       showLogin('Sesión cerrada. Ingresa tu usuario para ver tu plan.');
+      window.scrollTo({ top: 0, behavior: 'instant' });
     }
 
     async function cargarPlan(user) {
       try {
+        // Release focus to avoid keeping iOS zoom state
+        try { document.activeElement && document.activeElement.blur && document.activeElement.blur(); } catch(e) {}
+
         const url = URL_SCRIPT + '?t=' + Date.now() + '&user=' + encodeURIComponent(user);
         const res = await fetch(url);
         const datos = await res.json();
@@ -673,15 +651,15 @@
           return;
         }
 
-        // Login OK -> mostrar app
         document.getElementById('login-screen').style.display = 'none';
         document.getElementById('app-content').style.display = 'block';
 
-        // Conectar botón "Cerrar sesión"
+        // Reset scroll to top to avoid "stuck zoomed" feel on mobile
+        window.scrollTo({ top: 0, behavior: 'instant' });
+
         const logoutBtn = document.getElementById('logout-btn');
         if (logoutBtn) logoutBtn.onclick = logout;
 
-        // Estado "cargando plan..."
         const contenedor = document.getElementById('plan-nutricional');
         contenedor.innerHTML = `
           <div class="card">
@@ -717,7 +695,6 @@
       }
     }
 
-    // Siempre iniciar en pantalla login (no auto-mostrar nada)
     showLogin();
   </script>
 </body>
