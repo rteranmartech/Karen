@@ -13,8 +13,6 @@
       --muted: #5b6474;
 
       --border: rgba(11, 15, 25, .10);
-      --border-2: rgba(11, 15, 25, .14);
-
       --shadow: 0 14px 40px rgba(11, 15, 25, .10);
       --shadow-soft: 0 10px 24px rgba(11, 15, 25, .08);
 
@@ -138,7 +136,14 @@
     }
     .btn-primary:hover{ box-shadow: 0 14px 30px rgba(17,24,39,.22); }
 
-    /* Segmented tabs (only after login) */
+    .btn-ghost{
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(11,15,25,.12);
+      color: rgba(11,15,25,.86);
+      box-shadow: 0 6px 14px rgba(11,15,25,.06);
+    }
+
+    /* Segmented (reutilizable) */
     .segmented{
       display: inline-flex;
       align-items: center;
@@ -167,6 +172,40 @@
     .segmented .seg-btn:hover{ transform: translateY(-1px); }
     .segmented .seg-btn:active{ transform: translateY(0px); }
     .segmented .seg-btn.active{ background: rgba(255,255,255,.14); }
+
+    /* Perfil tabs (dentro de la card) */
+    .mini-tabs{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      margin-top: 12px;
+    }
+    .mini-tabs .mini-btn{
+      flex: 1 1 auto;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.08);
+      color: rgba(255,255,255,.92);
+      padding: 10px 12px;
+      border-radius: 14px;
+      font-weight: 800;
+      font-size: 13px;
+      cursor: pointer;
+      transition: transform .12s ease, box-shadow .12s ease, background .12s ease, opacity .12s ease;
+      box-shadow: 0 10px 18px rgba(11,15,25,.14);
+      user-select: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+    .mini-tabs .mini-btn:hover{ transform: translateY(-1px); box-shadow: 0 14px 24px rgba(11,15,25,.18); }
+    .mini-tabs .mini-btn:active{ transform: translateY(0); }
+    .mini-tabs .mini-btn.active{
+      background: rgba(39,174,96,.18);
+      border-color: rgba(39,174,96,.30);
+    }
 
     .main{
       flex: 1;
@@ -255,6 +294,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
+      margin-top: 2px;
     }
     @media (max-width: 520px){
       .profile-grid{ grid-template-columns: 1fr; }
@@ -277,6 +317,8 @@
       font-weight: 800;
       color: rgba(255,255,255,.96);
       min-height: 18px;
+      white-space: pre-line;
+      line-height: 1.35;
     }
 
     .section-head{
@@ -355,6 +397,7 @@
       line-height: 1.6;
     }
 
+    /* Login */
     .login-wrap{
       display: grid;
       place-items: center;
@@ -409,30 +452,12 @@
     }
     @keyframes spin{ to{ transform: rotate(360deg); } }
 
-    /* 3-buttons row under profile */
-    .profile-actions{
-      display:flex;
-      align-items:center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-top: 12px;
-      flex-wrap: wrap;
+    /* Tabs centrados encima del plan */
+    .center-tabs{
+      margin-top: 16px;
+      display: flex;
+      justify-content: center;
     }
-    .profile-actions .btn{
-      flex: 1 1 160px;
-    }
-
-    .btn-ghost{
-      background: rgba(255,255,255,.12);
-      border: 1px solid rgba(255,255,255,.18);
-      color: rgba(255,255,255,.92);
-      box-shadow: none;
-    }
-    .btn-ghost:hover{
-      transform: translateY(-1px);
-      box-shadow: 0 10px 18px rgba(11,15,25,.18);
-    }
-    .btn-ghost:active{ transform: translateY(0px); }
 
     .footer{
       max-width: var(--max);
@@ -455,8 +480,88 @@
       .hero-inner{ padding: 18px 16px; }
       .card{ padding: 14px; }
       .card h3{ letter-spacing: .12em; }
-      .profile-actions{ gap: 8px; }
-      .profile-actions .btn{ flex: 1 1 100%; } /* stack in mobile */
+      .mini-tabs{ gap: 8px; }
+    }
+
+    /* Modal (Entrenamiento Próximamente) */
+    .modal{
+      position: fixed;
+      inset: 0;
+      display: none;
+      z-index: 60;
+      padding: 18px;
+    }
+    .modal.show{ display: grid; place-items: center; }
+    .modal-backdrop{
+      position: absolute;
+      inset: 0;
+      background: rgba(11,15,25,.55);
+      backdrop-filter: blur(6px);
+    }
+    .modal-card{
+      position: relative;
+      width: min(520px, calc(100% - 24px));
+      border-radius: 20px;
+      background: rgba(255,255,255,.96);
+      border: 1px solid rgba(11,15,25,.10);
+      box-shadow: 0 24px 60px rgba(11,15,25,.22);
+      overflow: hidden;
+      animation: pop .14s ease-out;
+    }
+    @keyframes pop{
+      from{ transform: translateY(8px) scale(.98); opacity: .6; }
+      to{ transform: translateY(0) scale(1); opacity: 1; }
+    }
+    .modal-card::before{
+      content:"";
+      position:absolute;
+      inset: 0 auto 0 0;
+      width: 8px;
+      background: linear-gradient(180deg, rgba(39,174,96,1), rgba(39,174,96,.55));
+    }
+    .modal-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px 16px 10px 24px;
+    }
+    .modal-head h3{
+      margin: 0;
+      font-size: 13px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(11,15,25,.80);
+    }
+    .modal-close{
+      appearance:none;
+      border: 1px solid rgba(11,15,25,.12);
+      background: rgba(255,255,255,.9);
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      display:grid;
+      place-items:center;
+      cursor: pointer;
+      box-shadow: 0 10px 18px rgba(11,15,25,.10);
+      transition: transform .12s ease, box-shadow .12s ease;
+      font-weight: 900;
+      color: rgba(11,15,25,.85);
+    }
+    .modal-close:hover{ transform: translateY(-1px); box-shadow: 0 14px 24px rgba(11,15,25,.14); }
+    .modal-close:active{ transform: translateY(0); }
+    .modal-body{
+      padding: 0 16px 18px 24px;
+      color: rgba(11,15,25,.84);
+      line-height: 1.6;
+      font-size: 15px;
+    }
+    .modal-body strong{ color: rgba(11,15,25,.92); }
+    .modal-actions{
+      padding: 0 16px 18px 24px;
+      display:flex;
+      justify-content:flex-end;
+      gap: 10px;
     }
 
     :focus-visible{ outline: none; }
@@ -475,16 +580,11 @@
           ANIFIT
         </a>
 
-        <!-- Tabs: ocultos en login, visibles después -->
-        <div class="nav-actions" id="nav-tabs" style="display:none;">
-          <div class="segmented" role="tablist" aria-label="Secciones">
-            <button class="seg-btn active" id="tab-alimentacion" type="button" aria-selected="true">
-              🍽️ Alimentación
-            </button>
-            <button class="seg-btn" id="tab-entrenamiento" type="button" aria-selected="false">
-              💪 Entrenamiento
-            </button>
-          </div>
+        <!-- Cerrar sesión arriba a la derecha (solo post-login) -->
+        <div class="nav-actions">
+          <button id="logout-top" class="btn btn-ghost" type="button" aria-label="Cerrar sesión" style="display:none;">
+            ⎋ Cerrar sesión
+          </button>
         </div>
       </div>
     </header>
@@ -501,58 +601,74 @@
           <div class="hero-inner">
             <div>
               <h1>Plan de Alimentación</h1>
-              <p>
-                Información general sobre tu plan de alimentación.
-              </p>
+              <p>Información general sobre tu plan de alimentación.</p>
             </div>
 
+            <!-- CARD ADJUNTA: aquí alterna Perfil vs Progreso -->
             <aside class="profile" aria-label="Resumen del alumno" id="perfil-card">
               <div class="profile-title">
                 <span>Resumen del alumno</span>
                 <span class="tag">Personalizado</span>
               </div>
 
-              <div class="profile-grid">
-                <div class="kv">
-                  <div class="k">Alumno</div>
-                  <div class="v" id="alumno-nombre"></div>
-                </div>
-                <div class="kv">
-                  <div class="k">Peso</div>
-                  <div class="v" id="alumno-peso"></div>
-                </div>
-                <div class="kv" style="grid-column: 1 / -1;">
-                  <div class="k">Objetivo</div>
-                  <div class="v" id="alumno-objetivo"></div>
-                </div>
-                <div class="kv" style="grid-column: 1 / -1;">
-                  <div class="k">Fecha de Ingreso</div>
-                  <div class="v" id="alumno-fecha"></div>
+              <!-- Vista: Perfil -->
+              <div id="perfil-view">
+                <div class="profile-grid">
+                  <div class="kv">
+                    <div class="k">Alumno</div>
+                    <div class="v" id="alumno-nombre"></div>
+                  </div>
+                  <div class="kv">
+                    <div class="k">Peso</div>
+                    <div class="v" id="alumno-peso"></div>
+                  </div>
+                  <div class="kv" style="grid-column: 1 / -1;">
+                    <div class="k">Objetivo</div>
+                    <div class="v" id="alumno-objetivo"></div>
+                  </div>
+                  <div class="kv" style="grid-column: 1 / -1;">
+                    <div class="k">Fecha de Ingreso</div>
+                    <div class="v" id="alumno-fecha"></div>
+                  </div>
                 </div>
               </div>
 
-              <!-- BOTONES: Perfil / Progreso / Cerrar sesión -->
-              <div class="profile-actions">
-                <button id="btn-perfil" class="btn btn-ghost" type="button" aria-label="Mi perfil">
-                  👤 Mi Perfil
-                </button>
-                <button id="btn-progreso" class="btn btn-ghost" type="button" aria-label="Mi progreso">
-                  📈 Mi Progreso
-                </button>
-                <button id="logout-btn" class="btn btn-ghost" type="button" aria-label="Cerrar sesión">
-                  ⎋ Cerrar sesión
-                </button>
+              <!-- Vista: Progreso (mismo estilo dentro de la card) -->
+              <div id="progreso-view" style="display:none;">
+                <div class="kv" style="grid-column: 1 / -1;">
+                  <div class="k">Mi Progreso</div>
+                  <div class="v">Próximamente 📈
+Estamos preparando tu panel de progreso con métricas y avances.</div>
+                </div>
+              </div>
+
+              <!-- Botones Perfil/Progreso (uno al lado del otro) -->
+              <div class="mini-tabs" role="tablist" aria-label="Vistas del perfil">
+                <button id="btn-perfil" class="mini-btn active" type="button" aria-selected="true">👤 Mi Perfil</button>
+                <button id="btn-progreso" class="mini-btn" type="button" aria-selected="false">📈 Mi Progreso</button>
               </div>
             </aside>
           </div>
         </section>
 
+        <!-- ON/OFF Alimentación / Entrenamiento centrado encima del plan -->
+        <div class="center-tabs" id="main-tabs" style="display:none;">
+          <div class="segmented" role="tablist" aria-label="Secciones">
+            <button class="seg-btn active" id="tab-alimentacion" type="button" aria-selected="true">
+              🍽️ Alimentación
+            </button>
+            <button class="seg-btn" id="tab-entrenamiento" type="button" aria-selected="false">
+              💪 Entrenamiento
+            </button>
+          </div>
+        </div>
+
+        <!-- Título abajo: en Progreso se mantiene solo el título (sin cards debajo) -->
         <div class="section-head" id="section-title">
           <h2>Tu dieta personalizada</h2>
         </div>
 
         <section class="section">
-          <!-- Este contenedor cambia entre "dieta" y "progreso" -->
           <div class="cards" id="plan-nutricional"></div>
         </section>
       </div>
@@ -564,6 +680,24 @@
     </footer>
   </div>
 
+  <!-- Modal Entrenamiento "Próximamente" -->
+  <div class="modal" id="modal-prox" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" data-close="true"></div>
+    <div class="modal-card" role="document" aria-label="Próximamente">
+      <div class="modal-head">
+        <h3 id="modal-title">Entrenamiento</h3>
+        <button class="modal-close" id="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body" id="modal-body">
+        <strong>Próximamente</strong> 💪<br>
+        Estamos preparando tu sección de entrenamiento.
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" type="button" id="modal-ok">Entendido</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
@@ -571,16 +705,16 @@
   <script>
     const URL_SCRIPT = 'https://script.google.com/macros/s/AKfycbxpAUI0Ffg5Zas-4f1nieUhu_CsprdsIjcGchoxX1c3D_x1WdV9GKZEaSgzuF9VgxIA/exec';
 
-    // Guardamos el plan cargado para poder volver a pintarlo sin tocar el backend
     let __PLAN_CACHE__ = [];
     let __ALUMNO_CACHE__ = null;
+    let __PROFILE_TAB__ = 'perfil'; // 'perfil' | 'progreso'
 
     function showLogin(message) {
       document.getElementById('app-content').style.display = 'none';
       document.getElementById('login-screen').style.display = 'block';
 
-      // Ocultar tabs en login
-      document.getElementById('nav-tabs').style.display = 'none';
+      document.getElementById('logout-top').style.display = 'none';
+      document.getElementById('main-tabs').style.display = 'none';
 
       document.title = 'Plan Nutricional';
       const lc = document.getElementById('login-container');
@@ -642,18 +776,20 @@
       document.getElementById('alumno-peso').textContent = '';
       document.getElementById('alumno-objetivo').textContent = '';
       document.getElementById('alumno-fecha').textContent = '';
+
       const contenedor = document.getElementById('plan-nutricional');
       if (contenedor) contenedor.innerHTML = '';
 
       __PLAN_CACHE__ = [];
       __ALUMNO_CACHE__ = null;
+      __PROFILE_TAB__ = 'perfil';
 
       try { document.activeElement && document.activeElement.blur && document.activeElement.blur(); } catch(e) {}
       showLogin('Sesión cerrada. Ingresa tu usuario para ver tu plan.');
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
 
-    function setActiveTab(which) {
+    function setMainTab(which) {
       const tabAli = document.getElementById('tab-alimentacion');
       const tabEnt = document.getElementById('tab-entrenamiento');
 
@@ -666,10 +802,36 @@
       }
     }
 
-    function renderDiet(plan) {
-      const title = document.getElementById('section-title');
-      title.innerHTML = `<h2>Tu dieta personalizada</h2>`;
+    function setProfileTab(which) {
+      const btnPerfil = document.getElementById('btn-perfil');
+      const btnProgreso = document.getElementById('btn-progreso');
+      const perfilView = document.getElementById('perfil-view');
+      const progresoView = document.getElementById('progreso-view');
 
+      __PROFILE_TAB__ = which;
+
+      if (which === 'progreso') {
+        btnProgreso.classList.add('active'); btnProgreso.setAttribute('aria-selected','true');
+        btnPerfil.classList.remove('active'); btnPerfil.setAttribute('aria-selected','false');
+        perfilView.style.display = 'none';
+        progresoView.style.display = 'block';
+
+        // Abajo: solo título, sin cards
+        document.getElementById('section-title').innerHTML = '<h2>Tu dieta personalizada</h2>';
+        document.getElementById('plan-nutricional').innerHTML = '';
+      } else {
+        btnPerfil.classList.add('active'); btnPerfil.setAttribute('aria-selected','true');
+        btnProgreso.classList.remove('active'); btnProgreso.setAttribute('aria-selected','false');
+        perfilView.style.display = 'block';
+        progresoView.style.display = 'none';
+
+        // Restaurar plan abajo (si hay cache)
+        renderDiet(__PLAN_CACHE__);
+      }
+    }
+
+    function renderDiet(plan) {
+      document.getElementById('section-title').innerHTML = '<h2>Tu dieta personalizada</h2>';
       const contenedor = document.getElementById('plan-nutricional');
       contenedor.innerHTML = '';
 
@@ -684,57 +846,66 @@
       });
     }
 
-    function renderProgreso() {
-      const title = document.getElementById('section-title');
-      title.innerHTML = `<h2>Mi Progreso</h2>`;
-
-      const contenedor = document.getElementById('plan-nutricional');
-      contenedor.innerHTML = `
-        <div class="card">
-          <h3>Proximamente</h3>
-          <p><strong>Próximamente</strong> 📈
-Estamos preparando tu panel de progreso con métricas y avances.</p>
-        </div>
-      `;
+    function openModal(titleText, bodyHtml) {
+      const modal = document.getElementById('modal-prox');
+      document.getElementById('modal-title').textContent = titleText || 'Próximamente';
+      document.getElementById('modal-body').innerHTML = bodyHtml || '<strong>Próximamente</strong><br>Estamos preparando esta sección.';
+      modal.classList.add('show');
+      modal.setAttribute('aria-hidden', 'false');
+      try { document.activeElement && document.activeElement.blur && document.activeElement.blur(); } catch(e) {}
     }
 
-    function wireTabs() {
+    function closeModal() {
+      const modal = document.getElementById('modal-prox');
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden', 'true');
+      // Volver visualmente a Alimentación
+      setMainTab('alimentacion');
+    }
+
+    function wireMainTabs() {
       const tabAli = document.getElementById('tab-alimentacion');
       const tabEnt = document.getElementById('tab-entrenamiento');
 
       tabAli.onclick = () => {
-        setActiveTab('alimentacion');
-        renderDiet(__PLAN_CACHE__);
+        setMainTab('alimentacion');
+        // Si estoy en perfil, muestro dieta. Si estoy en progreso, no muestro cards abajo (se mantiene vacío).
+        if (__PROFILE_TAB__ === 'perfil') renderDiet(__PLAN_CACHE__);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       };
 
       tabEnt.onclick = () => {
-        setActiveTab('entrenamiento');
-        // Mantenemos "Entrenamiento" con pop-up como antes
-        // (solo Mi Progreso cambia a pantalla interna)
-        alert('Próximamente'); // Fallback simple si prefieres mantener modal aquí, dímelo y lo vuelvo modal.
-        setActiveTab('alimentacion');
-        renderDiet(__PLAN_CACHE__);
+        setMainTab('entrenamiento');
+        openModal(
+          'Entrenamiento',
+          '<strong>Próximamente</strong> 💪<br>Estamos preparando tu sección de entrenamiento.'
+        );
       };
     }
 
-    function wireProfileButtons() {
-      const btnPerfil = document.getElementById('btn-perfil');
-      const btnProgreso = document.getElementById('btn-progreso');
-
-      // Mi Perfil: vuelve al "home" (dieta) y arriba
-      btnPerfil.onclick = () => {
-        setActiveTab('alimentacion');
-        renderDiet(__PLAN_CACHE__);
+    function wireProfileTabs() {
+      document.getElementById('btn-perfil').onclick = () => {
+        setProfileTab('perfil');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       };
-
-      // Mi Progreso: cambia la pantalla (sección inferior) a 1 card "Próximamente"
-      btnProgreso.onclick = () => {
-        setActiveTab('alimentacion'); // seguimos en Alimentación como home
-        renderProgreso();
+      document.getElementById('btn-progreso').onclick = () => {
+        setProfileTab('progreso');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       };
+    }
+
+    function wireModal() {
+      document.getElementById('modal-close').onclick = closeModal;
+      document.getElementById('modal-ok').onclick = closeModal;
+
+      document.getElementById('modal-prox').addEventListener('click', (e) => {
+        if (e.target && e.target.dataset && e.target.dataset.close === "true") closeModal();
+      });
+
+      document.addEventListener('keydown', (e) => {
+        const modal = document.getElementById('modal-prox');
+        if (e.key === 'Escape' && modal.classList.contains('show')) closeModal();
+      });
     }
 
     async function cargarPlan(user) {
@@ -753,15 +924,17 @@ Estamos preparando tu panel de progreso con métricas y avances.</p>
         document.getElementById('login-screen').style.display = 'none';
         document.getElementById('app-content').style.display = 'block';
 
-        // Mostrar tabs después del login
-        document.getElementById('nav-tabs').style.display = 'inline-flex';
-        wireTabs();
-        wireProfileButtons();
+        // Mostrar logout arriba derecha + tabs encima del plan
+        document.getElementById('logout-top').style.display = 'inline-flex';
+        document.getElementById('main-tabs').style.display = 'flex';
+
+        document.getElementById('logout-top').onclick = logout;
+
+        wireMainTabs();
+        wireProfileTabs();
+        wireModal();
 
         window.scrollTo({ top: 0, behavior: 'instant' });
-
-        const logoutBtn = document.getElementById('logout-btn');
-        if (logoutBtn) logoutBtn.onclick = logout;
 
         const contenedor = document.getElementById('plan-nutricional');
         contenedor.innerHTML = `
@@ -784,9 +957,9 @@ Estamos preparando tu panel de progreso con métricas y avances.</p>
 
         document.title = alumno.nombre ? `Plan Nutricional - ${alumno.nombre}` : 'Plan Nutricional';
 
-        // Home: dieta
-        setActiveTab('alimentacion');
-        renderDiet(__PLAN_CACHE__);
+        // Defaults
+        setMainTab('alimentacion');
+        setProfileTab('perfil'); // Esto también renderiza la dieta abajo
 
       } catch (e) {
         showLogin('Error al conectar con Google Sheets.');
