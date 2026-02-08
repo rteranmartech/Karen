@@ -1,33 +1,480 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Plan Nutricional - Emily Romero</title>
-    <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f7f6; color: #333; padding: 20px; }
-        .container { max-width: 600px; margin: auto; background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        h1 { color: #2c3e50; border-bottom: 2px solid #27ae60; padding-bottom: 10px; }
-        .perfil { background: #e8f5e9; padding: 10px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9em; }
-        .card { border-left: 5px solid #27ae60; background: #fafafa; margin-bottom: 15px; padding: 15px; border-radius: 5px; }
-        .card h3 { margin-top: 0; color: #27ae60; text-transform: uppercase; font-size: 1rem; }
-        .card p { white-space: pre-line; margin-bottom: 0; line-height: 1.5; }
-        .loading { text-align: center; color: #888; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Plan Nutricional - Emily Romero</title>
+
+  <style>
+    /* =========================================================
+      ANIFIT-like: minimal, clean, mucho aire, tipografía fuerte,
+      cards modernas, responsive (mobile-first).
+    ========================================================= */
+
+    :root{
+      /* Ajustes rápidos para calzar con tu web */
+      --bg: #ffffff;
+      --bg-soft: #f6f7fb;
+      --text: #0b0f19;       /* casi negro */
+      --muted: #5b6474;      /* gris texto secundario */
+      --border: rgba(11, 15, 25, .10);
+      --shadow: 0 14px 40px rgba(11, 15, 25, .10);
+      --shadow-soft: 0 10px 24px rgba(11, 15, 25, .08);
+
+      --accent: #27ae60;     /* verde (guiño a tu versión original) */
+      --accent-2: #111827;   /* acento oscuro estilo “landing” */
+      --radius-xl: 26px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+
+      --max: 1120px;
+
+      --pad-x: clamp(16px, 3.8vw, 28px);
+      --pad-y: clamp(18px, 4.2vw, 32px);
+
+      --h1: clamp(26px, 4.2vw, 44px);
+      --h2: clamp(16px, 2.4vw, 20px);
+      --p:  clamp(14px, 1.8vw, 16px);
+      --small: 12.5px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body{
+      margin: 0;
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background:
+        radial-gradient(1200px 500px at 15% -10%, rgba(39,174,96,.10), transparent 55%),
+        radial-gradient(900px 500px at 100% 0%, rgba(17,24,39,.08), transparent 60%),
+        var(--bg);
+      line-height: 1.35;
+    }
+
+    a{ color: inherit; text-decoration: none; }
+    .wrap{ min-height: 100%; display: flex; flex-direction: column; }
+
+    /* Topbar simple tipo landing */
+    .topbar{
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      background: rgba(255,255,255,.70);
+      border-bottom: 1px solid rgba(11,15,25,.06);
+    }
+    .topbar-inner{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 12px var(--pad-x);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .brand{
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-size: 13px;
+    }
+    .brand-dot{
+      width: 10px; height: 10px; border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(39,174,96,.16);
+    }
+    .nav-actions{
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn{
+      appearance: none;
+      border: 1px solid rgba(11,15,25,.12);
+      background: rgba(255,255,255,.8);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 650;
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+      box-shadow: 0 6px 14px rgba(11,15,25,.06);
+      cursor: pointer;
+    }
+    .btn:hover{ transform: translateY(-1px); box-shadow: 0 10px 18px rgba(11,15,25,.10); }
+    .btn:active{ transform: translateY(0px); }
+    .btn-primary{
+      background: var(--accent-2);
+      color: #fff;
+      border-color: rgba(17,24,39,.18);
+      box-shadow: 0 10px 24px rgba(17,24,39,.18);
+    }
+    .btn-primary:hover{ box-shadow: 0 14px 30px rgba(17,24,39,.22); }
+    .btn-primary .pill{
+      background: rgba(255,255,255,.14);
+      padding: 4px 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: .02em;
+    }
+
+    /* Hero */
+    .main{
+      flex: 1;
+      max-width: var(--max);
+      width: 100%;
+      margin: 0 auto;
+      padding: 26px var(--pad-x) 46px;
+    }
+
+    .hero{
+      margin-top: 10px;
+      border-radius: var(--radius-xl);
+      background:
+        linear-gradient(135deg, rgba(17,24,39,.96), rgba(17,24,39,.88)),
+        radial-gradient(900px 300px at 10% 0%, rgba(39,174,96,.26), transparent 60%);
+      color: #fff;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+    .hero-inner{
+      padding: var(--pad-y) var(--pad-x);
+      display: grid;
+      grid-template-columns: 1.35fr .65fr;
+      gap: 18px;
+      align-items: start;
+    }
+    @media (max-width: 860px){
+      .hero-inner{ grid-template-columns: 1fr; }
+    }
+
+    .hero h1{
+      margin: 0 0 10px;
+      font-size: var(--h1);
+      letter-spacing: -.02em;
+      line-height: 1.05;
+    }
+    .hero p{
+      margin: 0;
+      color: rgba(255,255,255,.82);
+      font-size: var(--p);
+      max-width: 60ch;
+    }
+
+    /* Perfil */
+    .profile{
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: var(--radius-lg);
+      padding: 14px 14px;
+      display: grid;
+      gap: 10px;
+    }
+    .profile-title{
+      font-weight: 750;
+      letter-spacing: .02em;
+      font-size: 13px;
+      opacity: .92;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .tag{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(39,174,96,.18);
+      border: 1px solid rgba(39,174,96,.30);
+      color: #eafff3;
+      font-size: 12.5px;
+      font-weight: 650;
+      white-space: nowrap;
+    }
+    .profile-grid{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    @media (max-width: 520px){
+      .profile-grid{ grid-template-columns: 1fr; }
+    }
+    .kv{
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 14px;
+      padding: 12px 12px;
+    }
+    .kv .k{
+      font-size: 12px;
+      color: rgba(255,255,255,.70);
+      margin-bottom: 4px;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+    }
+    .kv .v{
+      font-size: 14.5px;
+      font-weight: 750;
+      color: rgba(255,255,255,.95);
+    }
+
+    /* Sección Cards */
+    .section{
+      margin-top: 22px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .section-head{
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .section-head h2{
+      margin: 0;
+      font-size: var(--h2);
+      letter-spacing: -.01em;
+    }
+    .section-head .hint{
+      font-size: var(--small);
+      color: var(--muted);
+    }
+
+    .cards{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    @media (min-width: 900px){
+      .cards{ grid-template-columns: 1fr 1fr; }
+    }
+
+    /* La clase .card la genera tu JS: la estilizamos sin tocar script */
+    .card{
+      position: relative;
+      border-radius: var(--radius-lg);
+      background: rgba(255,255,255,.85);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+      padding: 16px 16px 16px 16px;
+    }
+    .card:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 16px 34px rgba(11,15,25,.12);
+      border-color: rgba(11,15,25,.16);
+    }
+
+    /* Barra lateral de acento (moderna, no “border-left” clásico) */
+    .card::before{
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 8px;
+      background: linear-gradient(180deg, rgba(39,174,96,1), rgba(39,174,96,.55));
+    }
+
+    .card h3{
+      margin: 0 0 10px;
+      padding-left: 10px; /* para compensar la barra */
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: rgba(11,15,25,.82);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .card h3::after{
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: rgba(11,15,25,.10);
+    }
+
+    .card p{
+      margin: 0;
+      padding-left: 10px;
+      white-space: pre-line;
+      font-size: var(--p);
+      color: rgba(11,15,25,.86);
+      line-height: 1.55;
+    }
+
+    /* Loading bonito */
+    .loading{
+      margin: 0;
+      border-radius: var(--radius-lg);
+      border: 1px dashed rgba(11,15,25,.20);
+      background: rgba(255,255,255,.70);
+      padding: 18px;
+      color: var(--muted);
+      display: grid;
+      gap: 12px;
+    }
+    .skeleton{
+      height: 12px;
+      border-radius: 999px;
+      background: linear-gradient(90deg,
+        rgba(11,15,25,.06),
+        rgba(11,15,25,.10),
+        rgba(11,15,25,.06)
+      );
+      background-size: 200% 100%;
+      animation: shimmer 1.2s infinite linear;
+    }
+    .skeleton.w60{ width: 60%; }
+    .skeleton.w85{ width: 85%; }
+    .skeleton.w45{ width: 45%; }
+    @keyframes shimmer{
+      0%{ background-position: 200% 0; }
+      100%{ background-position: -200% 0; }
+    }
+
+    /* Footer */
+    .footer{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 var(--pad-x) 26px;
+      color: var(--muted);
+      font-size: 12.5px;
+      display: flex;
+      gap: 10px;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .footer strong{ color: rgba(11,15,25,.78); }
+
+    /* Mejoras de accesibilidad */
+    :focus-visible{ outline: none; box-shadow: 0 0 0 4px rgba(39,174,96,.18); border-radius: 12px; }
+
+    /* Contenedor donde tu JS inyecta cards */
+    #plan-nutricional{
+      display: grid;
+      gap: 12px;
+    }
+    /* Envolvemos en .cards desde HTML, pero por si pega directo */
+    #plan-nutricional > .card{ width: 100%; }
+
+    /* Pequeña optimización para pantallas muy chicas */
+    @media (max-width: 360px){
+      .btn{ padding: 9px 12px; }
+      .hero-inner{ padding: 18px 16px; }
+      .card{ padding: 14px; }
+    }
+  </style>
 </head>
+
 <body>
+  <div class="wrap">
 
-<div class="container">
-    <h1>Plan Nutricional</h1>
-    <div class="perfil">
-        <strong>Alumno:</strong> Emily Romero | <strong>Peso:</strong> 74.1 kg | <strong>Objetivo:</strong> Déficit moderado
-    </div>
+    <!-- Topbar estilo landing simple -->
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="https://anifit.cl/" target="_blank" rel="noopener">
+          <span class="brand-dot" aria-hidden="true"></span>
+          ANIFIT
+        </a>
 
-    <div id="plan-nutricional">
-        <p class="loading">Cargando tu dieta personalizada...</p>
-    </div>
-</div>
+        <div class="nav-actions">
+          <a class="btn" href="https://anifit.cl/" target="_blank" rel="noopener" aria-label="Volver a ANIFIT">
+            Inicio
+          </a>
+          <a class="btn btn-primary" href="https://wa.me/" target="_blank" rel="noopener" aria-label="Contacto por WhatsApp">
+            Contacto <span class="pill">WhatsApp</span>
+          </a>
+        </div>
+      </div>
+    </header>
 
-<script>
+    <main class="main">
+      <!-- Hero -->
+      <section class="hero" aria-label="Encabezado del plan nutricional">
+        <div class="hero-inner">
+          <div>
+            <h1>Plan Nutricional</h1>
+            <p>
+              Todo tu plan, ordenado por secciones y presentado en cards claras para revisar
+              fácil desde el celular y también en escritorio.
+            </p>
+          </div>
+
+          <!-- Perfil (puedes cambiar estos textos fijos si quieres) -->
+          <aside class="profile" aria-label="Resumen del alumno">
+            <div class="profile-title">
+              <span>Resumen del alumno</span>
+              <span class="tag">Personalizado</span>
+            </div>
+
+            <div class="profile-grid">
+              <div class="kv">
+                <div class="k">Alumno</div>
+                <div class="v">Emily Romero</div>
+              </div>
+              <div class="kv">
+                <div class="k">Peso</div>
+                <div class="v">74.1 kg</div>
+              </div>
+              <div class="kv" style="grid-column: 1 / -1;">
+                <div class="k">Objetivo</div>
+                <div class="v">Déficit moderado</div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <div class="section-head">
+        <h2>Tu dieta personalizada</h2>
+        <div class="hint">Secciones cargadas desde Google Sheets</div>
+      </div>
+
+      <!-- Cards -->
+      <section class="section">
+        <!-- IMPORTANTE: este contenedor lo usa tu JS, no se toca -->
+        <div class="cards" id="plan-nutricional">
+          <div class="loading">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <div class="skeleton" style="width:18px; height:18px; border-radius:6px;"></div>
+              <strong style="color: rgba(11,15,25,.78);">Cargando tu dieta personalizada…</strong>
+            </div>
+            <div class="skeleton w85"></div>
+            <div class="skeleton w60"></div>
+            <div class="skeleton w45"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div><strong>ANIFIT</strong> — Plan Nutricional</div>
+      <div>© <span id="year"></span> Todos los derechos reservados.</div>
+    </footer>
+  </div>
+
+  <script>
+    // Año dinámico (no toca tu conexión)
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+  <!-- =========================================================
+       NO CAMBIÉ tu script ni tu conexión: mismo URL y misma lógica
+  ========================================================== -->
+  <script>
     const URL_SCRIPT = 'https://script.google.com/macros/s/AKfycbxpAUI0Ffg5Zas-4f1nieUhu_CsprdsIjcGchoxX1c3D_x1WdV9GKZEaSgzuF9VgxIA/exec';
 
     async function cargarPlan() {
@@ -52,7 +499,6 @@
     }
 
     cargarPlan();
-</script>
-
+  </script>
 </body>
 </html>
