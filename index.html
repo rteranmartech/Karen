@@ -334,6 +334,21 @@
       letter-spacing: -.01em;
     }
 
+    /* ✅ Animación sutil del título */
+    .section-head h2.attn{
+      display: inline-block;
+      will-change: transform;
+      animation: subtle-sway 5.6s ease-in-out infinite;
+    }
+    @keyframes subtle-sway{
+      0%   { transform: translateX(0px); }
+      50%  { transform: translateX(-10px); }
+      100% { transform: translateX(0px); }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .section-head h2.attn{ animation: none; }
+    }
+
     .section{
       margin-top: 14px;
       display: grid;
@@ -663,9 +678,9 @@ Estamos preparando tu panel de progreso con métricas y avances.</div>
           </div>
         </div>
 
-        <!-- Título abajo: en Progreso se mantiene solo el título (sin cards debajo) -->
+        <!-- Título abajo -->
         <div class="section-head" id="section-title">
-          <h2>Tu dieta personalizada</h2>
+          <h2 class="attn">Tu dieta personalizada</h2>
         </div>
 
         <section class="section">
@@ -807,6 +822,7 @@ Estamos preparando tu panel de progreso con métricas y avances.</div>
       const btnProgreso = document.getElementById('btn-progreso');
       const perfilView = document.getElementById('perfil-view');
       const progresoView = document.getElementById('progreso-view');
+      const sectionTitle = document.getElementById('section-title');
 
       __PROFILE_TAB__ = which;
 
@@ -816,8 +832,8 @@ Estamos preparando tu panel de progreso con métricas y avances.</div>
         perfilView.style.display = 'none';
         progresoView.style.display = 'block';
 
-        // Abajo: solo título, sin cards
-        document.getElementById('section-title').innerHTML = '<h2>Tu dieta personalizada</h2>';
+        // En progreso: ocultar el plan y el título
+        sectionTitle.style.display = 'none';
         document.getElementById('plan-nutricional').innerHTML = '';
       } else {
         btnPerfil.classList.add('active'); btnPerfil.setAttribute('aria-selected','true');
@@ -825,13 +841,17 @@ Estamos preparando tu panel de progreso con métricas y avances.</div>
         perfilView.style.display = 'block';
         progresoView.style.display = 'none';
 
-        // Restaurar plan abajo (si hay cache)
+        // En perfil: mostrar título y dieta
+        sectionTitle.style.display = 'flex';
         renderDiet(__PLAN_CACHE__);
       }
     }
 
     function renderDiet(plan) {
-      document.getElementById('section-title').innerHTML = '<h2>Tu dieta personalizada</h2>';
+      const sectionTitle = document.getElementById('section-title');
+      sectionTitle.style.display = 'flex';
+      sectionTitle.innerHTML = '<h2 class="attn">Tu dieta personalizada</h2>';
+
       const contenedor = document.getElementById('plan-nutricional');
       contenedor.innerHTML = '';
 
@@ -869,8 +889,16 @@ Estamos preparando tu panel de progreso con métricas y avances.</div>
 
       tabAli.onclick = () => {
         setMainTab('alimentacion');
-        // Si estoy en perfil, muestro dieta. Si estoy en progreso, no muestro cards abajo (se mantiene vacío).
-        if (__PROFILE_TAB__ === 'perfil') renderDiet(__PLAN_CACHE__);
+
+        // ✅ SIEMPRE al click en Alimentación:
+        // - Mostrar el título
+        // - Mostrar las cards del plan desde el cache (mismo data del Sheets)
+        const sectionTitle = document.getElementById('section-title');
+        sectionTitle.style.display = 'flex';
+        sectionTitle.innerHTML = '<h2 class="attn">Tu dieta personalizada</h2>';
+
+        renderDiet(__PLAN_CACHE__);
+
         window.scrollTo({ top: 0, behavior: 'smooth' });
       };
 
