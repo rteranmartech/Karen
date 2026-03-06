@@ -216,10 +216,10 @@
     inset: 0;
     background: linear-gradient(
       to bottom,
-      rgba(26, 21, 16, 0.2) 0%,
-      rgba(26, 21, 16, 0.1) 40%,
-      rgba(26, 21, 16, 0.6) 80%,
-      rgba(26, 21, 16, 0.9) 100%
+      rgba(15, 12, 8, 0.4) 0%,
+      rgba(15, 12, 8, 0.25) 30%,
+      rgba(15, 12, 8, 0.65) 70%,
+      rgba(15, 12, 8, 0.93) 100%
     );
     z-index: 1;
   }
@@ -231,8 +231,11 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    padding: 0 2.5rem 4.25rem;
+    padding: 6rem 2.5rem 6rem;
+    padding-top: 0;
+    padding-bottom: clamp(4rem, 8vh, 7rem);
     max-width: 900px;
+    margin-top: auto;
   }
 
   .hero-eyebrow {
@@ -734,6 +737,7 @@
   .cat-eventos .slide-color { background: linear-gradient(135deg, #2a2010 0%, #3d3018 50%, #4a3c1f 100%); }
 
   .cat-general .slide-color { background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #3d3d3d 100%); }
+  .cat-productos .slide-color { background: linear-gradient(135deg, #1a1020 0%, #2d1a35 50%, #3d2548 100%); }
 
   /* Color variations for slides */
   .slide-item:nth-child(1) .slide-color { filter: hue-rotate(0deg) brightness(0.9); }
@@ -1068,7 +1072,7 @@
     nav { padding: 1rem 1.5rem; }
 
     .servicios-grid { grid-template-columns: 1fr; }
-    .hero-content { padding: 0 1.5rem 3.6rem; }
+    .hero-content { padding: 0 1.5rem clamp(3.5rem, 7vh, 5rem); }
 
     .slide-item { flex: 0 0 calc(85% - 0.4rem); }
 
@@ -1091,7 +1095,7 @@
 
 <!-- NAVIGATION -->
 <nav id="navbar">
-<a href="#inicio" class="nav-logo">Klub<span>Visual</span></a>  <ul class="nav-links">
+<a href="#inicio" class="nav-logo">Klubvisual <span>by Karen Romero</span></a>  <ul class="nav-links">
     <li><a href="#inicio">Inicio</a></li>
     <li><a href="#quien-soy">Quién soy</a></li>
     <li><a href="#servicios">Servicios</a></li>
@@ -1390,15 +1394,15 @@
     <!-- FOTOS PARA TUS PRODUCTOS -->
     <div class="portfolio-category reveal reveal-delay-1">
       <div class="category-header">
-        <h3 class="category-title">Fotos para tus productos</h3>
+        <h3 class="category-title"><em>Fotos</em> para tus productos</h3>
       </div>
       <div class="slider-wrap">
         <div class="slider-track" data-slider="5">
-          <div class="slide-item cat-general" data-lightbox="true"><div class="slide-color"></div><div class="slide-overlay"></div><div class="slider-label">Fotografía 01</div></div>
-          <div class="slide-item cat-general" data-lightbox="true"><div class="slide-color"></div><div class="slide-overlay"></div><div class="slider-label">Fotografía 02</div></div>
-          <div class="slide-item cat-general" data-lightbox="true"><div class="slide-color"></div><div class="slide-overlay"></div><div class="slider-label">Fotografía 03</div></div>
-          <div class="slide-item cat-general" data-lightbox="true"><div class="slide-color"></div><div class="slide-overlay"></div><div class="slider-label">Fotografía 04</div></div>
-          <div class="slide-item cat-general" data-lightbox="true"><div class="slide-color"></div><div class="slide-overlay"></div><div class="slider-label">Fotografía 05</div></div>
+          <div class="slide-item cat-productos" data-lightbox="true"><div class="slide-color"></div><div class="slide-overlay"></div><div class="slider-label">Productos 01</div></div>
+          <div class="slide-item cat-productos" data-lightbox="true"><div class="slide-color"></div><div class="slide-overlay"></div><div class="slider-label">Productos 02</div></div>
+          <div class="slide-item cat-productos" data-lightbox="true"><div class="slide-color"></div><div class="slide-overlay"></div><div class="slider-label">Productos 03</div></div>
+          <div class="slide-item cat-productos" data-lightbox="true"><div class="slide-color"></div><div class="slide-overlay"></div><div class="slider-label">Productos 04</div></div>
+          <div class="slide-item cat-productos" data-lightbox="true"><div class="slide-color"></div><div class="slide-overlay"></div><div class="slider-label">Productos 05</div></div>
         </div>
       </div>
       <div class="slider-nav">
@@ -1442,7 +1446,7 @@
 
 <!-- FOOTER -->
 <footer>
-  <a href="#inicio" class="footer-logo">Karen <span>Romero</span></a>
+  <a href="#inicio" class="footer-logo">Klubvisual <span>by Karen Romero</span></a>
   <p class="footer-copy">© 2025 klubvisual.cl — Todos los derechos reservados</p>
   <a href="https://instagram.com/klubvisual" target="_blank" rel="noopener" style="color: rgba(244,237,226,0.3); transition: color 0.3s; font-size: 0.72rem; letter-spacing: 0.1em; text-decoration: none; text-transform: uppercase;" onmouseover="this.style.color='#D98A5F'" onmouseout="this.style.color='rgba(244,237,226,0.3)'">@klubvisual</a>
 </footer>
@@ -1546,7 +1550,7 @@
 
   // Autoplay sliders
   const autoplayTimers = {};
-  [0, 1, 2, 3, 4].forEach(id => {
+  [0, 1, 2, 3, 4, 5].forEach(id => {
     sliderStates[id] = 0;
     autoplayTimers[id] = setInterval(() => {
       const cfg = getSliderConfig(id);
@@ -1618,7 +1622,7 @@
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
-      [0, 1, 2, 3, 4].forEach(id => slideTo(id, sliderStates[id] || 0));
+      [0, 1, 2, 3, 4, 5].forEach(id => slideTo(id, sliderStates[id] || 0));
     }, 200);
   });
 </script>
