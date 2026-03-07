@@ -166,50 +166,115 @@
   .hero-slides {
     position: absolute;
     inset: 0;
+    isolation: isolate;
+    background: #120f0c;
   }
 
-  .hero-slide {
+  .hero-video-slide {
     position: absolute;
     inset: 0;
     opacity: 0;
-    transition: opacity 1.8s cubic-bezier(0.4, 0, 0.2, 1);
-    transform: scale(1.05);
-    transition: opacity 1.8s ease, transform 6s ease;
+    visibility: hidden;
+    transition: opacity 1.4s ease, visibility 1.4s ease, transform 7s ease;
+    transform: scale(1.04);
+    will-change: opacity, transform;
+    pointer-events: none;
   }
 
-  .hero-slide.active {
+  .hero-video-slide.active {
     opacity: 1;
+    visibility: visible;
     transform: scale(1);
   }
 
-  .hero-slide.prev {
+  .hero-video-slide.prev {
     opacity: 0;
-    transform: scale(1.08);
+    visibility: visible;
+    transform: scale(1.02);
   }
 
-  .slide-bg {
+  .hero-video-frame {
     position: absolute;
     inset: 0;
-    background-size: cover;
-    background-position: center;
+    overflow: hidden;
+    border: 0;
+    pointer-events: none;
+    background: #120f0c;
   }
 
-  .slide-1 .slide-bg {
-    background: linear-gradient(135deg, #2d1f14 0%, #3d2b1f 30%, #4a3525 50%, #2a1e18 70%, #1a1510 100%);
+  .hero-video-frame video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    transform: translate(-50%, -50%);
+    border: 0;
+    display: block;
+    pointer-events: none;
+    background: #120f0c;
   }
 
-  .slide-2 .slide-bg {
-    background: linear-gradient(225deg, #1a2218 0%, #243328 30%, #1e2d20 50%, #152018 70%, #0d150e 100%);
-  }
-
-  /* Texture overlay */
-  .slide-1 .slide-bg::after,
-  .slide-2 .slide-bg::after {
-    content: '';
+  .hero-video-shade {
     position: absolute;
     inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    opacity: 0.3;
+    background:
+      linear-gradient(to right, rgba(10, 8, 6, 0.2), rgba(10, 8, 6, 0.08) 35%, rgba(10, 8, 6, 0.12) 65%, rgba(10, 8, 6, 0.28)),
+      linear-gradient(to bottom, rgba(8, 6, 5, 0.22) 0%, rgba(8, 6, 5, 0.1) 30%, rgba(8, 6, 5, 0.32) 72%, rgba(8, 6, 5, 0.5) 100%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  @media (min-width: 992px) {
+    .hero-slides {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .hero-video-slide,
+    .hero-video-slide.active,
+    .hero-video-slide.prev {
+      position: relative;
+      inset: auto;
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      transition: none;
+      overflow: hidden;
+    }
+
+    .hero-video-slide::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 1px;
+      height: 100%;
+      background: rgba(244, 237, 226, 0.08);
+      z-index: 2;
+    }
+
+    .hero-video-slide:last-child::after {
+      display: none;
+    }
+
+    .hero-video-frame video {
+      width: max(100%, calc(100dvh * 0.5625));
+      height: 100%;
+      min-width: 100%;
+      min-height: 100%;
+    }
+  }
+
+  @media (max-width: 991.98px) {
+    .hero-video-frame video {
+      width: 100%;
+      height: 100%;
+    }
   }
 
   .hero-overlay {
@@ -217,12 +282,13 @@
     inset: 0;
     background: linear-gradient(
       to bottom,
-      rgba(15, 12, 8, 0.4) 0%,
-      rgba(15, 12, 8, 0.25) 30%,
-      rgba(15, 12, 8, 0.65) 70%,
-      rgba(15, 12, 8, 0.93) 100%
+      rgba(15, 12, 8, 0.46) 0%,
+      rgba(15, 12, 8, 0.28) 30%,
+      rgba(15, 12, 8, 0.68) 70%,
+      rgba(15, 12, 8, 0.94) 100%
     );
-    z-index: 1;
+    z-index: 2;
+    pointer-events: none;
   }
 
   .hero-content {
@@ -1183,11 +1249,37 @@
 <!-- HERO -->
 <section id="inicio">
   <div class="hero-slides">
-    <div class="hero-slide slide-1 active">
-      <div class="slide-bg"></div>
+    <div class="hero-video-slide active" data-video-slide="0">
+      <div class="hero-video-frame" aria-hidden="true">
+        <video autoplay muted loop playsinline preload="auto" tabindex="-1">
+          <source src="https://res.cloudinary.com/duaa18leu/video/upload/f_auto,q_auto/IMG_7279_v86h4y.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="hero-video-shade"></div>
     </div>
-    <div class="hero-slide slide-2">
-      <div class="slide-bg"></div>
+    <div class="hero-video-slide" data-video-slide="1">
+      <div class="hero-video-frame" aria-hidden="true">
+        <video autoplay muted loop playsinline preload="auto" tabindex="-1">
+          <source src="https://res.cloudinary.com/duaa18leu/video/upload/f_auto,q_auto/IMG_7270_iqevhu.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="hero-video-shade"></div>
+    </div>
+    <div class="hero-video-slide" data-video-slide="2">
+      <div class="hero-video-frame" aria-hidden="true">
+        <video autoplay muted loop playsinline preload="auto" tabindex="-1">
+          <source src="https://res.cloudinary.com/duaa18leu/video/upload/f_auto,q_auto/IMG_7268_w58rbm.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="hero-video-shade"></div>
+    </div>
+    <div class="hero-video-slide" data-video-slide="3">
+      <div class="hero-video-frame" aria-hidden="true">
+        <video autoplay muted loop playsinline preload="auto" tabindex="-1">
+          <source src="https://res.cloudinary.com/duaa18leu/video/upload/f_auto,q_auto/IMG_7269_aftdpv.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="hero-video-shade"></div>
     </div>
   </div>
   <div class="hero-overlay"></div>
@@ -1208,6 +1300,8 @@
   <div class="hero-dots">
     <div class="hero-dot active" data-slide="0"></div>
     <div class="hero-dot" data-slide="1"></div>
+    <div class="hero-dot" data-slide="2"></div>
+    <div class="hero-dot" data-slide="3"></div>
   </div>
 </section>
 
@@ -1710,39 +1804,89 @@
     });
   });
 
-  // ─── HERO SLIDER ───
-  const heroSlides = document.querySelectorAll('.hero-slide');
+  // ─── HERO VIDEO SLIDER ───
+  const heroSlides = document.querySelectorAll('.hero-video-slide');
   const heroDots = document.querySelectorAll('.hero-dot');
+  const heroVideos = document.querySelectorAll('.hero-video-frame video');
   let currentHeroSlide = 0;
   let heroTimer;
+  const HERO_CHANGE_MS = 6500;
+  const HERO_FADE_MS = 1400;
+  const desktopHeroMedia = window.matchMedia('(min-width: 992px)');
+
+  function ensureHeroPlayback() {
+    heroVideos.forEach(video => {
+      video.muted = true;
+      const playAttempt = video.play();
+      if (playAttempt && typeof playAttempt.catch === 'function') {
+        playAttempt.catch(() => {});
+      }
+    });
+  }
+
+  function syncHeroMode() {
+    const isDesktop = desktopHeroMedia.matches;
+
+    heroSlides.forEach((slide, i) => {
+      if (isDesktop) {
+        slide.classList.remove('prev');
+        slide.classList.add('active');
+      } else {
+        slide.classList.toggle('active', i === currentHeroSlide);
+        slide.classList.remove('prev');
+      }
+    });
+
+    heroDots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === currentHeroSlide);
+      dot.style.display = isDesktop ? 'none' : '';
+    });
+
+    clearInterval(heroTimer);
+    if (!isDesktop && heroSlides.length) {
+      heroTimer = setInterval(nextHeroSlide, HERO_CHANGE_MS);
+    }
+  }
 
   function goToSlide(index) {
+    if (!heroSlides.length || desktopHeroMedia.matches) return;
+
     heroSlides[currentHeroSlide].classList.remove('active');
     heroSlides[currentHeroSlide].classList.add('prev');
-    heroDots[currentHeroSlide].classList.remove('active');
+    heroDots[currentHeroSlide]?.classList.remove('active');
 
     currentHeroSlide = index;
 
     heroSlides[currentHeroSlide].classList.add('active');
     heroSlides[currentHeroSlide].classList.remove('prev');
-    heroDots[currentHeroSlide].classList.add('active');
+    heroDots[currentHeroSlide]?.classList.add('active');
 
-    setTimeout(() => {
-      heroSlides.forEach((s, i) => { if (i !== currentHeroSlide) s.classList.remove('prev'); });
-    }, 2000);
+    window.setTimeout(() => {
+      heroSlides.forEach((slide, i) => {
+        if (i !== currentHeroSlide) slide.classList.remove('prev');
+      });
+    }, HERO_FADE_MS + 120);
   }
 
   function nextHeroSlide() {
     goToSlide((currentHeroSlide + 1) % heroSlides.length);
   }
 
-  heroTimer = setInterval(nextHeroSlide, 5000);
+  ensureHeroPlayback();
+  syncHeroMode();
+
+  if (typeof desktopHeroMedia.addEventListener === 'function') {
+    desktopHeroMedia.addEventListener('change', syncHeroMode);
+  } else if (typeof desktopHeroMedia.addListener === 'function') {
+    desktopHeroMedia.addListener(syncHeroMode);
+  }
 
   heroDots.forEach((dot, i) => {
     dot.addEventListener('click', () => {
+      if (desktopHeroMedia.matches) return;
       clearInterval(heroTimer);
       goToSlide(i);
-      heroTimer = setInterval(nextHeroSlide, 5000);
+      heroTimer = setInterval(nextHeroSlide, HERO_CHANGE_MS);
     });
   });
 
@@ -1877,6 +2021,7 @@
 </script>
 </body>
 </html>
+
 
 
 
