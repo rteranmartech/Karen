@@ -1,2024 +1,978 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Karen Romero — Fotografía Premium | klubvisual.cl</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --cream: #F4EDE2;
-    --terra: #D98A5F;
-    --slate: #6B7F6A;
-    --sand: #BEAD96;
-    --cream-dark: #ede0cf;
-    --terra-dark: #c07040;
-    --slate-dark: #526151;
-    --glass-bg: rgba(244, 237, 226, 0.08);
-    --glass-border: rgba(244, 237, 226, 0.15);
-    --glass-shadow: 0 8px 32px rgba(107, 127, 106, 0.12);
-    --font-serif: 'Cormorant Garamond', Georgia, serif;
-    --font-sans: 'Plus Jakarta Sans', sans-serif;
-    --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: var(--font-sans);
-    background: #1a1510;
-    color: var(--cream);
-    overflow-x: hidden;
-  }
-
-  /* ─── SCROLLBAR ─── */
-  ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-track { background: #1a1510; }
-  ::-webkit-scrollbar-thumb { background: var(--terra); border-radius: 2px; }
-
-  /* ─── NAVIGATION ─── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 1000;
-    padding: 1.2rem 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    transition: var(--transition);
-  }
-
-  nav.scrolled {
-    background: rgba(26, 21, 16, 0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--glass-border);
-  }
-
-  .nav-logo {
-    display: inline-flex;
-    align-items: flex-end;
-    gap: 0.02em;
-    font-family: var(--font-serif);
-    font-size: 1.4rem;
-    font-weight: 400;
-    letter-spacing: 0.04em;
-    line-height: 1.08;
-    color: var(--cream);
-    text-decoration: none;
-    white-space: nowrap;
-  }
-
-  .nav-logo span {
-    color: var(--terra);
-    font-style: italic;
-    display: inline-block;
-    line-height: 1.08;
-    transform: translateY(0.06em);
-  }
-
-  .nav-links {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    list-style: none;
-  }
-
-  .nav-links a {
-    font-size: 0.78rem;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgba(244, 237, 226, 0.75);
-    text-decoration: none;
-    transition: var(--transition);
-    position: relative;
-  }
-
-  .nav-links a::after {
-    content: '';
-    position: absolute;
-    bottom: -3px; left: 0;
-    width: 0; height: 1px;
-    background: var(--terra);
-    transition: width 0.3s ease;
-  }
-
-  .nav-links a:hover { color: var(--cream); }
-  .nav-links a:hover::after { width: 100%; }
-
-  .nav-instagram {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-size: 0.78rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    color: rgba(244, 237, 226, 0.75);
-    text-decoration: none;
-    transition: var(--transition);
-  }
-
-  .nav-instagram:hover { color: var(--terra); }
-
-  .nav-instagram svg { width: 16px; height: 16px; }
-
-  .hamburger {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    cursor: pointer;
-    padding: 0.8rem;
-    background: rgba(244, 237, 226, 0.03);
-    border: 1px solid var(--glass-border);
-    border-radius: 3px;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-  }
-
-  .hamburger span {
-    display: block;
-    width: 24px; height: 1.5px;
-    background: var(--cream);
-    transition: var(--transition);
-  }
-
-  .hamburger:hover {
-    background: rgba(244, 237, 226, 0.08);
-    border-color: rgba(244, 237, 226, 0.28);
-  }
-
-  /* ─── HERO ─── */
-  #inicio {
-    position: relative;
-    height: 100vh;
-    height: 100dvh;
-    min-height: 600px;
-    overflow: hidden;
-  }
-
-  .hero-slides {
-    position: absolute;
-    inset: 0;
-    isolation: isolate;
-    background: #120f0c;
-  }
-
-  .hero-video-slide {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 1.4s ease, visibility 1.4s ease, transform 7s ease;
-    transform: scale(1.04);
-    will-change: opacity, transform;
-    pointer-events: none;
-  }
-
-  .hero-video-slide.active {
-    opacity: 1;
-    visibility: visible;
-    transform: scale(1);
-  }
-
-  .hero-video-slide.prev {
-    opacity: 0;
-    visibility: visible;
-    transform: scale(1.02);
-  }
-
-  .hero-video-frame {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    border: 0;
-    pointer-events: none;
-    background: #120f0c;
-  }
-
-  .hero-video-frame video {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    height: 100%;
-    min-width: 100%;
-    min-height: 100%;
-    object-fit: cover;
-    object-position: center center;
-    transform: translate(-50%, -50%);
-    border: 0;
-    display: block;
-    pointer-events: none;
-    background: #120f0c;
-  }
-
-  .hero-video-shade {
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(to right, rgba(10, 8, 6, 0.2), rgba(10, 8, 6, 0.08) 35%, rgba(10, 8, 6, 0.12) 65%, rgba(10, 8, 6, 0.28)),
-      linear-gradient(to bottom, rgba(8, 6, 5, 0.22) 0%, rgba(8, 6, 5, 0.1) 30%, rgba(8, 6, 5, 0.32) 72%, rgba(8, 6, 5, 0.5) 100%);
-    z-index: 1;
-    pointer-events: none;
-  }
-
-  @media (min-width: 992px) {
-    .hero-slides {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-
-    .hero-video-slide,
-    .hero-video-slide.active,
-    .hero-video-slide.prev {
-      position: relative;
-      inset: auto;
-      opacity: 1;
-      visibility: visible;
-      transform: none;
-      transition: none;
-      overflow: hidden;
-    }
-
-    .hero-video-slide::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 1px;
-      height: 100%;
-      background: rgba(244, 237, 226, 0.08);
-      z-index: 2;
-    }
-
-    .hero-video-slide:last-child::after {
-      display: none;
-    }
-
-    .hero-video-frame video {
-      width: max(100%, calc(100dvh * 0.5625));
-      height: 100%;
-      min-width: 100%;
-      min-height: 100%;
-    }
-  }
-
-  @media (max-width: 991.98px) {
-    .hero-video-frame video {
-      width: 100%;
-      height: 100%;
-    }
-  }
-
-  .hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      to bottom,
-      rgba(15, 12, 8, 0.46) 0%,
-      rgba(15, 12, 8, 0.28) 30%,
-      rgba(15, 12, 8, 0.68) 70%,
-      rgba(15, 12, 8, 0.94) 100%
-    );
-    z-index: 2;
-    pointer-events: none;
-  }
-
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 0 2.5rem clamp(4rem, 8dvh, 7rem);
-    max-width: 900px;
-  }
-
-  .hero-eyebrow {
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--terra);
-    margin-bottom: 1.15rem;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeUp 0.8s 0.3s forwards;
-  }
-
-  .hero-title {
-    font-family: var(--font-serif);
-    font-size: clamp(3rem, 8vw, 6.5rem);
-    font-weight: 300;
-    line-height: 1.04;
-    letter-spacing: -0.01em;
-    margin-bottom: 1.2rem;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeUp 0.9s 0.5s forwards;
-  }
-
-  .hero-title em {
-    font-style: italic;
-    color: var(--terra);
-    font-weight: 300;
-  }
-
-  .hero-sub {
-    font-size: 1rem;
-    font-weight: 300;
-    line-height: 1.7;
-    color: rgba(244, 237, 226, 0.7);
-    max-width: 460px;
-    margin-bottom: 2.2rem;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeUp 0.8s 0.7s forwards;
-  }
-
-  .hero-ctas {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    flex-wrap: wrap;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeUp 0.8s 0.9s forwards;
-  }
-
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.85rem 2rem;
-    background: var(--terra);
-    color: var(--cream);
-    font-family: var(--font-sans);
-    font-size: 0.82rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    text-decoration: none;
-    border-radius: 3px;
-    transition: var(--transition);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .btn-primary::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--terra-dark);
-    transform: translateX(-100%);
-    transition: transform 0.4s ease;
-  }
-
-  .btn-primary:hover::before { transform: translateX(0); }
-  .btn-primary span { position: relative; z-index: 1; }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(217, 138, 95, 0.35); }
-
-  .btn-ghost {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.85rem 1.8rem;
-    background: var(--glass-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    color: var(--cream);
-    font-family: var(--font-sans);
-    font-size: 0.82rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-decoration: none;
-    border-radius: 3px;
-    border: 1px solid var(--glass-border);
-    transition: var(--transition);
-  }
-
-  .btn-ghost:hover {
-    background: rgba(244, 237, 226, 0.12);
-    border-color: rgba(244, 237, 226, 0.3);
-    transform: translateY(-2px);
-  }
-
-  .hero-dots {
-    position: absolute;
-    bottom: 2rem;
-    right: 2.5rem;
-    z-index: 2;
-    display: flex;
-    gap: 0.5rem;
-  }
-
-  .hero-dot {
-    width: 24px; height: 2px;
-    background: rgba(244, 237, 226, 0.3);
-    border-radius: 1px;
-    cursor: pointer;
-    transition: var(--transition);
-  }
-
-  .hero-dot.active {
-    background: var(--terra);
-    width: 40px;
-  }
-
-  /* ─── SECTION COMMON ─── */
-  section { padding: 7rem 2.5rem; }
-
-  .section-label {
-    display: inline-block;
-    font-size: 0.68rem;
-    font-weight: 600;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--terra);
-    margin-bottom: 0.8rem;
-  }
-
-  .section-title {
-    font-family: var(--font-serif);
-    font-size: clamp(2.2rem, 4vw, 3.4rem);
-    font-weight: 300;
-    line-height: 1.15;
-  }
-
-  .section-title em { font-style: italic; color: var(--terra); }
-
-  /* ─── QUIÉN SOY ─── */
-  #quien-soy {
-    background: linear-gradient(180deg, #1a1510 0%, #1f1a14 100%);
-  }
-
-  .about-container {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5rem;
-    align-items: center;
-  }
-
-  .about-image-wrap {
-    position: relative;
-  }
-
-  .about-photo {
-    width: 100%;
-    aspect-ratio: 3/4;
-    border-radius: 2px;
-    position: relative;
-    overflow: hidden;
-    background: #2d2318;
-  }
-
-  .about-photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center top;
-    display: block;
-  }
-
-  .about-photo::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, transparent 60%, rgba(217, 138, 95, 0.1) 100%);
-  }
-
-  .about-photo-label {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: rgba(244, 237, 226, 0.25);
-  }
-
-  .about-photo-label .icon { font-size: 3rem; margin-bottom: 0.5rem; }
-  .about-photo-label p { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; }
-
-  .about-accent {
-    position: absolute;
-    bottom: -1.5rem;
-    right: -1.5rem;
-    width: 60%;
-    height: 60%;
-    border: 1px solid rgba(217, 138, 95, 0.2);
-    border-radius: 2px;
-    z-index: -1;
-  }
-
-  .about-text { }
-
-  .about-text .section-label { margin-bottom: 0.5rem; }
-
-  .about-name {
-    font-family: var(--font-serif);
-    font-size: clamp(2rem, 3.5vw, 3rem);
-    font-weight: 300;
-    line-height: 1.1;
-    margin-bottom: 1.5rem;
-  }
-
-  .about-name em { font-style: italic; color: var(--terra); }
-
-  .about-bio {
-    font-size: 1rem;
-    font-weight: 300;
-    line-height: 1.9;
-    color: rgba(244, 237, 226, 0.7);
-    margin-bottom: 2rem;
-  }
-
-  .about-location {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.78rem;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    color: var(--sand);
-    text-transform: uppercase;
-    padding: 0.6rem 1.2rem;
-    background: rgba(107, 127, 106, 0.1);
-    border: 1px solid rgba(107, 127, 106, 0.25);
-    border-radius: 2px;
-  }
-
-  /* ─── SERVICIOS ─── */
-  #servicios {
-    background: #1f1a14;
-    position: relative;
-    overflow: hidden;
-  }
-
-  #servicios::before {
-    content: '';
-    position: absolute;
-    top: -200px; right: -200px;
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(217, 138, 95, 0.04) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .servicios-header {
-    max-width: 1100px;
-    margin: 0 auto 3.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
-  .servicios-grid {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.2rem;
-  }
-
-  .service-card {
-    position: relative;
-    padding: 2rem 1.8rem;
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: 4px;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    transition: var(--transition);
-    overflow: hidden;
-    --mx: 50%; --my: 50%;
-  }
-
-  .service-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at var(--mx) var(--my), rgba(217, 138, 95, 0.08) 0%, transparent 60%);
-    pointer-events: none;
-  }
-
-  .service-card::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at var(--mx) var(--my), rgba(217, 138, 95, 0.12) 0%, transparent 50%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-  }
-
-  .service-card:hover {
-    border-color: rgba(217, 138, 95, 0.3);
-    transform: translateY(-3px);
-    box-shadow: 0 16px 40px rgba(0,0,0,0.3);
-  }
-
-  .service-card:hover::after { opacity: 1; }
-
-  .service-icon {
-    width: 52px;
-    height: 52px;
-    margin-bottom: 1rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid rgba(244, 237, 226, 0.14);
-    border-radius: 50%;
-    background: rgba(244, 237, 226, 0.03);
-    color: var(--terra);
-  }
-
-  .service-icon svg {
-    width: 24px;
-    height: 24px;
-    stroke: currentColor;
-  }
-
-  .service-title {
-    font-family: var(--font-serif);
-    font-size: 1.3rem;
-    font-weight: 400;
-    margin-bottom: 0.6rem;
-    color: var(--cream);
-  }
-
-  .service-desc {
-    font-size: 0.85rem;
-    font-weight: 300;
-    line-height: 1.7;
-    color: rgba(244, 237, 226, 0.55);
-  }
-
-  .servicios-location {
-    max-width: 1100px;
-    margin: 2.5rem auto 0;
-    text-align: center;
-    padding: 1.2rem;
-    border-top: 1px solid var(--glass-border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    color: rgba(244, 237, 226, 0.45);
-    font-size: 0.82rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  /* ─── PORTAFOLIO ─── */
-  #portafolio {
-    background: linear-gradient(180deg, #1a1510 0%, #161210 100%);
-  }
-
-  .portafolio-header {
-    max-width: 1100px;
-    margin: 0 auto 4rem;
-    text-align: center;
-  }
-
-  .portafolio-header .section-title { margin-bottom: 0.8rem; }
-
-  .portafolio-header p {
-    font-size: 0.9rem;
-    font-weight: 300;
-    color: rgba(244, 237, 226, 0.5);
-    letter-spacing: 0.05em;
-  }
-
-  .portfolio-categories {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 4rem;
-  }
-
-  .portfolio-category {
-    position: relative;
-  }
-
-  .category-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
-  .category-title {
-    font-family: var(--font-serif);
-    font-size: clamp(1.6rem, 3vw, 2.2rem);
-    font-weight: 300;
-    letter-spacing: 0.01em;
-  }
-
-  .category-title em { font-style: italic; color: var(--terra); }
-
-  .btn-cotizar {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.7rem 1.5rem;
-    background: transparent;
-    color: var(--terra);
-    font-family: var(--font-sans);
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    text-decoration: none;
-    border: 1px solid rgba(217, 138, 95, 0.4);
-    border-radius: 2px;
-    transition: var(--transition);
-    white-space: nowrap;
-  }
-
-  .btn-cotizar:hover {
-    background: rgba(217, 138, 95, 0.1);
-    border-color: var(--terra);
-    transform: translateY(-1px);
-  }
-
-  .slider-wrap {
-    position: relative;
-    overflow: hidden;
-    border-radius: 3px;
-  }
-
-  .slider-track {
-    display: flex;
-    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  .slide-item {
-    flex: 0 0 calc(33.333% - 0.55rem);
-    margin-right: 0.83rem;
-    aspect-ratio: 3/4;
-    border-radius: 3px;
-    overflow: hidden;
-    position: relative;
-    cursor: pointer;
-    transition: var(--transition);
-  }
-
-  .slide-item:hover { transform: scale(1.01); }
-
-  .slide-item:last-child { margin-right: 0; }
-  /* ─── ASPECT RATIO POR CATEGORÍA ─── */
-  /* Retratos verticales: personas completas sin recorte */
-  .cat-gastro,
-  .cat-cumple,
-  .cat-marca,
-  .cat-general,
-  .cat-eventos,
-  .cat-productos {
-    aspect-ratio: 3/4;
-  }
-
-
-
-  .slide-item img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    transition: var(--transition);
-    display: block;
-  }
-
-  .slide-item:hover img { transform: scale(1.03); }
-
-  .slide-photo-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.08);
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  .slide-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 50%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: 2;
-  }
-
-  .slide-item:hover .slide-overlay { opacity: 1; }
-
-  /* Categorías de portafolio — estilos por clase si se requieren ajustes futuros */
-
-  .slider-label {
-    position: absolute;
-    bottom: 0.8rem;
-    left: 1rem;
-    font-size: 0.7rem;
-    font-weight: 500;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: rgba(244, 237, 226, 0.5);
-    z-index: 3;
-  }
-
-  .slider-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 1rem;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-
-  .slider-nav-controls {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-left: auto;
-  }
-
-  .slider-btn {
-    width: 36px; height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: 2px;
-    color: var(--cream);
-    cursor: pointer;
-    transition: var(--transition);
-    backdrop-filter: blur(8px);
-  }
-
-  .slider-btn:hover {
-    background: rgba(217, 138, 95, 0.15);
-    border-color: rgba(217, 138, 95, 0.4);
-  }
-
-  .slider-btn svg { width: 14px; height: 14px; }
-
-  /* ─── LIGHTBOX ─── */
-  .lightbox {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 2000;
-    background: rgba(10, 8, 5, 0.96);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-  }
-
-  .lightbox.open { display: flex; }
-
-  .lightbox-content {
-    width: min(92vw, 1200px);
-    max-height: 90vh;
-    position: relative;
-    border-radius: 3px;
-  }
-
-  .lightbox-image {
-    width: 100%;
-    max-width: 100%;
-    max-height: 85vh;
-    display: block;
-    object-fit: contain;
-    object-position: center;
-    border-radius: 2px;
-  }
-
-  .lightbox-close {
-    position: absolute;
-    top: 1rem; right: 1rem;
-    width: 36px; height: 36px;
-    background: rgba(244, 237, 226, 0.1);
-    border: 1px solid rgba(244, 237, 226, 0.2);
-    border-radius: 2px;
-    color: var(--cream);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    transition: var(--transition);
-  }
-
-  .lightbox-close:hover { background: rgba(217, 138, 95, 0.2); }
-
-  /* ─── CONTACTO ─── */
-  #contacto {
-    background: #1f1a14;
-    position: relative;
-    overflow: hidden;
-  }
-
-  #contacto::before {
-    content: '';
-    position: absolute;
-    bottom: -300px; left: -300px;
-    width: 700px; height: 700px;
-    background: radial-gradient(circle, rgba(91, 125, 140, 0.06) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .contacto-inner {
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: center;
-  }
-
-  .contacto-inner .section-label { margin-bottom: 0.5rem; }
-  .contacto-inner .section-title { margin-bottom: 1rem; }
-
-  .contacto-sub {
-    font-size: 0.95rem;
-    font-weight: 300;
-    line-height: 1.8;
-    color: rgba(244, 237, 226, 0.55);
-    margin-bottom: 3rem;
-    max-width: 480px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .contacto-card {
-    position: relative;
-    padding: 3rem 2.5rem;
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: 4px;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    overflow: hidden;
-    --mx: 50%; --my: 50%;
-  }
-
-  .contacto-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at var(--mx) var(--my), rgba(217, 138, 95, 0.06) 0%, transparent 60%);
-    pointer-events: none;
-  }
-
-  .contacto-card::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at var(--mx) var(--my), rgba(217, 138, 95, 0.1) 0%, transparent 50%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-  }
-
-  .contacto-card:hover::after { opacity: 1; }
-
-  .contacto-icon {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    display: block;
-  }
-
-  .contacto-card h3 {
-    font-family: var(--font-serif);
-    font-size: 1.8rem;
-    font-weight: 300;
-    margin-bottom: 0.5rem;
-  }
-
-  .contacto-card p {
-    font-size: 0.85rem;
-    font-weight: 300;
-    color: rgba(244, 237, 226, 0.5);
-    margin-bottom: 2rem;
-    letter-spacing: 0.05em;
-  }
-
-  .btn-whatsapp {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.7rem;
-    padding: 1rem 2.5rem;
-    background: linear-gradient(135deg, #25D366, #1da851);
-    color: white;
-    font-family: var(--font-sans);
-    font-size: 0.85rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    text-decoration: none;
-    border-radius: 3px;
-    transition: var(--transition);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .btn-whatsapp:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(37, 211, 102, 0.25);
-  }
-
-  .btn-whatsapp svg { width: 18px; height: 18px; }
-
-  .contacto-divider {
-    width: 1px; height: 3rem;
-    background: var(--glass-border);
-    margin: 2rem auto;
-  }
-
-  .contacto-info {
-    font-size: 0.78rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: rgba(244, 237, 226, 0.3);
-  }
-
-  /* ─── FOOTER ─── */
-  footer {
-    padding: 2rem 2.5rem;
-    background: #0f0c09;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-top: 1px solid rgba(244, 237, 226, 0.05);
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
-  .footer-logo {
-    font-family: var(--font-serif);
-    font-size: 1.1rem;
-    font-weight: 400;
-    color: rgba(244, 237, 226, 0.5);
-    text-decoration: none;
-  }
-
-  .footer-logo span { color: var(--terra); font-style: italic; }
-
-  .footer-copy {
-    font-size: 0.72rem;
-    color: rgba(244, 237, 226, 0.2);
-    letter-spacing: 0.08em;
-  }
-
-  /* ─── REVEAL ANIMATIONS ─── */
-  @keyframes fadeUp {
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-
-  .reveal.revealed {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .reveal-delay-1 { transition-delay: 0.1s; }
-  .reveal-delay-2 { transition-delay: 0.2s; }
-  .reveal-delay-3 { transition-delay: 0.3s; }
-  .reveal-delay-4 { transition-delay: 0.4s; }
-  .reveal-delay-5 { transition-delay: 0.5s; }
-
-  /* ─── MOBILE MENU ─── */
-  .mobile-menu {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 999;
-    background: rgba(15, 12, 9, 0.97);
-    backdrop-filter: blur(20px);
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 2.5rem;
-  }
-
-  .mobile-menu.open { display: flex; }
-
-  .mobile-menu a {
-    font-family: var(--font-serif);
-    font-size: 2.2rem;
-    font-weight: 300;
-    color: var(--cream);
-    text-decoration: none;
-    letter-spacing: 0.05em;
-    transition: color 0.3s ease;
-  }
-
-  .mobile-menu a:hover { color: var(--terra); }
-
-  /* ─── RESPONSIVE ─── */
-  @media (max-width: 900px) {
-    .servicios-grid { grid-template-columns: repeat(2, 1fr); }
-    .about-container { grid-template-columns: 1fr; gap: 3rem; }
-    .about-image-wrap { max-width: 360px; margin: 0 auto; }
-
-    .nav-links { display: none; }
-    .nav-instagram.desktop { display: none; }
-    .hamburger { display: flex; }
-
-    .slide-item { flex: 0 0 calc(50% - 0.4rem); }
-  }
-
-
-  .lb-nav {
-    position: absolute;
-    top: 50%; transform: translateY(-50%);
-    background: rgba(244,237,226,0.1);
-    border: 1px solid rgba(244,237,226,0.2);
-    color: var(--cream);
-    font-size: 2.4rem; line-height: 1;
-    width: 48px; height: 48px;
-    border-radius: 2px;
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    transition: background 0.2s ease;
-    z-index: 10;
-  }
-  .lb-nav:hover { background: rgba(217,138,95,0.35); }
-  .lb-prev { left: -64px; }
-  .lb-next { right: -64px; }
-  .lb-counter {
-    position: absolute;
-    bottom: -2rem; left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.72rem; letter-spacing: 0.14em;
-    color: rgba(244,237,226,0.35);
-    white-space: nowrap;
-  }
-  @media (max-width: 768px) {
-    .lb-prev { left: 8px; }
-    .lb-next { right: 8px; }
-    .lb-nav { width: 40px; height: 40px; font-size: 2rem; }
-  }
-  @media (max-width: 600px) {
-    section { padding: 5rem 1.5rem; }
-    nav { padding: 1rem 1.5rem; }
-
-    .servicios-grid { grid-template-columns: 1fr; }
-    .hero-content { padding: 0 1.5rem clamp(3.5rem, 7vh, 5rem); }
-
-    .slide-item { flex: 0 0 calc(85% - 0.4rem); }
-
-    .category-header { flex-direction: column; align-items: flex-start; margin-bottom: 1rem; }
-    .slider-nav { align-items: flex-start; }
-    .slider-nav-controls { margin-left: 0; }
-    .btn-cotizar { order: -1; }
-    .lightbox-content { width: 92vw; }
-    .lightbox-image { aspect-ratio: auto; min-height: 55vw; }
-
-    .contacto-card { padding: 2rem 1.5rem; }
-
-    footer { flex-direction: column; text-align: center; }
-
-    .servicios-header { flex-direction: column; }
-    /* Todo el portafolio en mobile: 80% de ancho */
-    .cat-gastro,
-    .cat-cumple,
-    .cat-marca,
-    .cat-general,
-    .cat-eventos,
-    .cat-productos {
-      flex: 0 0 calc(80% - 0.4rem);
-    }
-
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Klubvisual | Fotografía Profesional por Karen Romero</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <style>
+        /* ================= VARIABLES ================= */
+        :root {
+            --clr-cream: #F4EDE2;
+            --clr-terra: #D98A5F;
+            --clr-slate: #5B7D8C;
+            --clr-taupe: #BEAD96;
+            
+            --font-heading: 'Cormorant Garamond', serif;
+            --font-body: 'Plus Jakarta Sans', sans-serif;
+            
+        }
+
+        /* ================= RESET & BASE ================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        html { overflow-x: hidden; }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--clr-cream);
+            color: var(--clr-slate);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img { max-width: 100%; height: auto; display: block; }
+
+        /* ================= UTILITIES & COMPONENTS ================= */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-padding { padding: 5rem 0; }
+        .text-center { text-align: center; }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--clr-slate);
+        }
+
+        /* Botones */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.8rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--clr-terra);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(217, 138, 95, 0.4);
+        }
+
+        .btn-primary:hover {
+            background-color: #c4764d;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(217, 138, 95, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            color: var(--clr-cream);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Glassmorphism Card con Spotlight */
+        .glass-card {
+            position: relative;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(190, 173, 150, 0.4); /* Taupe translúcido */
+            border-radius: 16px;
+            padding: 2rem;
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            box-shadow: 0 8px 32px rgba(91, 125, 140, 0.05);
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 150%; height: 150%;
+            background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .glass-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(400px circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.6), transparent 40%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(217, 138, 95, 0.6); /* Borde Terra al hover */
+        }
+
+        .glass-card:hover::after { opacity: 1; }
+        .glass-card > * { position: relative; z-index: 2; }
+
+        /* Animaciones on Scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ================= HEADER & NAV ================= */
+        header.navbar {
+            position: fixed;
+            top: 0; width: 100%;
+            z-index: 1000;
+            background: rgba(244, 237, 226, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(190, 173, 150, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--clr-slate);
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--clr-slate);
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover { color: var(--clr-terra); }
+
+        .menu-toggle { display: none; background: none; border: none; cursor: pointer; color: var(--clr-slate); }
+
+        /* ================= HERO SECTION ================= */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: #1f2428;
+        }
+
+        .hero-video-stage,
+        .hero-video-mobile {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .hero-video-stage {
+            display: flex;
+            width: calc(100% + 3px);
+            left: -1.5px;
+        }
+
+        .hero-video-col {
+            position: relative;
+            flex: 1 1 25%;
+            height: 100%;
+            overflow: hidden;
+            background: #1f2428;
+            margin-right: -1px;
+        }
+
+        .hero-video-col:last-child {
+            margin-right: 0;
+        }
+
+        .hero-video-col video,
+        .hero-video-mobile video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            border: 0;
+        }
+
+        .hero-video-col video {
+            transform: scale(1.01);
+            transform-origin: center;
+        }
+
+        .hero-video-mobile {
+            display: none;
+        }
+
+        .hero-video-mobile video {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.9s ease;
+            pointer-events: none;
+        }
+
+        .hero-video-mobile video.is-active {
+            opacity: 1;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background:
+                linear-gradient(to right, rgba(28, 36, 42, 0.76), rgba(28, 36, 42, 0.28)),
+                linear-gradient(to top, rgba(28, 36, 42, 0.42), rgba(28, 36, 42, 0.18));
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: var(--clr-cream);
+            max-width: 600px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .hero-buttons { display: flex; gap: 1rem; }
+
+        /* ================= QUIÉN SOY ================= */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-img {
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(91, 125, 140, 0.2);
+            position: relative;
+        }
+
+        .about-img::after {
+            content: '';
+            position: absolute;
+            top: -15px; right: -15px; bottom: 15px; left: 15px;
+            border: 2px solid var(--clr-taupe);
+            border-radius: 16px;
+            z-index: -1;
+        }
+
+        /* ================= SERVICIOS ================= */
+        .services { background-color: rgba(190, 173, 150, 0.1); }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card { text-align: center; }
+        .service-card i { color: var(--clr-terra); margin-bottom: 1rem; }
+        .service-card h3 { margin-bottom: 0.5rem; font-family: var(--font-body); font-weight: 600; font-size: 1.2rem;}
+        .service-card p { font-size: 0.9rem; opacity: 0.8; }
+
+        /* ================= PORTAFOLIO (CRÍTICO) ================= */
+        .portfolio-category { margin-bottom: 4rem; }
+        .portfolio-header {
+            display: block;
+            margin-bottom: 1.5rem;
+        }
+
+        .portfolio-header h3 {
+            font-size: 2rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--clr-taupe);
+        }
+
+        .portfolio-cta {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .slider-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .slider-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            scrollbar-width: none; /* Firefox */
+            gap: 1rem;
+            width: 100%;
+            padding-bottom: 1rem; /* Para sombras */
+        }
+        .slider-container::-webkit-scrollbar { display: none; } /* Chrome */
+
+        .slider-item {
+            flex: 0 0 calc(33.333% - 1rem);
+            scroll-snap-align: start;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .slider-item img {
+            width: 100%;
+            height: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+            object-position: center center;
+            transition: transform 0.5s ease;
+            display: block;
+        }
+
+        .slider-item {
+            aspect-ratio: 3/4;
+        }
+
+        /* Overlay sutil sobre cada foto */
+        .slide-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.08);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .slider-item:hover img { transform: scale(1.05); }
+
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(244, 237, 226, 0.8);
+            backdrop-filter: blur(4px);
+            border: 1px solid var(--clr-taupe);
+            border-radius: 50%;
+            width: 40px; height: 40px;
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer;
+            z-index: 10;
+            color: var(--clr-slate);
+            transition: all 0.3s;
+        }
+        .slider-btn:hover { background: var(--clr-terra); color: white; }
+        .slider-btn.prev { left: -20px; }
+        .slider-btn.next { right: -20px; }
+
+        /* Lightbox Modal */
+        .lightbox {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .lightbox.active { opacity: 1; pointer-events: auto; }
+        .lightbox img { max-width: 90%; max-height: 90vh; border-radius: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+        .lightbox-close {
+            position: fixed; top: 16px; right: 20px;
+            color: white; cursor: pointer; padding: 10px;
+            z-index: 2010;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            width: 44px; height: 44px;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s;
+        }
+        .lightbox-close:hover { background: rgba(217,138,95,0.55); }
+
+        /* ================= CONTACTO ================= */
+        .contact { background-color: var(--clr-slate); color: var(--clr-cream); }
+        .contact-card {
+            background: rgba(255, 255, 255, 0.05);
+            max-width: 600px; margin: 0 auto; text-align: center;
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+        .contact-card .section-title { color: var(--clr-cream); }
+        .contact-card p { margin-bottom: 2rem; opacity: 0.8; }
+
+        /* Footer */
+        footer {
+            background: #4A6774; color: var(--clr-cream);
+            text-align: center; padding: 2rem 0; font-size: 0.9rem;
+        }
+
+        /* ================= RESPONSIVE ================= */
+        @media (max-width: 992px) {
+            .slider-item { flex: 0 0 calc(50% - 1rem); }
+            .hero h1 { font-size: 3rem; }
+            .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: absolute; top: 100%; left: 0; width: 100%;
+                background: var(--clr-cream);
+                flex-direction: column; gap: 0;
+                border-bottom: 1px solid var(--clr-taupe);
+                clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+                transition: clip-path 0.3s ease-out;
+            }
+            .nav-links.active { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+            .nav-links li { width: 100%; text-align: center; }
+            .nav-links a { display: block; padding: 1rem; }
+            .menu-toggle { display: block; }
+            
+            .hero-video-stage { display: none; }
+            .hero-video-mobile { display: block; }
+            .hero-buttons { flex-direction: column; }
+            .slider-item { flex: 0 0 80%; }
+            .slider-btn { display: none; } /* En mobile se usa swipe nativo */
+            
+            .portfolio-header h3 { font-size: 2.2rem; }
+            .portfolio-cta .btn { width: 100%; }
+        }
+
+        /* Lightbox navegación */
+        .lb-nav {
+            position: absolute;
+            top: 50%; transform: translateY(-50%);
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.25);
+            color: white;
+            font-size: 2.8rem;
+            line-height: 1;
+            width: 52px; height: 52px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s ease;
+            backdrop-filter: blur(8px);
+            z-index: 10;
+        }
+        .lb-nav:hover { background: rgba(217,138,95,0.55); }
+        .lb-prev { left: 20px; }
+        .lb-next { right: 20px; }
+        .lb-counter {
+            position: absolute;
+            bottom: 18px; left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.78rem;
+            letter-spacing: 0.12em;
+            color: rgba(255,255,255,0.45);
+        }
+        @media (max-width: 600px) {
+            .lb-prev { left: 8px; }
+            .lb-next { right: 8px; }
+            .lb-nav { width: 42px; height: 42px; font-size: 2rem; }
+            .lightbox-close { position: fixed !important; top: 14px !important; right: 14px !important; }
+        }
+    </style>
 </head>
 <body>
 
-<!-- NAVIGATION -->
-<nav id="navbar">
-<a href="#inicio" class="nav-logo">Klubvisual <span>by Karen Romero</span></a>  <ul class="nav-links">
-    <li><a href="#inicio">Inicio</a></li>
-    <li><a href="#quien-soy">Quién soy</a></li>
-    <li><a href="#servicios">Servicios</a></li>
-    <li><a href="#portafolio">Portafolio</a></li>
-    <li><a href="#contacto">Contacto</a></li>
-    <li>
-      <a href="https://instagram.com/klubvisual" target="_blank" rel="noopener" class="nav-instagram desktop" aria-label="Instagram">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-          <circle cx="12" cy="12" r="4"/>
-          <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>
-        </svg>
-      </a>
-    </li>
-  </ul>
-  <button class="hamburger" id="hamburger" aria-label="Menú">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
-
-<!-- MOBILE MENU -->
-<div class="mobile-menu" id="mobileMenu">
-  <a href="#inicio" class="mobile-link">Inicio</a>
-  <a href="#quien-soy" class="mobile-link">Quién soy</a>
-  <a href="#servicios" class="mobile-link">Servicios</a>
-  <a href="#portafolio" class="mobile-link">Portafolio</a>
-  <a href="#contacto" class="mobile-link">Contacto</a>
-  <a href="https://instagram.com/klubvisual" target="_blank" style="font-family: var(--font-sans); font-size: 0.9rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--terra);">@klubvisual</a>
-</div>
-
-<!-- HERO -->
-<section id="inicio">
-  <div class="hero-slides">
-    <div class="hero-video-slide active" data-video-slide="0">
-      <div class="hero-video-frame" aria-hidden="true">
-        <video autoplay muted loop playsinline preload="auto" tabindex="-1">
-          <source src="https://res.cloudinary.com/duaa18leu/video/upload/f_auto,q_auto/IMG_7279_v86h4y.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="hero-video-shade"></div>
-    </div>
-    <div class="hero-video-slide" data-video-slide="1">
-      <div class="hero-video-frame" aria-hidden="true">
-        <video autoplay muted loop playsinline preload="auto" tabindex="-1">
-          <source src="https://res.cloudinary.com/duaa18leu/video/upload/f_auto,q_auto/IMG_7270_iqevhu.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="hero-video-shade"></div>
-    </div>
-    <div class="hero-video-slide" data-video-slide="2">
-      <div class="hero-video-frame" aria-hidden="true">
-        <video autoplay muted loop playsinline preload="auto" tabindex="-1">
-          <source src="https://res.cloudinary.com/duaa18leu/video/upload/f_auto,q_auto/IMG_7268_w58rbm.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="hero-video-shade"></div>
-    </div>
-    <div class="hero-video-slide" data-video-slide="3">
-      <div class="hero-video-frame" aria-hidden="true">
-        <video autoplay muted loop playsinline preload="auto" tabindex="-1">
-          <source src="https://res.cloudinary.com/duaa18leu/video/upload/f_auto,q_auto/IMG_7269_aftdpv.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="hero-video-shade"></div>
-    </div>
-  </div>
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <p class="hero-eyebrow">Fotografía Premium · Santiago</p>
-    <h1 class="hero-title">La imagen que<br><em>habla por ti</em></h1>
-    <p class="hero-sub">Capturo la esencia de tus momentos, tu marca y tus historias con una mirada única y un estilo inconfundiblemente auténtico.</p>
-    <div class="hero-ctas">
-      <a href="https://wa.me/56900000000?text=Hola%20Karen%2C%20me%20interesa%20cotizar%20una%20sesión" class="btn-primary" target="_blank" rel="noopener">
-        <span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px; margin-right:4px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Hablemos por WhatsApp
-        </span>
-      </a>
-      <a href="#portafolio" class="btn-ghost">Ver portafolio</a>
-    </div>
-  </div>
-  <div class="hero-dots">
-    <div class="hero-dot active" data-slide="0"></div>
-    <div class="hero-dot" data-slide="1"></div>
-    <div class="hero-dot" data-slide="2"></div>
-    <div class="hero-dot" data-slide="3"></div>
-  </div>
-</section>
-
-<!-- QUIÉN SOY -->
-<section id="quien-soy">
-  <div class="about-container">
-    <div class="about-image-wrap reveal">
-      <div class="about-photo">
-        <!-- Posición 1 -->
-        <img src="https://i.postimg.cc/661yDcvd/IMG-7260-JPG.jpg" alt="Karen Romero — Fotógrafa" loading="lazy" style="object-position:center 10%" style="object-position:center 8%">
-      </div>
-      <div class="about-accent"></div>
-    </div>
-    <div class="about-text">
-      <span class="section-label reveal">Sobre mí</span>
-      <h2 class="about-name reveal reveal-delay-1">Karen<br><em>Romero</em></h2>
-      <p class="about-bio reveal reveal-delay-2">
-        Soy fotógrafa y creadora de contenido con una pasión genuina por contar historias a través de imágenes. Cada sesión es una oportunidad de crear algo único, cargado de emoción y autenticidad.<br><br>
-        Trabajo con marcas, emprendedores y personas que entienden que una buena fotografía no solo se ve bonita: conecta, comunica y convierte.
-      </p>
-      <div class="about-location reveal reveal-delay-3">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-        Santiago de Chile
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SERVICIOS -->
-<section id="servicios">
-  <div class="servicios-header">
-    <div>
-      <span class="section-label reveal">Lo que hago</span>
-      <h2 class="section-title reveal reveal-delay-1">Servicios <em>fotográficos</em></h2>
-    </div>
-    <a href="https://wa.me/56900000000?text=Hola%20Karen%2C%20quiero%20consultar%20sobre%20tus%20servicios" class="btn-ghost reveal reveal-delay-2" target="_blank">Cotiza tu sesión →</a>
-  </div>
-  <div class="servicios-grid">
-    <div class="service-card reveal reveal-delay-1">
-      <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3v7a3 3 0 0 0 3 3h1v8"/><path d="M8 3v7"/><path d="M12 3v7"/><path d="M18 3v18"/><path d="M18 10c1.657 0 3-1.79 3-4V3h-6v3c0 2.21 1.343 4 3 4Z"/></svg></span>
-      <h3 class="service-title">Fotografía Gastronómica</h3>
-      <p class="service-desc">Imágenes que despiertan el apetito. Ideal para restaurantes, cafeterías, productos y marcas de alimentos.</p>
-    </div>
-    <div class="service-card reveal reveal-delay-2">
-      <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.9L19 10l-5.1 2.1L12 17l-1.9-4.9L5 10l5.1-2.1L12 3Z"/><path d="M19 3v4"/><path d="M21 5h-4"/></svg></span>
-      <h3 class="service-title">Marca Personal</h3>
-      <p class="service-desc">Sesiones que transmiten tu esencia profesional. Para emprendedores, coaches y profesionales que quieren destacar.</p>
-    </div>
-    <div class="service-card reveal reveal-delay-3">
-      <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v6"/><path d="M18 3v6"/><path d="M4 9h16"/><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 13h3"/><path d="M8 17h8"/></svg></span>
-      <h3 class="service-title">Eventos & Celebraciones</h3>
-      <p class="service-desc">Capturamos cada momento especial: cumpleaños, aniversarios, inauguraciones y todo lo que merece recordarse.</p>
-    </div>
-    <div class="service-card reveal reveal-delay-1">
-      <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h3l2-2h6l2 2h3a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z"/><circle cx="12" cy="13" r="4"/></svg></span>
-      <h3 class="service-title">Contenido para Redes</h3>
-      <p class="service-desc">Fotos y materiales pensados para impactar en Instagram, TikTok y otras plataformas digitales.</p>
-    </div>
-    <div class="service-card reveal reveal-delay-2">
-      <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7V6a6 6 0 0 1 12 0v1"/><path d="M4 7h16l-1 13H5L4 7Z"/><path d="M9 11a3 3 0 0 0 6 0"/></svg></span>
-      <h3 class="service-title">Fotografía de Producto</h3>
-      <p class="service-desc">Imágenes limpias y atractivas para ecommerce, catálogos y material publicitario de tus productos.</p>
-    </div>
-    <div class="service-card reveal reveal-delay-3">
-      <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18c1.2 0 2-.8 2-1.8 0-.8-.4-1.4-.4-2.1 0-1 1-1.3 1.8-1.3H17a4 4 0 0 0 0-8 9 9 0 0 0-5-1.8Z"/><circle cx="7.5" cy="10.5" r="1"/><circle cx="12" cy="8.5" r="1"/><circle cx="16.5" cy="10.5" r="1"/></svg></span>
-      <h3 class="service-title">Sesiones Creativas</h3>
-      <p class="service-desc">Proyectos artísticos personalizados donde damos vida a tu visión con libertad creativa y resultado premium.</p>
-    </div>
-  </div>
-  <div class="servicios-location reveal">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-    Servicios disponibles en Santiago de Chile
-  </div>
-</section>
-
-<!-- PORTAFOLIO -->
-<section id="portafolio">
-  <div class="portafolio-header">
-    <span class="section-label reveal">Mi trabajo</span>
-    <h2 class="section-title reveal reveal-delay-1">Portafolio</h2>
-    <p class="reveal reveal-delay-2">Cada imagen es una historia. Explora mis categorías y cotiza tu sesión.</p>
-  </div>
-
-  <div class="portfolio-categories">
-
-    <!-- GASTRONOMÍA -->
-    <div class="portfolio-category reveal">
-      <div class="category-header">
-        <h3 class="category-title"><em>Gastronomía</em></h3>
-      </div>
-      <div class="slider-wrap">
-        <div class="slider-track" data-slider="0">
-          <!-- Posición 1 -->
-          <div class="slide-item cat-gastro" data-lightbox="true" data-img="https://i.postimg.cc/ncyMLLT4/IMG-9365-JPG.jpg">
-            <img src="https://i.postimg.cc/ncyMLLT4/IMG-9365-JPG.jpg" alt="Gastronomía 02" loading="lazy">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
-          <!-- Posición 3 -->
-          <div class="slide-item cat-gastro" data-lightbox="true" data-img="https://i.postimg.cc/m2356sB7/IMG-9357-JPG.jpg">
-            <img src="https://i.postimg.cc/m2356sB7/IMG-9357-JPG.jpg" alt="Gastronomía 03" loading="lazy">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
-          <!-- Posición 4 -->
-          <div class="slide-item cat-gastro" data-lightbox="true" data-img="https://i.postimg.cc/GpTPVFGf/IMG-9375-JPG.jpg">
-            <img src="https://i.postimg.cc/GpTPVFGf/IMG-9375-JPG.jpg" alt="Gastronomía 04" loading="lazy">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
-          <!-- Posición 5 -->
-          <div class="slide-item cat-gastro" data-lightbox="true" data-img="https://i.postimg.cc/2Swg3ft5/IMG-9353-JPG.jpg">
-            <img src="https://i.postimg.cc/2Swg3ft5/IMG-9353-JPG.jpg" alt="Gastronomía 05" loading="lazy">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
-          <!-- Posición 6 -->
-          <div class="slide-item cat-gastro" data-lightbox="true" data-img="https://i.postimg.cc/FR2BwFYW/IMG-9359-JPG.jpg">
-            <img src="https://i.postimg.cc/FR2BwFYW/IMG-9359-JPG.jpg" alt="Gastronomía 06" loading="lazy">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
-          <!-- Posición 7 -->
-          <div class="slide-item cat-gastro" data-lightbox="true" data-img="https://i.postimg.cc/RhdwKXxC/IMG-9364-JPG.jpg">
-            <img src="https://i.postimg.cc/RhdwKXxC/IMG-9364-JPG.jpg" alt="Gastronomía 07" loading="lazy">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
-          <!-- Posición 8 -->
-          <div class="slide-item cat-gastro" data-lightbox="true" data-img="https://i.postimg.cc/SK98DypQ/IMG-9373-JPG.jpg">
-            <img src="https://i.postimg.cc/SK98DypQ/IMG-9373-JPG.jpg" alt="Gastronomía 08" loading="lazy">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
-          <!-- Posición 9 -->
-          <div class="slide-item cat-gastro" data-lightbox="true" data-img="https://i.postimg.cc/yxLSkx0W/IMG-9376-JPG.jpg">
-            <img src="https://i.postimg.cc/yxLSkx0W/IMG-9376-JPG.jpg" alt="Gastronomía 09" loading="lazy">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
-          <!-- Posición 10 -->
-          <div class="slide-item cat-gastro" data-lightbox="true" data-img="https://i.postimg.cc/HWzMSZFD/IMG-9361-JPG.jpg">
-            <img src="https://i.postimg.cc/HWzMSZFD/IMG-9361-JPG.jpg" alt="Gastronomía 10" loading="lazy">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
-          <!-- Posición 11 -->
-          <div class="slide-item cat-gastro" data-lightbox="true" data-img="https://i.postimg.cc/BnrP8d19/IMG-9371-JPG.jpg">
-            <img src="https://i.postimg.cc/BnrP8d19/IMG-9371-JPG.jpg" alt="Gastronomía 11" loading="lazy">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="#inicio" class="logo">KlubVisual</a>
+            <button class="menu-toggle" id="mobile-menu-btn"><i data-feather="menu"></i></button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#quien-soy">Quién soy</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#portafolio">Portafolio</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+                <li><a href="https://instagram.com/klubvisual" target="_blank" aria-label="Instagram"><i data-feather="instagram" style="width:18px;"></i></a></li>
+            </ul>
         </div>
-      </div>
-      <div class="slider-nav">
-        <a href="https://wa.me/56900000000?text=Hola%20Karen%2C%20quiero%20cotizar%20una%20sesión%20gastronómica" class="btn-cotizar" target="_blank">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Cotiza aquí
-        </a>
-        <div class="slider-nav-controls">
-          <button class="slider-btn" data-slider="0" data-dir="-1" aria-label="Anterior">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-        </button>
-          <button class="slider-btn" data-slider="0" data-dir="1" aria-label="Siguiente">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-        </button>
+    </header>
+
+    <section id="inicio" class="hero">
+        <div class="hero-video-stage" aria-hidden="true">
+            <div class="hero-video-col"><video autoplay muted loop playsinline preload="auto"><source src="https://res.cloudinary.com/duaa18leu/video/upload/q_auto,f_auto/IMG_7279_v86h4y.mp4" type="video/mp4"></video></div>
+            <div class="hero-video-col"><video autoplay muted loop playsinline preload="auto"><source src="https://res.cloudinary.com/duaa18leu/video/upload/q_auto,f_auto/IMG_7270_iqevhu.mp4" type="video/mp4"></video></div>
+            <div class="hero-video-col"><video autoplay muted loop playsinline preload="auto"><source src="https://res.cloudinary.com/duaa18leu/video/upload/q_auto,f_auto/IMG_7268_w58rbm.mp4" type="video/mp4"></video></div>
+            <div class="hero-video-col"><video autoplay muted loop playsinline preload="auto"><source src="https://res.cloudinary.com/duaa18leu/video/upload/q_auto,f_auto/IMG_7269_aftdpv.mp4" type="video/mp4"></video></div>
         </div>
-      </div>
+        <div class="hero-video-mobile" aria-hidden="true">
+            <video class="is-active" autoplay muted playsinline preload="auto" data-hero-mobile-video><source src="https://res.cloudinary.com/duaa18leu/video/upload/q_auto,f_auto/IMG_7279_v86h4y.mp4" type="video/mp4"></video>
+            <video muted playsinline preload="auto" data-hero-mobile-video><source src="https://res.cloudinary.com/duaa18leu/video/upload/q_auto,f_auto/IMG_7270_iqevhu.mp4" type="video/mp4"></video>
+            <video muted playsinline preload="auto" data-hero-mobile-video><source src="https://res.cloudinary.com/duaa18leu/video/upload/q_auto,f_auto/IMG_7268_w58rbm.mp4" type="video/mp4"></video>
+            <video muted playsinline preload="auto" data-hero-mobile-video><source src="https://res.cloudinary.com/duaa18leu/video/upload/q_auto,f_auto/IMG_7269_aftdpv.mp4" type="video/mp4"></video>
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="container hero-content reveal">
+            <h1>Capturando la esencia de cada momento</h1>
+            <p>Especialista en fotografía de gastronomía, eventos y marcas personales. Diseño visual moderno y estético para destacar tu proyecto.</p>
+            <div class="hero-buttons">
+                <a href="#" class="btn btn-primary btn-wa" data-msg="Hola Karen, vengo desde tu sitio web y me gustaría cotizar un servicio.">
+                    <i data-feather="message-circle"></i> Hablar por WhatsApp
+                </a>
+                <a href="#portafolio" class="btn btn-secondary">Ver portafolio</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="quien-soy" class="section-padding">
+        <div class="container about-grid">
+            <div class="reveal">
+                <img src="https://i.postimg.cc/661yDcvd/IMG-7260-JPG.jpg" alt="Karen Romero" class="about-img" loading="lazy" style="width:100%; aspect-ratio:3/4; object-fit:cover; object-position:center 8%;">
+            </div>
+            <div class="reveal">
+                <h2 class="section-title">Hola, soy Karen Romero</h2>
+                <p>Soy fotógrafa y creadora de contenido apasionada por la luz, las texturas y las historias reales. Mi enfoque es crear imágenes estéticas, limpias y altamente visuales que eleven la percepción de tu marca o evento.</p>
+                <br>
+                <p>Trabajemos juntos para transformar tu visión en fotografías que conecten, conviertan y emocionen.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="servicios" class="section-padding services">
+        <div class="container">
+            <h2 class="section-title text-center reveal">Mis Servicios</h2>
+            <div class="services-grid">
+                <div class="service-card glass-card reveal">
+                    <i data-feather="coffee" style="width: 32px; height: 32px;"></i>
+                    <h3>Gastronomía</h3>
+                    <p>Fotografía culinaria que despierta el apetito. Ideal para cartas, RRSS y apps de delivery.</p>
+                </div>
+                <div class="service-card glass-card reveal" style="transition-delay: 0.1s;">
+                    <i data-feather="user" style="width: 32px; height: 32px;"></i>
+                    <h3>Marca Personal</h3>
+                    <p>Retratos corporativos y lifestyle modernos para potenciar tu identidad digital.</p>
+                </div>
+                <div class="service-card glass-card reveal" style="transition-delay: 0.2s;">
+                    <i data-feather="camera" style="width: 32px; height: 32px;"></i>
+                    <h3>Eventos</h3>
+                    <p>Cobertura documental y elegante de eventos sociales, corporativos y celebraciones.</p>
+                </div>
+                <div class="service-card glass-card reveal" style="transition-delay: 0.3s;">
+                    <i data-feather="aperture" style="width: 32px; height: 32px;"></i>
+                    <h3>Fotografía General</h3>
+                    <p>Sesiones creativas, productos y proyectos personalizados a tu medida.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portafolio" class="section-padding">
+        <div class="container">
+            <h2 class="section-title text-center reveal" style="margin-bottom: 3rem;">Portafolio</h2>
+
+            <div class="portfolio-category reveal">
+                <div class="portfolio-header">
+                    <h3>Gastronomía</h3>
+                </div>
+                <div class="slider-wrapper">
+                    <button class="slider-btn prev"><i data-feather="chevron-left"></i></button>
+                    <div class="slider-container">
+                        <div class="slider-item"><img src="https://i.postimg.cc/ncyMLLT4/IMG-9365-JPG.jpg" loading="lazy" alt="Gastronomía 1" style="object-position:center center;"><div class="slide-overlay"></div></div>
+                        <div class="slider-item"><img src="https://i.postimg.cc/m2356sB7/IMG-9357-JPG.jpg" loading="lazy" alt="Gastronomía 2" style="object-position:center center;"><div class="slide-overlay"></div></div>
+                        <div class="slider-item"><img src="https://i.postimg.cc/GpTPVFGf/IMG-9375-JPG.jpg" loading="lazy" alt="Gastronomía 3" style="object-position:center center;"><div class="slide-overlay"></div></div>
+                        <div class="slider-item"><img src="https://i.postimg.cc/2Swg3ft5/IMG-9353-JPG.jpg" loading="lazy" alt="Gastronomía 4" style="object-position:center center;"><div class="slide-overlay"></div></div>
+                        <div class="slider-item"><img src="https://i.postimg.cc/FR2BwFYW/IMG-9359-JPG.jpg" loading="lazy" alt="Gastronomía 5" style="object-position:center center;"><div class="slide-overlay"></div></div>
+                        <div class="slider-item"><img src="https://i.postimg.cc/RhdwKXxC/IMG-9364-JPG.jpg" loading="lazy" alt="Gastronomía 6" style="object-position:center center;"><div class="slide-overlay"></div></div>
+                        <div class="slider-item"><img src="https://i.postimg.cc/SK98DypQ/IMG-9373-JPG.jpg" loading="lazy" alt="Gastronomía 7" style="object-position:center center;"><div class="slide-overlay"></div></div>
+                        <div class="slider-item"><img src="https://i.postimg.cc/yxLSkx0W/IMG-9376-JPG.jpg" loading="lazy" alt="Gastronomía 8" style="object-position:center center;"><div class="slide-overlay"></div></div>
+                        <div class="slider-item"><img src="https://i.postimg.cc/HWzMSZFD/IMG-9361-JPG.jpg" loading="lazy" alt="Gastronomía 9" style="object-position:center center;"><div class="slide-overlay"></div></div>
+                        <div class="slider-item"><img src="https://i.postimg.cc/BnrP8d19/IMG-9371-JPG.jpg" loading="lazy" alt="Gastronomía 10" style="object-position:center center;"><div class="slide-overlay"></div></div>
+                    </div>
+                    <button class="slider-btn next"><i data-feather="chevron-right"></i></button>
+                </div>
+                <div class="portfolio-cta">
+                    <a href="#" class="btn btn-primary btn-wa" data-msg="Hola Karen, quiero cotizar el servicio de Gastronomía.">Cotiza aquí</a>
+                </div>
+            </div>
+
+            <div class="portfolio-category reveal">
+                <div class="portfolio-header">
+                    <h3>Cumpleaños y Celebraciones</h3>
+                </div>
+                <div class="slider-wrapper">
+                    <button class="slider-btn prev"><i data-feather="chevron-left"></i></button>
+                    <div class="slider-container">
+                        <div class="slider-item"><img src="https://i.postimg.cc/LXcmvpRw/IMG-9379-JPG.jpg" loading="lazy" alt="Cumpleaños 1" style="object-position:center 10%;"><div class="slide-overlay"></div></div>
+                        <div class="slider-item"><img src="https://i.postimg.cc/GmLdXz0Z/IMG-9268-JPG.jpg" loading="lazy" alt="Cumpleaños 2" style="object-position:center 15%;"><div class="slide-overlay"></div></div>
+                        <div class="slider-item"><img src="https://i.postimg.cc/DzDhyTW7/IMG-9340-JPG.jpg" loading="lazy" alt="Cumpleaños 3" style="object-position:center 10%;"><div class="slide-overlay"></div></div>
+                        <div class="slider-item"><img src="https://i.postimg.cc/D03KLPPm/IMG-9377-JPG.jpg" loading="lazy" alt="Cumpleaños 4" style="object-position:center 15%;"><div class="slide-overlay"></div></div>
+                        <div class="slider-item"><img src="https://i.postimg.cc/MKxSGtGG/IMG-9380-JPG.jpg" loading="lazy" alt="Cumpleaños 5" style="object-position:center 10%;"><div class="slide-overlay"></div></div>
+                    </div>
+                    <button class="slider-btn next"><i data-feather="chevron-right"></i></button>
+                </div>
+                <div class="portfolio-cta">
+                    <a href="#" class="btn btn-primary btn-wa" data-msg="Hola Karen, quiero cotizar el servicio de Fotos de Cumpleaños.">Cotiza desde $39.990</a>
+                </div>
+            </div>
+
+            <div class="portfolio-category reveal">
+                <div class="portfolio-header">
+                    <h3>Marca Personal</h3>
+                </div>
+                <div class="slider-wrapper">
+                    <button class="slider-btn prev"><i data-feather="chevron-left"></i></button>
+                    <div class="slider-container">
+                        <div class="slider-item"><img src="https://i.postimg.cc/BvFYH9Yt/IMG-9393-JPG.jpg" loading="lazy" alt="Marca personal 1" style="object-position:center 8%;"><div class="slide-overlay"></div></div>
+                        <div class="slider-item"><img src="https://i.postimg.cc/RFQgp1z6/IMG-9390-JPG.jpg" loading="lazy" alt="Marca personal 2" style="object-position:center 15%;"><div class="slide-overlay"></div></div>
+                        <div class="slider-item"><img src="https://i.postimg.cc/YqSd8mnP/IMG-9394-JPG.jpg" loading="lazy" alt="Marca personal 3" style="object-position:center center;"><div class="slide-overlay"></div></div>
+                        <div class="slider-item"><img src="https://i.postimg.cc/qMZjFMWr/IMG-9405-JPG.jpg" loading="lazy" alt="Marca personal 4" style="object-position:center 8%;"><div class="slide-overlay"></div></div>
+                        <div class="slider-item"><img src="https://i.postimg.cc/tgFk7dJs/IMG-9385-JPG.jpg" loading="lazy" alt="Marca personal 5" style="object-position:center 15%;"><div class="slide-overlay"></div></div>
+                        <div class="slider-item"><img src="https://i.postimg.cc/RFRTLMcq/IMG-9389-JPG.jpg" loading="lazy" alt="Marca personal 6" style="object-position:center 8%;"><div class="slide-overlay"></div></div>
+                    </div>
+                    <button class="slider-btn next"><i data-feather="chevron-right"></i></button>
+                </div>
+                <div class="portfolio-cta">
+                    <a href="#" class="btn btn-primary btn-wa" data-msg="Hola Karen, quiero cotizar el servicio de Marca Personal.">Cotiza aquí</a>
+                </div>
+            </div>
+
+            <div class="portfolio-category reveal">
+                <div class="portfolio-header">
+                    <h3>Eventos</h3>
+                </div>
+                <div class="slider-wrapper">
+                    <button class="slider-btn prev"><i data-feather="chevron-left"></i></button>
+                    <div class="slider-container">
+                        <div class="slider-item"><img src="https://i.postimg.cc/6pPRw8h5/IMG-9388-JPG.jpg" loading="lazy" alt="Eventos 1" style="object-position:center 20%;"><div class="slide-overlay"></div></div>
+                        <div class="slider-item"><img src="https://i.postimg.cc/rm1tSQ24/IMG-9401-JPG.jpg" loading="lazy" alt="Eventos 2" style="object-position:center center;"><div class="slide-overlay"></div></div>
+                    </div>
+                    <button class="slider-btn next"><i data-feather="chevron-right"></i></button>
+                </div>
+                <div class="portfolio-cta">
+                    <a href="#" class="btn btn-primary btn-wa" data-msg="Hola Karen, quiero cotizar el servicio de Eventos.">Cotiza aquí</a>
+                </div>
+            </div>
+
+            <div class="portfolio-category reveal">
+                <div class="portfolio-header">
+                    <h3>Fotografía en General</h3>
+                </div>
+                <div class="slider-wrapper">
+                    <button class="slider-btn prev"><i data-feather="chevron-left"></i></button>
+                    <div class="slider-container">
+                        <div class="slider-item"><img src="https://i.postimg.cc/Bv5zRfT3/IMG-9408-JPG.jpg" loading="lazy" alt="General 1" style="object-position:center 15%;"><div class="slide-overlay"></div></div>
+                        <div class="slider-item"><img src="https://i.postimg.cc/23pFzVYH/IMG-9404-JPG.jpg" loading="lazy" alt="General 2" style="object-position:center 8%;"><div class="slide-overlay"></div></div>
+                        <div class="slider-item"><img src="https://i.postimg.cc/g2H5TPqm/IMG-7003.jpg" loading="lazy" alt="General 3" style="object-position:center 10%;"><div class="slide-overlay"></div></div>
+                        <div class="slider-item"><img src="https://i.postimg.cc/hPF54Gp1/IMG-9406-JPG.jpg" loading="lazy" alt="General 4" style="object-position:center 8%;"><div class="slide-overlay"></div></div>
+                        <div class="slider-item"><img src="https://i.postimg.cc/jjj83nSK/IMG-7007.jpg" loading="lazy" alt="General 5" style="object-position:center 15%;"><div class="slide-overlay"></div></div>
+                        <div class="slider-item"><img src="https://i.postimg.cc/jqfM1bty/IMG-9395-JPG.jpg" loading="lazy" alt="General 6" style="object-position:center 8%;"><div class="slide-overlay"></div></div>
+                        <div class="slider-item"><img src="https://i.postimg.cc/VkKgtsW1/IMG-7293.jpg" loading="lazy" alt="General 7" style="object-position:center 10%;"><div class="slide-overlay"></div></div>
+                    </div>
+                    <button class="slider-btn next"><i data-feather="chevron-right"></i></button>
+                </div>
+                <div class="portfolio-cta">
+                    <a href="#" class="btn btn-primary btn-wa" data-msg="Hola Karen, quiero cotizar una sesión de Fotografía en general.">Cotiza aquí</a>
+                </div>
+            </div>
+
+
+            <div class="portfolio-category reveal">
+                <div class="portfolio-header">
+                    <h3>Fotos para tus productos</h3>
+                </div>
+                <div class="slider-wrapper">
+                    <button class="slider-btn prev"><i data-feather="chevron-left"></i></button>
+                    <div class="slider-container">
+                        <div class="slider-item"><img src="https://i.postimg.cc/XYrG2V6t/IMG-9399-JPG.jpg" loading="lazy" alt="Productos 1" style="object-position:center center;"><div class="slide-overlay"></div></div>
+                        <div class="slider-item"><img src="https://i.postimg.cc/NFGLRtxW/IMG-9403-JPG.jpg" loading="lazy" alt="Productos 2" style="object-position:center center;"><div class="slide-overlay"></div></div>
+                        <div class="slider-item"><img src="https://i.postimg.cc/8P0sfqrz/IMG-9398-JPG.jpg" loading="lazy" alt="Productos 3" style="object-position:center center;"><div class="slide-overlay"></div></div>
+                        <div class="slider-item"><img src="https://i.postimg.cc/sx2Dvcj7/IMG-9402-JPG.jpg" loading="lazy" alt="Productos 4" style="object-position:center center;"><div class="slide-overlay"></div></div>
+                    </div>
+                    <button class="slider-btn next"><i data-feather="chevron-right"></i></button>
+                </div>
+                <div class="portfolio-cta">
+                    <a href="#" class="btn btn-primary btn-wa" data-msg="Hola Karen, quiero cotizar el servicio de Fotografía de Productos.">Cotiza aquí</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="contacto" class="section-padding contact">
+        <div class="container reveal">
+            <div class="glass-card contact-card">
+                <h2 class="section-title">¿Listo para crear magia visual?</h2>
+                <p>Agenda tu sesión o pide una cotización personalizada. Atención directa de lunes a viernes de 09:00 a 18:00 hrs.</p>
+                <a href="#" class="btn btn-primary btn-wa" data-msg="Hola Karen, me gustaría contactarme contigo para agendar un servicio." style="font-size: 1.1rem; padding: 1rem 2.5rem;">
+                    <i data-feather="message-circle"></i> Hablar por WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Klubvisual. Todos los derechos reservados. Fotografías por Karen Romero.</p>
+        </div>
+    </footer>
+
+    <div class="lightbox" id="lightbox">
+        <i data-feather="x" class="lightbox-close" id="lightbox-close" style="width: 32px; height: 32px;"></i>
+        <button class="lb-nav lb-prev" id="lb-prev" aria-label="Anterior">&#8249;</button>
+        <img src="" alt="Fullscreen preview" id="lightbox-img">
+        <button class="lb-nav lb-next" id="lb-next" aria-label="Siguiente">&#8250;</button>
+        <span class="lb-counter" id="lb-counter"></span>
     </div>
 
-    <!-- CUMPLEAÑOS -->
-    <div class="portfolio-category reveal reveal-delay-1">
-      <div class="category-header">
-        <h3 class="category-title"><em>Foto de Cumpleaños</em></h3>
-      </div>
-      <div class="slider-wrap">
-        <div class="slider-track" data-slider="1">
-          <!-- Posición 1 -->
-          <div class="slide-item cat-cumple" data-lightbox="true" data-img="https://i.postimg.cc/LXcmvpRw/IMG-9379-JPG.jpg">
-            <img src="https://i.postimg.cc/LXcmvpRw/IMG-9379-JPG.jpg" alt="Cumpleaños 01" loading="lazy" style="object-position:center 15%" style="object-position:center 10%">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
-          <!-- Posición 2 -->
-          <div class="slide-item cat-cumple" data-lightbox="true" data-img="https://i.postimg.cc/GmLdXz0Z/IMG-9268-JPG.jpg">
-            <img src="https://i.postimg.cc/GmLdXz0Z/IMG-9268-JPG.jpg" alt="Cumpleaños 02" loading="lazy" style="object-position:center 20%" style="object-position:center 15%">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
-          <!-- Posición 3 -->
-          <div class="slide-item cat-cumple" data-lightbox="true" data-img="https://i.postimg.cc/DzDhyTW7/IMG-9340-JPG.jpg">
-            <img src="https://i.postimg.cc/DzDhyTW7/IMG-9340-JPG.jpg" alt="Cumpleaños 03" loading="lazy" style="object-position:center 15%" style="object-position:center 10%">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
-          <!-- Posición 4 -->
-          <div class="slide-item cat-cumple" data-lightbox="true" data-img="https://i.postimg.cc/D03KLPPm/IMG-9377-JPG.jpg">
-            <img src="https://i.postimg.cc/D03KLPPm/IMG-9377-JPG.jpg" alt="Cumpleaños 04" loading="lazy" style="object-position:center 20%" style="object-position:center 15%">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
-          <!-- Posición 5 -->
-          <div class="slide-item cat-cumple" data-lightbox="true" data-img="https://i.postimg.cc/MKxSGtGG/IMG-9380-JPG.jpg">
-            <img src="https://i.postimg.cc/MKxSGtGG/IMG-9380-JPG.jpg" alt="Cumpleaños 05" loading="lazy" style="object-position:center 15%" style="object-position:center 10%">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
-          
-        </div>
-      </div>
-      <div class="slider-nav">
-        <a href="https://wa.me/56900000000?text=Hola%20Karen%2C%20quiero%20cotizar%20una%20sesión%20de%20cumpleaños" class="btn-cotizar" target="_blank">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Cotiza aquí
-        </a>
-        <div class="slider-nav-controls">
-          <button class="slider-btn" data-slider="1" data-dir="-1" aria-label="Anterior">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-        </button>
-          <button class="slider-btn" data-slider="1" data-dir="1" aria-label="Siguiente">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-        </button>
-        </div>
-      </div>
-    </div>
+    <script>
+        // Iniciar íconos Feather
+        feather.replace();
 
-    <!-- MARCA PERSONAL -->
-    <div class="portfolio-category reveal reveal-delay-2">
-      <div class="category-header">
-        <h3 class="category-title"><em>Marca Personal</em></h3>
-      </div>
-      <div class="slider-wrap">
-        <div class="slider-track" data-slider="2">
-          <!-- Posición 1 -->
-          <div class="slide-item cat-marca" data-lightbox="true" data-img="https://i.postimg.cc/BvFYH9Yt/IMG-9393-JPG.jpg">
-            <img src="https://i.postimg.cc/BvFYH9Yt/IMG-9393-JPG.jpg" alt="Marca Personal 01" loading="lazy" style="object-position:center 15%" style="object-position:center 8%">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
-          <!-- Posición 2 -->
-          <div class="slide-item cat-marca" data-lightbox="true" data-img="https://i.postimg.cc/RFQgp1z6/IMG-9390-JPG.jpg">
-            <img src="https://i.postimg.cc/RFQgp1z6/IMG-9390-JPG.jpg" alt="Marca Personal 02" loading="lazy" style="object-position:center 20%" style="object-position:center 15%">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
-          <!-- Posición 3 -->
-          <div class="slide-item cat-marca" data-lightbox="true" data-img="https://i.postimg.cc/YqSd8mnP/IMG-9394-JPG.jpg">
-            <img src="https://i.postimg.cc/YqSd8mnP/IMG-9394-JPG.jpg" alt="Marca Personal 03" loading="lazy" style="object-position:center center" style="object-position:center center">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
-          <!-- Posición 4 -->
-          <div class="slide-item cat-marca" data-lightbox="true" data-img="https://i.postimg.cc/qMZjFMWr/IMG-9405-JPG.jpg">
-            <img src="https://i.postimg.cc/qMZjFMWr/IMG-9405-JPG.jpg" alt="Marca Personal 04" loading="lazy" style="object-position:center 15%" style="object-position:center 8%">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
-          <!-- Posición 5 -->
-          <div class="slide-item cat-marca" data-lightbox="true" data-img="https://i.postimg.cc/tgFk7dJs/IMG-9385-JPG.jpg">
-            <img src="https://i.postimg.cc/tgFk7dJs/IMG-9385-JPG.jpg" alt="Marca Personal 05" loading="lazy" style="object-position:center 20%" style="object-position:center 15%">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
-          <!-- Posición 6 -->
-          <div class="slide-item cat-marca" data-lightbox="true" data-img="https://i.postimg.cc/RFRTLMcq/IMG-9389-JPG.jpg">
-            <img src="https://i.postimg.cc/RFRTLMcq/IMG-9389-JPG.jpg" alt="Marca Personal 06" loading="lazy" style="object-position:center 15%" style="object-position:center 8%">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
-        </div>
-      </div>
-      <div class="slider-nav">
-        <a href="https://wa.me/56900000000?text=Hola%20Karen%2C%20quiero%20cotizar%20una%20sesión%20de%20marca%20personal" class="btn-cotizar" target="_blank">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Cotiza aquí
-        </a>
-        <div class="slider-nav-controls">
-          <button class="slider-btn" data-slider="2" data-dir="-1" aria-label="Anterior">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-        </button>
-          <button class="slider-btn" data-slider="2" data-dir="1" aria-label="Siguiente">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-        </button>
-        </div>
-      </div>
-    </div>
+        // 1. Lógica de Enlaces WhatsApp (Conversión)
+        const waNumber = '56900000000'; // número pendiente de confirmar
+        document.querySelectorAll('.btn-wa').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const msg = btn.getAttribute('data-msg');
+                const url = `https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`;
+                window.open(url, '_blank');
+            });
+        });
 
-    <!-- EVENTOS -->
-    <div class="portfolio-category reveal">
-      <div class="category-header">
-        <h3 class="category-title"><em>Eventos</em></h3>
-      </div>
-      <div class="slider-wrap">
-        <div class="slider-track" data-slider="3">
-          <!-- Posición 1 -->
-          <div class="slide-item cat-eventos" data-lightbox="true" data-img="https://i.postimg.cc/6pPRw8h5/IMG-9388-JPG.jpg">
-            <img src="https://i.postimg.cc/6pPRw8h5/IMG-9388-JPG.jpg" alt="Eventos 01" loading="lazy" style="object-position:center 20%">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
-          <!-- Posición 2 -->
-          <div class="slide-item cat-eventos" data-lightbox="true" data-img="https://i.postimg.cc/rm1tSQ24/IMG-9401-JPG.jpg">
-            <img src="https://i.postimg.cc/rm1tSQ24/IMG-9401-JPG.jpg" alt="Eventos 02" loading="lazy" style="object-position:center center">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
-        </div>
-      </div>
-      <div class="slider-nav">
-        <a href="https://wa.me/56900000000?text=Hola%20Karen%2C%20quiero%20cotizar%20fotografía%20de%20eventos" class="btn-cotizar" target="_blank">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Cotiza aquí
-        </a>
-        <div class="slider-nav-controls">
-          <button class="slider-btn" data-slider="3" data-dir="-1" aria-label="Anterior">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-        </button>
-          <button class="slider-btn" data-slider="3" data-dir="1" aria-label="Siguiente">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-        </button>
-        </div>
-      </div>
-    </div>
 
-    <!-- FOTOGRAFÍA GENERAL -->
-    <div class="portfolio-category reveal reveal-delay-1">
-      <div class="category-header">
-        <h3 class="category-title"><em>Fotografía</em> en General</h3>
-      </div>
-      <div class="slider-wrap">
-        <div class="slider-track" data-slider="4">
-          <!-- Posición 1 -->
-          <div class="slide-item cat-general" data-lightbox="true" data-img="https://i.postimg.cc/Bv5zRfT3/IMG-9408-JPG.jpg">
-            <img src="https://i.postimg.cc/Bv5zRfT3/IMG-9408-JPG.jpg" alt="Fotografía General 01" loading="lazy" style="object-position:center 20%" style="object-position:center 15%">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
-          <!-- Posición 2 -->
-          <div class="slide-item cat-general" data-lightbox="true" data-img="https://i.postimg.cc/23pFzVYH/IMG-9404-JPG.jpg">
-            <img src="https://i.postimg.cc/23pFzVYH/IMG-9404-JPG.jpg" alt="Fotografía General 02" loading="lazy" style="object-position:center 15%" style="object-position:center 8%">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
-          <!-- Posición 3 -->
-          <div class="slide-item cat-general" data-lightbox="true" data-img="https://i.postimg.cc/g2H5TPqm/IMG-7003.jpg">
-            <img src="https://i.postimg.cc/g2H5TPqm/IMG-7003.jpg" alt="Fotografía General 03" loading="lazy" style="object-position:center 15%" style="object-position:center 10%">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
-          <!-- Posición 4 -->
-          <div class="slide-item cat-general" data-lightbox="true" data-img="https://i.postimg.cc/hPF54Gp1/IMG-9406-JPG.jpg">
-            <img src="https://i.postimg.cc/hPF54Gp1/IMG-9406-JPG.jpg" alt="Fotografía General 04" loading="lazy" style="object-position:center 15%" style="object-position:center 8%">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
-          <!-- Posición 5 -->
-          <div class="slide-item cat-general" data-lightbox="true" data-img="https://i.postimg.cc/jjj83nSK/IMG-7007.jpg">
-            <img src="https://i.postimg.cc/jjj83nSK/IMG-7007.jpg" alt="Fotografía General 05" loading="lazy" style="object-position:center 20%" style="object-position:center 15%">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
-          <!-- Posición 6 -->
-          <div class="slide-item cat-general" data-lightbox="true" data-img="https://i.postimg.cc/jqfM1bty/IMG-9395-JPG.jpg">
-            <img src="https://i.postimg.cc/jqfM1bty/IMG-9395-JPG.jpg" alt="Fotografía General 06" loading="lazy" style="object-position:center 15%" style="object-position:center 8%">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
-          <!-- Posición 7 -->
-          <div class="slide-item cat-general" data-lightbox="true" data-img="https://i.postimg.cc/VkKgtsW1/IMG-7293.jpg">
-            <img src="https://i.postimg.cc/VkKgtsW1/IMG-7293.jpg" alt="Fotografía General 07" loading="lazy" style="object-position:center 15%" style="object-position:center 10%">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
-        </div>
-      </div>
-      <div class="slider-nav">
-        <a href="https://wa.me/56900000000?text=Hola%20Karen%2C%20quiero%20cotizar%20una%20sesión%20de%20fotografía" class="btn-cotizar" target="_blank">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Cotiza aquí
-        </a>
-        <div class="slider-nav-controls">
-          <button class="slider-btn" data-slider="4" data-dir="-1" aria-label="Anterior">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-        </button>
-          <button class="slider-btn" data-slider="4" data-dir="1" aria-label="Siguiente">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-        </button>
-        </div>
-      </div>
-    </div>
+        // Hero mobile videos
+        const heroMobileVideos = Array.from(document.querySelectorAll('[data-hero-mobile-video]'));
+        if (heroMobileVideos.length) {
+            let heroMobileIndex = 0;
+            const playHeroVideo = (index) => {
+                heroMobileVideos.forEach((video, i) => {
+                    const active = i === index;
+                    video.classList.toggle('is-active', active);
+                    if (active) {
+                        video.currentTime = 0;
+                        const playPromise = video.play();
+                        if (playPromise && typeof playPromise.catch === 'function') playPromise.catch(() => {});
+                    } else {
+                        video.pause();
+                    }
+                });
+            };
+            playHeroVideo(heroMobileIndex);
+            setInterval(() => {
+                if (window.innerWidth > 768) return;
+                heroMobileIndex = (heroMobileIndex + 1) % heroMobileVideos.length;
+                playHeroVideo(heroMobileIndex);
+            }, 3500);
+            window.addEventListener('resize', () => {
+                if (window.innerWidth <= 768) playHeroVideo(heroMobileIndex);
+                else heroMobileVideos.forEach(video => {
+                    video.pause();
+                    video.classList.remove('is-active');
+                });
+            });
+        }
 
-    <!-- FOTOS PARA TUS PRODUCTOS -->
-    <div class="portfolio-category reveal reveal-delay-1">
-      <div class="category-header">
-        <h3 class="category-title"><em>Fotos</em> para tus productos</h3>
-      </div>
-      <div class="slider-wrap">
-        <div class="slider-track" data-slider="5">
-          <!-- Posición 1 -->
-          <div class="slide-item cat-productos" data-lightbox="true" data-img="https://i.postimg.cc/XYrG2V6t/IMG-9399-JPG.jpg">
-            <img src="https://i.postimg.cc/XYrG2V6t/IMG-9399-JPG.jpg" alt="Productos 01" loading="lazy">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
-          <!-- Posición 2 -->
-          <div class="slide-item cat-productos" data-lightbox="true" data-img="https://i.postimg.cc/NFGLRtxW/IMG-9403-JPG.jpg">
-            <img src="https://i.postimg.cc/NFGLRtxW/IMG-9403-JPG.jpg" alt="Productos 02" loading="lazy">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
-          <!-- Posición 3 -->
-          <div class="slide-item cat-productos" data-lightbox="true" data-img="https://i.postimg.cc/8P0sfqrz/IMG-9398-JPG.jpg">
-            <img src="https://i.postimg.cc/8P0sfqrz/IMG-9398-JPG.jpg" alt="Productos 03" loading="lazy">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
-          <!-- Posición 4 -->
-          <div class="slide-item cat-productos" data-lightbox="true" data-img="https://i.postimg.cc/sx2Dvcj7/IMG-9402-JPG.jpg">
-            <img src="https://i.postimg.cc/sx2Dvcj7/IMG-9402-JPG.jpg" alt="Productos 04" loading="lazy">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
-        </div>
-      </div>
-      <div class="slider-nav">
-        <a href="https://wa.me/56900000000?text=Hola%20Karen%2C%20quiero%20cotizar%20una%20sesión%20de%20fotografía" class="btn-cotizar" target="_blank">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Cotiza aquí
-        </a>
-        <div class="slider-nav-controls">
-          <button class="slider-btn" data-slider="5" data-dir="-1" aria-label="Anterior">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-        </button>
-          <button class="slider-btn" data-slider="5" data-dir="1" aria-label="Siguiente">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-        </button>
-        </div>
-      </div>
-    </div>
+        // 2. Menú Mobile
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const navLinks = document.getElementById('nav-links');
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => navLinks.classList.remove('active'));
+        });
 
-  </div>
-</section>
+        // 3. Reveal on Scroll (Intersection Observer)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
 
-<!-- CONTACTO -->
-<section id="contacto">
-  <div class="contacto-inner">
-    <span class="section-label reveal">¿Hablamos?</span>
-    <h2 class="section-title reveal reveal-delay-1">Hagamos algo<br><em>increíble</em></h2>
-    <p class="contacto-sub reveal reveal-delay-2">Cuéntame tu idea y construimos juntos la sesión perfecta para ti, tu marca o tu momento especial.</p>
-    <div class="contacto-card reveal reveal-delay-3">
-      <span class="contacto-icon">💬</span>
-      <h3>Conversemos por WhatsApp</h3>
-      <p>Respuesta rápida · Sin formularios · Sin complicaciones</p>
-      <a href="https://wa.me/56900000000?text=Hola%20Karen%2C%20quiero%20agendar%20una%20sesión%20fotográfica" class="btn-whatsapp" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Hablemos por WhatsApp
-      </a>
-      <div class="contacto-divider"></div>
-      <p class="contacto-info">Santiago de Chile · klubvisual.cl</p>
-    </div>
-  </div>
-</section>
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-<!-- FOOTER -->
-<footer>
-  <a href="#inicio" class="footer-logo">Klubvisual <span>by Karen Romero</span></a>
-  <p class="footer-copy">© 2025 klubvisual.cl — Todos los derechos reservados</p>
-  <a href="https://instagram.com/klubvisual" target="_blank" rel="noopener" style="color: rgba(244,237,226,0.3); transition: color 0.3s; font-size: 0.72rem; letter-spacing: 0.1em; text-decoration: none; text-transform: uppercase;" onmouseover="this.style.color='#D98A5F'" onmouseout="this.style.color='rgba(244,237,226,0.3)'">@klubvisual</a>
-</footer>
+        // 4. Spotlight Effect (Mousemove en glass-cards)
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mx', `${x}px`);
+                card.style.setProperty('--my', `${y}px`);
+            });
+        });
 
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox">
-  <div class="lightbox-content" onclick="event.stopPropagation()">
-    <img class="lightbox-image" id="lightboxImage" src="" alt="Vista ampliada">
-    <button class="lightbox-close" id="lightboxClose">✕</button>
-    <button class="lb-nav lb-prev" id="lbPrev" aria-label="Anterior">&#8249;</button>
-    <button class="lb-nav lb-next" id="lbNext" aria-label="Siguiente">&#8250;</button>
-    <span class="lb-counter" id="lbCounter"></span>
-  </div>
-</div>
+        // 5. Lógica de Sliders (Autoplay + Flechas)
+        document.querySelectorAll('.slider-wrapper').forEach(wrapper => {
+            const container = wrapper.querySelector('.slider-container');
+            const btnPrev = wrapper.querySelector('.prev');
+            const btnNext = wrapper.querySelector('.next');
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+            
+            // Flechas — scroll dinámico basado en ancho real del item
+            function getScrollAmt() {
+                const first = container.querySelector('.slider-item');
+                return first ? first.offsetWidth + 16 : 320;
+            }
+            btnNext.addEventListener('click', () => {
+                container.scrollBy({ left: getScrollAmt(), behavior: 'smooth' });
+            });
+            btnPrev.addEventListener('click', () => {
+                container.scrollBy({ left: -getScrollAmt(), behavior: 'smooth' });
+            });
 
-<script>
-  // ─── NAVBAR SCROLL ───
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 50);
-  });
+            // Autoplay
+            function doAutoplay() {
+                const amt = getScrollAmt();
+                if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 10) {
+                    container.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    container.scrollBy({ left: amt, behavior: 'smooth' });
+                }
+            }
+            let autoplayInterval = setInterval(doAutoplay, 4000);
 
-  // ─── MOBILE MENU ───
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobileMenu');
+            wrapper.addEventListener('mouseenter', () => clearInterval(autoplayInterval));
+            wrapper.addEventListener('mouseleave', () => {
+                autoplayInterval = setInterval(doAutoplay, 4000);
+            });
+        });
 
-  hamburger.addEventListener('click', () => {
-    mobileMenu.classList.toggle('open');
-  });
+        // 6. Lightbox con navegación, ESC y swipe
+        const lightbox    = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxClose = document.getElementById('lightbox-close');
+        const lbPrev      = document.getElementById('lb-prev');
+        const lbNext      = document.getElementById('lb-next');
+        const lbCounter   = document.getElementById('lb-counter');
 
-  document.querySelectorAll('.mobile-link').forEach(link => {
-    link.addEventListener('click', () => {
-      mobileMenu.classList.remove('open');
-    });
-  });
+        let lbImages = [];
+        let lbIndex  = 0;
 
-  // ─── HERO VIDEO SLIDER ───
-  const heroSlides = document.querySelectorAll('.hero-video-slide');
-  const heroDots = document.querySelectorAll('.hero-dot');
-  const heroVideos = document.querySelectorAll('.hero-video-frame video');
-  let currentHeroSlide = 0;
-  let heroTimer;
-  const HERO_CHANGE_MS = 6500;
-  const HERO_FADE_MS = 1400;
-  const desktopHeroMedia = window.matchMedia('(min-width: 992px)');
+        function lbOpen(imgs, idx) {
+            lbImages = imgs;
+            lbIndex  = idx;
+            lbShow();
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
 
-  function ensureHeroPlayback() {
-    heroVideos.forEach(video => {
-      video.muted = true;
-      const playAttempt = video.play();
-      if (playAttempt && typeof playAttempt.catch === 'function') {
-        playAttempt.catch(() => {});
-      }
-    });
-  }
+        function lbClose() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
 
-  function syncHeroMode() {
-    const isDesktop = desktopHeroMedia.matches;
+        function lbShow() {
+            lightboxImg.src = lbImages[lbIndex];
+            lbCounter.textContent = `${lbIndex + 1} / ${lbImages.length}`;
+            lbPrev.style.display = lbImages.length > 1 ? 'flex' : 'none';
+            lbNext.style.display = lbImages.length > 1 ? 'flex' : 'none';
+        }
 
-    heroSlides.forEach((slide, i) => {
-      if (isDesktop) {
-        slide.classList.remove('prev');
-        slide.classList.add('active');
-      } else {
-        slide.classList.toggle('active', i === currentHeroSlide);
-        slide.classList.remove('prev');
-      }
-    });
+        function lbGo(dir) {
+            lbIndex = (lbIndex + dir + lbImages.length) % lbImages.length;
+            lbShow();
+        }
 
-    heroDots.forEach((dot, i) => {
-      dot.classList.toggle('active', i === currentHeroSlide);
-      dot.style.display = isDesktop ? 'none' : '';
-    });
+        // Attach click a cada slider-item con swipe guard
+        document.querySelectorAll('.slider-wrapper').forEach(wrapper => {
+            const imgs = Array.from(wrapper.querySelectorAll('.slider-item img')).map(i => i.src);
+            let ptrX = 0;
+            wrapper.addEventListener('pointerdown', e => { ptrX = e.clientX; }, { passive: true });
+            wrapper.querySelectorAll('.slider-item').forEach((item, idx) => {
+                item.addEventListener('click', e => {
+                    if (e.target.closest('.slider-btn')) return;
+                    if (Math.abs(e.clientX - ptrX) > 8) return;
+                    lbOpen(imgs, idx);
+                });
+            });
+        });
 
-    clearInterval(heroTimer);
-    if (!isDesktop && heroSlides.length) {
-      heroTimer = setInterval(nextHeroSlide, HERO_CHANGE_MS);
-    }
-  }
+        lightboxClose.addEventListener('click', lbClose);
+        lbPrev.addEventListener('click', e => { e.stopPropagation(); lbGo(-1); });
+        lbNext.addEventListener('click', e => { e.stopPropagation(); lbGo(1); });
+        lightbox.addEventListener('click', e => { if (e.target === lightbox) lbClose(); });
 
-  function goToSlide(index) {
-    if (!heroSlides.length || desktopHeroMedia.matches) return;
+        // ESC y flechas teclado
+        document.addEventListener('keydown', e => {
+            if (!lightbox.classList.contains('active')) return;
+            if (e.key === 'Escape') lbClose();
+            if (e.key === 'ArrowLeft') lbGo(-1);
+            if (e.key === 'ArrowRight') lbGo(1);
+        });
 
-    heroSlides[currentHeroSlide].classList.remove('active');
-    heroSlides[currentHeroSlide].classList.add('prev');
-    heroDots[currentHeroSlide]?.classList.remove('active');
-
-    currentHeroSlide = index;
-
-    heroSlides[currentHeroSlide].classList.add('active');
-    heroSlides[currentHeroSlide].classList.remove('prev');
-    heroDots[currentHeroSlide]?.classList.add('active');
-
-    window.setTimeout(() => {
-      heroSlides.forEach((slide, i) => {
-        if (i !== currentHeroSlide) slide.classList.remove('prev');
-      });
-    }, HERO_FADE_MS + 120);
-  }
-
-  function nextHeroSlide() {
-    goToSlide((currentHeroSlide + 1) % heroSlides.length);
-  }
-
-  ensureHeroPlayback();
-  syncHeroMode();
-
-  if (typeof desktopHeroMedia.addEventListener === 'function') {
-    desktopHeroMedia.addEventListener('change', syncHeroMode);
-  } else if (typeof desktopHeroMedia.addListener === 'function') {
-    desktopHeroMedia.addListener(syncHeroMode);
-  }
-
-  heroDots.forEach((dot, i) => {
-    dot.addEventListener('click', () => {
-      if (desktopHeroMedia.matches) return;
-      clearInterval(heroTimer);
-      goToSlide(i);
-      heroTimer = setInterval(nextHeroSlide, HERO_CHANGE_MS);
-    });
-  });
-
-  // ─── PORTFOLIO SLIDERS ───
-  const sliderStates = {};
-
-  function getSliderConfig(sliderId) {
-    const track = document.querySelector(`[data-slider="${sliderId}"]`);
-    if (!track) return null;
-    const items = track.querySelectorAll('.slide-item');
-    const itemWidth = items[0]?.offsetWidth || 0;
-    const gap = 13;
-    const itemsVisible = window.innerWidth > 900 ? 3 : window.innerWidth > 600 ? 2 : 1;
-    const maxOffset = Math.max(0, items.length - itemsVisible);
-    return { track, items, itemWidth, gap, itemsVisible, maxOffset };
-  }
-
-  function slideTo(sliderId, offset) {
-    const cfg = getSliderConfig(sliderId);
-    if (!cfg) return;
-
-    sliderStates[sliderId] = Math.max(0, Math.min(offset, cfg.maxOffset));
-    const moveX = sliderStates[sliderId] * (cfg.items[0].offsetWidth + cfg.gap);
-    cfg.track.style.transform = `translateX(-${moveX}px)`;
-  }
-
-  document.querySelectorAll('.slider-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const sliderId = parseInt(btn.dataset.slider);
-      const dir = parseInt(btn.dataset.dir);
-      const current = sliderStates[sliderId] || 0;
-      slideTo(sliderId, current + dir);
-    });
-  });
-
-  // Autoplay sliders
-  const autoplayTimers = {};
-  [0, 1, 2, 3, 4, 5].forEach(id => {
-    sliderStates[id] = 0;
-    autoplayTimers[id] = setInterval(() => {
-      const cfg = getSliderConfig(id);
-      if (!cfg) return;
-      const current = sliderStates[id] || 0;
-      const next = current >= cfg.maxOffset ? 0 : current + 1;
-      slideTo(id, next);
-    }, 3500 + id * 300);
-  });
-
-  // ─── LIGHTBOX ───
-  const lightbox = document.getElementById('lightbox');
-  const lbPrev = document.getElementById('lbPrev');
-  const lbNext = document.getElementById('lbNext');
-  const lbCounter = document.getElementById('lbCounter');
-  const lightboxImage = document.getElementById('lightboxImage');
-  const lightboxClose = document.getElementById('lightboxClose');
-
-  const colors = [
-    'linear-gradient(135deg, #2d2318 0%, #5a3d22 100%)',
-    'linear-gradient(135deg, #2a1f3a 0%, #4a3860 100%)',
-    'linear-gradient(135deg, #1a2218 0%, #354535 100%)',
-    'linear-gradient(135deg, #2a2010 0%, #4a3c1f 100%)',
-    'linear-gradient(135deg, #1a1a1a 0%, #3d3d3d 100%)',
-  ];
-
-  let lbAllImgs = [];
-  let lbCurrentIdx = 0;
-
-  function lbShow(idx) {
-    lbCurrentIdx = (idx + lbAllImgs.length) % lbAllImgs.length;
-    lightboxImage.src = lbAllImgs[lbCurrentIdx];
-    lbCounter.textContent = (lbCurrentIdx + 1) + ' / ' + lbAllImgs.length;
-  }
-
-  document.querySelectorAll('[data-lightbox]').forEach((item) => {
-    item.addEventListener('click', (e) => {
-      if (e.target.closest('.slider-btn')) return;
-      const track = item.closest('[data-slider]') ? item.closest('.slider-track') : null;
-      const siblings = track ? Array.from(track.querySelectorAll('[data-lightbox]')) : [item];
-      lbAllImgs = siblings.map(s => s.dataset.img || s.querySelector('img')?.src || '').filter(Boolean);
-      const idx = siblings.indexOf(item);
-      lbShow(idx >= 0 ? idx : 0);
-      lightbox.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    });
-  });
-
-  lbPrev.addEventListener('click', (e) => { e.stopPropagation(); lbShow(lbCurrentIdx - 1); });
-  lbNext.addEventListener('click', (e) => { e.stopPropagation(); lbShow(lbCurrentIdx + 1); });
-
-  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) { lightbox.classList.remove('open'); document.body.style.overflow = ''; } });
-  lightboxClose.addEventListener('click', () => { lightbox.classList.remove('open'); document.body.style.overflow = ''; });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') { lightbox.classList.remove('open'); document.body.style.overflow = ''; }
-  });
-
-  // ─── SPOTLIGHT EFFECT ───
-  function setupSpotlight(selector) {
-    document.querySelectorAll(selector).forEach(card => {
-      card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width) * 100;
-        const y = ((e.clientY - rect.top) / rect.height) * 100;
-        card.style.setProperty('--mx', `${x}%`);
-        card.style.setProperty('--my', `${y}%`);
-      });
-    });
-  }
-
-  setupSpotlight('.service-card');
-  setupSpotlight('.contacto-card');
-
-  // ─── REVEAL ON SCROLL ───
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('revealed');
-      }
-    });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-
-  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-  // ─── RECALCULATE SLIDERS ON RESIZE ───
-  let resizeTimer;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
-      [0, 1, 2, 3, 4, 5].forEach(id => slideTo(id, sliderStates[id] || 0));
-    }, 200);
-  });
-</script>
+        // Swipe touch en lightbox
+        let lbTouchX = 0;
+        lightbox.addEventListener('touchstart', e => { lbTouchX = e.touches[0].clientX; }, { passive: true });
+        lightbox.addEventListener('touchend', e => {
+            const dx = e.changedTouches[0].clientX - lbTouchX;
+            if (Math.abs(dx) > 50) lbGo(dx < 0 ? 1 : -1);
+        });
+    </script>
 </body>
 </html>
 
