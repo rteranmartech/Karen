@@ -1207,6 +1207,14 @@
     }
 
   }
+
+  /* ─── SUPRIMIR CONTROLES NATIVOS iOS SAFARI ─── */
+  video::-webkit-media-controls             { display: none !important; }
+  video::-webkit-media-controls-enclosure   { display: none !important; }
+  video::-webkit-media-controls-panel       { display: none !important; }
+  video::-webkit-media-controls-play-button { display: none !important; }
+  video::-webkit-media-controls-start-playback-button { display: none !important; }
+
 </style>
 </head>
 <body>
@@ -1249,7 +1257,7 @@
   <div class="hero-slides">
     <div class="hero-video-slide active" data-video-slide="0">
       <div class="hero-video-frame" aria-hidden="true">
-        <video autoplay muted loop playsinline preload="metadata" poster="https://res.cloudinary.com/duaa18leu/video/upload/f_webp,q_auto,so_0/IMG_7279_v86h4y" tabindex="-1">
+        <video autoplay muted loop playsinline preload="auto" poster="https://res.cloudinary.com/duaa18leu/video/upload/f_webp,q_auto,so_0/IMG_7279_v86h4y" tabindex="-1">
           <source src="https://res.cloudinary.com/duaa18leu/video/upload/f_auto,q_auto/IMG_7279_v86h4y.mp4" type="video/mp4">
         </video>
       </div>
@@ -1842,7 +1850,13 @@
 
     // Asegurar play en el video entrante (iOS puede haberlo pausado)
     const incomingVid = heroSlides[next].querySelector('video');
-    if (incomingVid) incomingVid.play().catch(() => {});
+    if (incomingVid) {
+      // Si el video no ha cargado suficiente (readyState < 2), forzar carga
+      if (incomingVid.readyState < 2) {
+        incomingVid.load();
+      }
+      incomingVid.play().catch(() => {});
+    }
 
     // Limpiar clase 'prev' tras completar la transición
     setTimeout(() => {
@@ -2080,6 +2094,7 @@
 </script>
 </body>
 </html>
+
 
 
 
