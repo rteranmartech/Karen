@@ -1208,6 +1208,32 @@
 
   }
 
+
+  /* ─── VIDEO ÚNICO MOBILE ─── */
+  .hero-mobile-video-wrap {
+    display: none; /* oculto por defecto, solo activo en mobile via JS */
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    background: #120f0c;
+  }
+  .hero-mobile-video-wrap video {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 100%; height: 100%;
+    min-width: 100%; min-height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    transform: translate(-50%, -50%);
+    display: block;
+    pointer-events: none;
+    background: #120f0c;
+  }
+  .hero-mobile-video-wrap .hero-video-shade {
+    z-index: 1;
+  }
+
   /* ─── SUPRIMIR CONTROLES NATIVOS iOS SAFARI ─── */
   video::-webkit-media-controls             { display: none !important; }
   video::-webkit-media-controls-enclosure   { display: none !important; }
@@ -1257,7 +1283,7 @@
   <div class="hero-slides">
     <div class="hero-video-slide active" data-video-slide="0">
       <div class="hero-video-frame" aria-hidden="true">
-        <video autoplay muted loop playsinline preload="auto" poster="https://res.cloudinary.com/duaa18leu/video/upload/f_webp,q_auto,so_0/IMG_7279_v86h4y" tabindex="-1">
+        <video autoplay muted loop playsinline preload="auto" poster="https://res.cloudinary.com/duaa18leu/video/upload/f_webp,q_auto,so_0/IMG_7279_v86h4y" tabindex="-1" id="heroVideoDesktop0">
           <source src="https://res.cloudinary.com/duaa18leu/video/upload/f_auto,q_auto/IMG_7279_v86h4y.mp4" type="video/mp4">
         </video>
       </div>
@@ -1265,7 +1291,7 @@
     </div>
     <div class="hero-video-slide" data-video-slide="1">
       <div class="hero-video-frame" aria-hidden="true">
-        <video autoplay muted loop playsinline preload="metadata" poster="https://res.cloudinary.com/duaa18leu/video/upload/f_webp,q_auto,so_0/IMG_7270_iqevhu" tabindex="-1">
+        <video autoplay muted loop playsinline preload="metadata" poster="https://res.cloudinary.com/duaa18leu/video/upload/f_webp,q_auto,so_0/IMG_7270_iqevhu" tabindex="-1" id="heroVideoDesktop1">
           <source src="https://res.cloudinary.com/duaa18leu/video/upload/f_auto,q_auto/IMG_7270_iqevhu.mp4" type="video/mp4">
         </video>
       </div>
@@ -1273,7 +1299,7 @@
     </div>
     <div class="hero-video-slide" data-video-slide="2">
       <div class="hero-video-frame" aria-hidden="true">
-        <video autoplay muted loop playsinline preload="metadata" poster="https://res.cloudinary.com/duaa18leu/video/upload/f_webp,q_auto,so_0/IMG_7268_w58rbm" tabindex="-1">
+        <video autoplay muted loop playsinline preload="metadata" poster="https://res.cloudinary.com/duaa18leu/video/upload/f_webp,q_auto,so_0/IMG_7268_w58rbm" tabindex="-1" id="heroVideoDesktop2">
           <source src="https://res.cloudinary.com/duaa18leu/video/upload/f_auto,q_auto/IMG_7268_w58rbm.mp4" type="video/mp4">
         </video>
       </div>
@@ -1281,12 +1307,21 @@
     </div>
     <div class="hero-video-slide" data-video-slide="3">
       <div class="hero-video-frame" aria-hidden="true">
-        <video autoplay muted loop playsinline preload="metadata" poster="https://res.cloudinary.com/duaa18leu/video/upload/f_webp,q_auto,so_0/IMG_7269_aftdpv" tabindex="-1">
+        <video autoplay muted loop playsinline preload="metadata" poster="https://res.cloudinary.com/duaa18leu/video/upload/f_webp,q_auto,so_0/IMG_7269_aftdpv" tabindex="-1" id="heroVideoDesktop3">
           <source src="https://res.cloudinary.com/duaa18leu/video/upload/f_auto,q_auto/IMG_7269_aftdpv.mp4" type="video/mp4">
         </video>
       </div>
       <div class="hero-video-shade"></div>
     </div>
+  </div>
+  <!-- VIDEO ÚNICO MOBILE: iOS solo maneja 1 video a la vez sin overlay nativo -->
+  <div class="hero-mobile-video-wrap" aria-hidden="true">
+    <video id="heroVideoMobile"
+      autoplay muted loop playsinline preload="auto" tabindex="-1"
+      poster="https://res.cloudinary.com/duaa18leu/video/upload/f_webp,q_auto,so_0/IMG_7279_v86h4y">
+      <source id="heroVideoMobileSrc" src="https://res.cloudinary.com/duaa18leu/video/upload/f_auto,q_auto/IMG_7279_v86h4y.mp4" type="video/mp4">
+    </video>
+    <div class="hero-video-shade"></div>
   </div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
@@ -1810,6 +1845,18 @@
     });
   });
 
+
+  // ─── DATOS VIDEOS HERO ───
+  const HERO_VIDEO_DATA = [
+    { src: 'https://res.cloudinary.com/duaa18leu/video/upload/f_auto,q_auto/IMG_7279_v86h4y.mp4', poster: 'https://res.cloudinary.com/duaa18leu/video/upload/f_webp,q_auto,so_0/IMG_7279_v86h4y' },
+    { src: 'https://res.cloudinary.com/duaa18leu/video/upload/f_auto,q_auto/IMG_7270_iqevhu.mp4', poster: 'https://res.cloudinary.com/duaa18leu/video/upload/f_webp,q_auto,so_0/IMG_7270_iqevhu' },
+    { src: 'https://res.cloudinary.com/duaa18leu/video/upload/f_auto,q_auto/IMG_7268_w58rbm.mp4', poster: 'https://res.cloudinary.com/duaa18leu/video/upload/f_webp,q_auto,so_0/IMG_7268_w58rbm' },
+    { src: 'https://res.cloudinary.com/duaa18leu/video/upload/f_auto,q_auto/IMG_7269_aftdpv.mp4', poster: 'https://res.cloudinary.com/duaa18leu/video/upload/f_webp,q_auto,so_0/IMG_7269_aftdpv' },
+  ];
+  const heroMobileVideoWrap = document.querySelector('.hero-mobile-video-wrap');
+  const heroMobileVideo     = document.getElementById('heroVideoMobile');
+  const heroMobileVideoSrc  = document.getElementById('heroVideoMobileSrc');
+
   // ─── HERO VIDEO SLIDER ───
   const heroSlides  = document.querySelectorAll('.hero-video-slide');
   const heroDots    = document.querySelectorAll('.hero-dot');
@@ -1820,12 +1867,21 @@
   const HERO_FADE_MS   = 900;    // duración del crossfade
   const desktopHeroMedia = window.matchMedia('(min-width: 992px)');
 
-  // Intentar play en todos los videos (silenciados, requerido por autoplay policy)
+  // Intentar play — en mobile solo el video único, en desktop todos
   function ensureHeroPlayback() {
-    heroVideos.forEach(v => {
-      v.muted = true;
-      v.play().catch(() => {});
-    });
+    if (!desktopHeroMedia.matches) {
+      // Mobile: iniciar el video único
+      if (heroMobileVideo) {
+        heroMobileVideo.muted = true;
+        heroMobileVideo.play().catch(() => {});
+      }
+    } else {
+      // Desktop: iniciar los 4 videos
+      heroVideos.forEach(v => {
+        v.muted = true;
+        v.play().catch(() => {});
+      });
+    }
   }
 
   // Transición a un slide concreto en mobile
@@ -1848,14 +1904,18 @@
     heroSlides[next].classList.add('active');
     heroDots[next]?.classList.add('active');
 
-    // Asegurar play en el video entrante (iOS puede haberlo pausado)
-    const incomingVid = heroSlides[next].querySelector('video');
-    if (incomingVid) {
-      // Si el video no ha cargado suficiente (readyState < 2), forzar carga
-      if (incomingVid.readyState < 2) {
-        incomingVid.load();
-      }
-      incomingVid.play().catch(() => {});
+    // Actualizar video según el modo
+    if (!desktopHeroMedia.matches && heroMobileVideo) {
+      // Mobile: cambiar src del video único al slide entrante
+      const data = HERO_VIDEO_DATA[next];
+      heroMobileVideo.poster = data.poster;
+      heroMobileVideoSrc.src = data.src;
+      heroMobileVideo.load();
+      heroMobileVideo.play().catch(() => {});
+    } else {
+      // Desktop: asegurar play en el video del slide entrante
+      const incomingVid = heroSlides[next].querySelector('video');
+      if (incomingVid) incomingVid.play().catch(() => {});
     }
 
     // Limpiar clase 'prev' tras completar la transición
@@ -1874,14 +1934,35 @@
   function syncHeroMode() {
     const isDesktop = desktopHeroMedia.matches;
 
-    heroSlides.forEach((slide, i) => {
-      slide.classList.remove('prev');
-      if (isDesktop) {
+    if (isDesktop) {
+      // Desktop: ocultar video mobile, mostrar los 4 slides normales
+      if (heroMobileVideoWrap) heroMobileVideoWrap.style.display = 'none';
+      heroSlides.forEach(slide => {
+        slide.classList.remove('prev');
         slide.classList.add('active');
-      } else {
+      });
+    } else {
+      // Mobile: mostrar video único, ocultar video-frames dentro de los slides
+      // (los slides existen para la lógica de dots y clases, pero no muestran video)
+      if (heroMobileVideoWrap) heroMobileVideoWrap.style.display = 'block';
+      heroSlides.forEach((slide, i) => {
+        slide.classList.remove('prev');
         slide.classList.toggle('active', i === currentHeroSlide);
+        // Ocultar el hero-video-frame en mobile — el video lo maneja heroMobileVideo
+        const frame = slide.querySelector('.hero-video-frame');
+        if (frame) frame.style.display = 'none';
+      });
+      // Asegurar poster y src correctos para el slide actual
+      if (heroMobileVideo) {
+        const data = HERO_VIDEO_DATA[currentHeroSlide];
+        heroMobileVideo.poster = data.poster;
+        if (heroMobileVideoSrc.src !== data.src) {
+          heroMobileVideoSrc.src = data.src;
+          heroMobileVideo.load();
+        }
+        heroMobileVideo.play().catch(() => {});
       }
-    });
+    }
 
     heroDots.forEach((dot, i) => {
       dot.classList.toggle('active', i === currentHeroSlide);
