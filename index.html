@@ -721,11 +721,12 @@
   .category-title {
     font-family: var(--font-serif);
     font-size: clamp(1.6rem, 3vw, 2.2rem);
-    font-weight: 300;
-    letter-spacing: 0.01em;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: var(--cream);
   }
 
-  .category-title em { font-style: italic; color: var(--terra); }
+  .category-title em { font-style: normal; color: var(--terra); font-weight: 400; }
 
   .btn-cotizar {
     display: inline-flex;
@@ -1202,44 +1203,272 @@
     .cat-marca,
     .cat-general,
     .cat-eventos,
-    .cat-productos {
+    .cat-productos,
+    .cat-redes {
       flex: 0 0 calc(80% - 0.4rem);
     }
 
   }
 
+  /* ─── PAQUETES ─── */
+  #paquetes {
+    background: linear-gradient(180deg, #161210 0%, #1a1510 100%);
+    position: relative;
+    overflow: hidden;
+  }
 
-  /* ─── VIDEO ÚNICO MOBILE ─── */
-  .hero-mobile-video-wrap {
-    display: none; /* oculto por defecto, solo activo en mobile via JS */
+  #paquetes::before {
+    content: '';
+    position: absolute;
+    top: -200px; left: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(217,138,95,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .paquetes-header {
+    max-width: 1100px;
+    margin: 0 auto 3.5rem;
+    text-align: center;
+  }
+
+  .paquetes-track-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  /* ─── PAQUETES SLIDER ─── */
+  .paquetes-track-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .paquetes-slider-outer {
+    position: relative;
+    overflow: hidden;           /* clip para que las cards fuera de vista no sean visibles */
+    width: 100%;
+  }
+
+  .paquetes-slider {
+    display: flex;
+    gap: 1.4rem;
+    width: 100%;
+    will-change: transform;
+    /* transition se aplica via JS en goToPack */
+  }
+
+  .pack-card {
+    flex: 0 0 calc(33.333% - 0.94rem);  /* 3 por fila desktop */
+    scroll-snap-align: start;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    background: #1f1a14;
+    border: 1px solid var(--glass-border);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pack-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 24px 56px rgba(0,0,0,0.5);
+    border-color: rgba(217,138,95,0.3);
+  }
+
+  /* Imagen: aspect-ratio 4/3, cover, object-fit correcto */
+  .pack-card-img-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .pack-card-img {
     position: absolute;
     inset: 0;
-    z-index: 0;
-    overflow: hidden;
-    background: #120f0c;
-  }
-  .hero-mobile-video-wrap video {
-    position: absolute;
-    top: 50%; left: 50%;
-    width: 100%; height: 100%;
-    min-width: 100%; min-height: 100%;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    object-position: center center;
-    transform: translate(-50%, -50%);
+    object-position: center;
     display: block;
-    pointer-events: none;
-    background: #120f0c;
-  }
-  .hero-mobile-video-wrap .hero-video-shade {
-    z-index: 1;
+    transition: transform 0.4s ease;
   }
 
-  /* ─── SUPRIMIR CONTROLES NATIVOS iOS SAFARI ─── */
-  video::-webkit-media-controls             { display: none !important; }
-  video::-webkit-media-controls-enclosure   { display: none !important; }
-  video::-webkit-media-controls-panel       { display: none !important; }
-  video::-webkit-media-controls-play-button { display: none !important; }
-  video::-webkit-media-controls-start-playback-button { display: none !important; }
+  .pack-card:hover .pack-card-img { transform: scale(1.04); }
+
+  /* Overlay sutil sobre imagen */
+  .pack-card-img-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 50%, rgba(26,21,16,0.65) 100%);
+    pointer-events: none;
+  }
+
+  .pack-card-body {
+    padding: 1.4rem 1.4rem 1.8rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .pack-badge {
+    display: inline-block;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--terra);
+    background: rgba(217,138,95,0.1);
+    border: 1px solid rgba(217,138,95,0.28);
+    border-radius: 20px;
+    padding: 0.28rem 0.75rem;
+    margin-bottom: 0.65rem;
+    width: fit-content;
+  }
+
+  .pack-name {
+    font-family: var(--font-serif);
+    font-size: 1.55rem;
+    font-weight: 400;
+    color: var(--cream);
+    line-height: 1.08;
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.01em;
+  }
+
+  .pack-price {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--terra);
+    letter-spacing: 0.06em;
+    margin-bottom: 1.1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(244,237,226,0.08);
+  }
+
+  .pack-features {
+    list-style: none;
+    margin-bottom: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+  }
+
+  .pack-features li {
+    font-size: 0.79rem;
+    font-weight: 300;
+    color: rgba(244,237,226,0.65);
+    line-height: 1.55;
+    padding-left: 1.1rem;
+    position: relative;
+  }
+
+  .pack-features li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--terra);
+    font-weight: 900;
+    font-size: 1rem;
+    line-height: 1.3;
+  }
+
+  .pack-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background: rgba(217,138,95,0.1);
+    border: 1px solid rgba(217,138,95,0.35);
+    border-radius: 8px;
+    color: var(--terra);
+    font-family: var(--font-sans);
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: var(--transition);
+    margin-top: auto;
+  }
+
+  .pack-cta:hover {
+    background: rgba(217,138,95,0.2);
+    border-color: var(--terra);
+    transform: translateY(-1px);
+  }
+
+  /* Navegación flechas */
+  .paquetes-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.4rem;
+  }
+
+  .pack-nav-btn {
+    width: 38px; height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 3px;
+    color: var(--cream);
+    cursor: pointer;
+    transition: var(--transition);
+    backdrop-filter: blur(8px);
+    flex-shrink: 0;
+  }
+
+  .pack-nav-btn:hover {
+    background: rgba(217,138,95,0.15);
+    border-color: rgba(217,138,95,0.4);
+  }
+
+  .pack-nav-btn svg { width: 14px; height: 14px; }
+
+  /* Dots mobile */
+  .pack-dots {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+  }
+
+  .pack-dot {
+    width: 22px; height: 2px;
+    background: rgba(244,237,226,0.25);
+    border-radius: 1px;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+    padding: 0;
+  }
+
+  .pack-dot.active {
+    background: var(--terra);
+    width: 36px;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) and (min-width: 601px) {
+    .pack-card { flex: 0 0 calc(50% - 0.7rem); }
+  }
+
+  @media (max-width: 600px) {
+    .pack-card { flex: 0 0 82vw; }
+  }
 
 </style>
 </head>
@@ -1247,14 +1476,15 @@
 
 <!-- NAVIGATION -->
 <nav id="navbar">
-<a href="#inicio" class="nav-logo">Klubvisual <span>by Karen Romero</span></a>  <ul class="nav-links">
+<a href="#inicio" class="nav-logo">Klubvisual</a>  <ul class="nav-links">
     <li><a href="#inicio">Inicio</a></li>
     <li><a href="#quien-soy">Quién soy</a></li>
     <li><a href="#servicios">Servicios</a></li>
     <li><a href="#portafolio">Portafolio</a></li>
+    <li><a href="#paquetes">Paquetes</a></li>
     <li><a href="#contacto">Contacto</a></li>
     <li>
-      <a href="https://instagram.com/klubvisual" target="_blank" rel="noopener" class="nav-instagram desktop" aria-label="Instagram">
+      <a href="https://www.instagram.com/karenvrm?igsh=N2Y2OWhiYnR5emhs" target="_blank" rel="noopener" class="nav-instagram desktop" aria-label="Instagram">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
           <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
           <circle cx="12" cy="12" r="4"/>
@@ -1274,8 +1504,9 @@
   <a href="#quien-soy" class="mobile-link">Quién soy</a>
   <a href="#servicios" class="mobile-link">Servicios</a>
   <a href="#portafolio" class="mobile-link">Portafolio</a>
+  <a href="#paquetes" class="mobile-link">Paquetes</a>
   <a href="#contacto" class="mobile-link">Contacto</a>
-  <a href="https://instagram.com/klubvisual" target="_blank" style="font-family: var(--font-sans); font-size: 0.9rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--terra);" rel="noopener">@klubvisual</a>
+  <a href="https://www.instagram.com/karenvrm?igsh=N2Y2OWhiYnR5emhs" target="_blank" style="font-family: var(--font-sans); font-size: 0.9rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--terra);" rel="noopener">@klubvisual</a>
 </div>
 
 <!-- HERO -->
@@ -1283,7 +1514,7 @@
   <div class="hero-slides">
     <div class="hero-video-slide active" data-video-slide="0">
       <div class="hero-video-frame" aria-hidden="true">
-        <video autoplay muted loop playsinline preload="auto" poster="https://res.cloudinary.com/duaa18leu/video/upload/f_webp,q_auto,so_0/IMG_7279_v86h4y" tabindex="-1" id="heroVideoDesktop0">
+        <video autoplay muted loop playsinline preload="metadata" poster="https://res.cloudinary.com/duaa18leu/video/upload/f_webp,q_auto,so_0/IMG_7279_v86h4y" tabindex="-1">
           <source src="https://res.cloudinary.com/duaa18leu/video/upload/f_auto,q_auto/IMG_7279_v86h4y.mp4" type="video/mp4">
         </video>
       </div>
@@ -1291,7 +1522,7 @@
     </div>
     <div class="hero-video-slide" data-video-slide="1">
       <div class="hero-video-frame" aria-hidden="true">
-        <video autoplay muted loop playsinline preload="metadata" poster="https://res.cloudinary.com/duaa18leu/video/upload/f_webp,q_auto,so_0/IMG_7270_iqevhu" tabindex="-1" id="heroVideoDesktop1">
+        <video autoplay muted loop playsinline preload="metadata" poster="https://res.cloudinary.com/duaa18leu/video/upload/f_webp,q_auto,so_0/IMG_7270_iqevhu" tabindex="-1">
           <source src="https://res.cloudinary.com/duaa18leu/video/upload/f_auto,q_auto/IMG_7270_iqevhu.mp4" type="video/mp4">
         </video>
       </div>
@@ -1299,7 +1530,7 @@
     </div>
     <div class="hero-video-slide" data-video-slide="2">
       <div class="hero-video-frame" aria-hidden="true">
-        <video autoplay muted loop playsinline preload="metadata" poster="https://res.cloudinary.com/duaa18leu/video/upload/f_webp,q_auto,so_0/IMG_7268_w58rbm" tabindex="-1" id="heroVideoDesktop2">
+        <video autoplay muted loop playsinline preload="metadata" poster="https://res.cloudinary.com/duaa18leu/video/upload/f_webp,q_auto,so_0/IMG_7268_w58rbm" tabindex="-1">
           <source src="https://res.cloudinary.com/duaa18leu/video/upload/f_auto,q_auto/IMG_7268_w58rbm.mp4" type="video/mp4">
         </video>
       </div>
@@ -1307,21 +1538,12 @@
     </div>
     <div class="hero-video-slide" data-video-slide="3">
       <div class="hero-video-frame" aria-hidden="true">
-        <video autoplay muted loop playsinline preload="metadata" poster="https://res.cloudinary.com/duaa18leu/video/upload/f_webp,q_auto,so_0/IMG_7269_aftdpv" tabindex="-1" id="heroVideoDesktop3">
+        <video autoplay muted loop playsinline preload="metadata" poster="https://res.cloudinary.com/duaa18leu/video/upload/f_webp,q_auto,so_0/IMG_7269_aftdpv" tabindex="-1">
           <source src="https://res.cloudinary.com/duaa18leu/video/upload/f_auto,q_auto/IMG_7269_aftdpv.mp4" type="video/mp4">
         </video>
       </div>
       <div class="hero-video-shade"></div>
     </div>
-  </div>
-  <!-- VIDEO ÚNICO MOBILE: iOS solo maneja 1 video a la vez sin overlay nativo -->
-  <div class="hero-mobile-video-wrap" aria-hidden="true">
-    <video id="heroVideoMobile"
-      autoplay muted loop playsinline preload="auto" tabindex="-1"
-      poster="https://res.cloudinary.com/duaa18leu/video/upload/f_webp,q_auto,so_0/IMG_7279_v86h4y">
-      <source id="heroVideoMobileSrc" src="https://res.cloudinary.com/duaa18leu/video/upload/f_auto,q_auto/IMG_7279_v86h4y.mp4" type="video/mp4">
-    </video>
-    <div class="hero-video-shade"></div>
   </div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
@@ -1329,7 +1551,7 @@
     <h1 class="hero-title">La imagen que<br><em>habla por ti</em></h1>
     <p class="hero-sub">Capturo la esencia de tus momentos, tu marca y tus historias con una mirada única y un estilo inconfundiblemente auténtico.</p>
     <div class="hero-ctas">
-      <a href="https://wa.me/56900000000?text=Hola%20Karen%2C%20me%20interesa%20cotizar%20una%20sesión" class="btn-primary" target="_blank" rel="noopener">
+      <a href="https://wa.me/56938884018?text=Hola%20Karen%2C%20vi%20tu%20sitio%20web%20y%20me%20interesa%20cotizar%20una%20sesi%C3%B3n%20fotogr%C3%A1fica." class="btn-primary" target="_blank" rel="noopener">
         <span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px; margin-right:4px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           Hablemos por WhatsApp
@@ -1352,7 +1574,7 @@
     <div class="about-image-wrap reveal">
       <div class="about-photo">
         <!-- Posición 1 -->
-        <img src="https://i.postimg.cc/661yDcvd/IMG-7260-JPG.jpg" alt="Karen Romero — Fotógrafa" loading="lazy" style="object-position:center 8%">
+        <img src="https://i.postimg.cc/JnTf3M97/IMG-7653.png" alt="Karen Romero — Fotógrafa" loading="lazy" style="object-position:center 15%">
       </div>
       <div class="about-accent"></div>
     </div>
@@ -1360,8 +1582,9 @@
       <span class="section-label reveal">Sobre mí</span>
       <h2 class="about-name reveal reveal-delay-1">Karen<br><em>Romero</em></h2>
       <p class="about-bio reveal reveal-delay-2">
-        Soy fotógrafa y creadora de contenido con una pasión genuina por contar historias a través de imágenes. Cada sesión es una oportunidad de crear algo único, cargado de emoción y autenticidad.<br><br>
-        Trabajo con marcas, emprendedores y personas que entienden que una buena fotografía no solo se ve bonita: conecta, comunica y convierte.
+        Soy Karen Romero, creadora de contenido visual para marcas y emprendimientos.<br><br>
+        Me especializo en mostrar la esencia real de cada proyecto a través de contenido orgánico, cercano y auténtico.<br><br>
+        Capturo detalles que conectan con las personas: la realidad de cada emprendimiento, la dedicación detrás de cada marca y la experiencia que viven sus clientes.
       </p>
       <div class="about-location reveal reveal-delay-3">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
@@ -1378,38 +1601,38 @@
       <span class="section-label reveal">Lo que hago</span>
       <h2 class="section-title reveal reveal-delay-1">Servicios <em>fotográficos</em></h2>
     </div>
-    <a href="https://wa.me/56900000000?text=Hola%20Karen%2C%20quiero%20consultar%20sobre%20tus%20servicios" class="btn-ghost reveal reveal-delay-2" target="_blank" rel="noopener">Cotiza tu sesión →</a>
+    <a href="https://wa.me/56938884018?text=Hola%20Karen%2C%20vi%20tu%20sitio%20web%20y%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20tus%20servicios%20fotogr%C3%A1ficos." class="btn-ghost reveal reveal-delay-2" target="_blank" rel="noopener">Cotiza tu sesión →</a>
   </div>
   <div class="servicios-grid">
     <div class="service-card reveal reveal-delay-1">
       <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3v7a3 3 0 0 0 3 3h1v8"/><path d="M8 3v7"/><path d="M12 3v7"/><path d="M18 3v18"/><path d="M18 10c1.657 0 3-1.79 3-4V3h-6v3c0 2.21 1.343 4 3 4Z"/></svg></span>
       <h3 class="service-title">Fotografía Gastronómica</h3>
-      <p class="service-desc">Imágenes que despiertan el apetito. Ideal para restaurantes, cafeterías, productos y marcas de alimentos.</p>
+      <p class="service-desc">Capturo la esencia de cada plato resaltando colores, texturas y detalles que despiertan el apetito. Creo imágenes atractivas que transmiten la calidad y experiencia real de tu marca.</p>
     </div>
     <div class="service-card reveal reveal-delay-2">
       <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.9L19 10l-5.1 2.1L12 17l-1.9-4.9L5 10l5.1-2.1L12 3Z"/><path d="M19 3v4"/><path d="M21 5h-4"/></svg></span>
-      <h3 class="service-title">Marca Personal</h3>
-      <p class="service-desc">Sesiones que transmiten tu esencia profesional. Para emprendedores, coaches y profesionales que quieren destacar.</p>
+      <h3 class="service-title">Fotografía de Marca Personal</h3>
+      <p class="service-desc">Creo imágenes que reflejan tu esencia y profesionalismo para fortalecer tu presencia digital. Trabajamos una identidad visual auténtica que conecte con tu audiencia.</p>
     </div>
     <div class="service-card reveal reveal-delay-3">
       <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v6"/><path d="M18 3v6"/><path d="M4 9h16"/><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 13h3"/><path d="M8 17h8"/></svg></span>
       <h3 class="service-title">Eventos & Celebraciones</h3>
-      <p class="service-desc">Capturamos cada momento especial: cumpleaños, aniversarios, inauguraciones y todo lo que merece recordarse.</p>
+      <p class="service-desc">Capturo los momentos clave, la energía y los detalles que hacen único cada evento. Imágenes naturales que transmiten la experiencia y la emoción de cada ocasión.</p>
     </div>
     <div class="service-card reveal reveal-delay-1">
       <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h3l2-2h6l2 2h3a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z"/><circle cx="12" cy="13" r="4"/></svg></span>
-      <h3 class="service-title">Contenido para Redes</h3>
-      <p class="service-desc">Fotos y materiales pensados para impactar en Instagram, TikTok y otras plataformas digitales.</p>
+      <h3 class="service-title">Gestión de Redes Sociales</h3>
+      <p class="service-desc">Texto pendiente</p>
     </div>
     <div class="service-card reveal reveal-delay-2">
       <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7V6a6 6 0 0 1 12 0v1"/><path d="M4 7h16l-1 13H5L4 7Z"/><path d="M9 11a3 3 0 0 0 6 0"/></svg></span>
-      <h3 class="service-title">Fotografía de Producto</h3>
-      <p class="service-desc">Imágenes limpias y atractivas para ecommerce, catálogos y material publicitario de tus productos.</p>
+      <h3 class="service-title">Fotografía de Cumpleaños</h3>
+      <p class="service-desc">Registro momentos espontáneos y emociones reales para contar la historia de tu celebración. Obtendrás recuerdos naturales, llenos de alegría y detalles especiales.</p>
     </div>
     <div class="service-card reveal reveal-delay-3">
       <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18c1.2 0 2-.8 2-1.8 0-.8-.4-1.4-.4-2.1 0-1 1-1.3 1.8-1.3H17a4 4 0 0 0 0-8 9 9 0 0 0-5-1.8Z"/><circle cx="7.5" cy="10.5" r="1"/><circle cx="12" cy="8.5" r="1"/><circle cx="16.5" cy="10.5" r="1"/></svg></span>
-      <h3 class="service-title">Sesiones Creativas</h3>
-      <p class="service-desc">Proyectos artísticos personalizados donde damos vida a tu visión con libertad creativa y resultado premium.</p>
+      <h3 class="service-title">Fotografía General</h3>
+      <p class="service-desc">Sesiones pensadas para retratar momentos especiales con un estilo natural y auténtico. Me enfoco en las emociones y detalles para crear recuerdos visuales de calidad.</p>
     </div>
   </div>
   <div class="servicios-location reveal">
@@ -1498,9 +1721,9 @@
         </div>
       </div>
       <div class="slider-nav">
-        <a href="https://wa.me/56900000000?text=Hola%20Karen%2C%20quiero%20cotizar%20una%20sesión%20gastronómica" class="btn-cotizar" target="_blank" rel="noopener">
+        <a href="https://wa.me/56938884018?text=Hola%20Karen%2C%20vi%20tu%20sitio%20web%20y%20me%20interesa%20informaci%C3%B3n%20sobre%20fotograf%C3%ADa%20gastron%C3%B3mica." class="btn-cotizar" target="_blank" rel="noopener">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Cotiza aquí
+          Desde $29.990 CLP
         </a>
         <div class="slider-nav-controls">
           <button class="slider-btn" data-slider="0" data-dir="-1" aria-label="Anterior">
@@ -1554,9 +1777,9 @@
         </div>
       </div>
       <div class="slider-nav">
-        <a href="https://wa.me/56900000000?text=Hola%20Karen%2C%20quiero%20cotizar%20una%20sesión%20de%20cumpleaños" class="btn-cotizar" target="_blank" rel="noopener">
+        <a href="https://wa.me/56938884018?text=Hola%20Karen%2C%20vi%20tu%20sitio%20web%20y%20me%20interesa%20informaci%C3%B3n%20sobre%20fotograf%C3%ADa%20de%20cumplea%C3%B1os." class="btn-cotizar" target="_blank" rel="noopener">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Cotiza aquí
+          Desde $29.990 CLP
         </a>
         <div class="slider-nav-controls">
           <button class="slider-btn" data-slider="1" data-dir="-1" aria-label="Anterior">
@@ -1615,9 +1838,9 @@
         </div>
       </div>
       <div class="slider-nav">
-        <a href="https://wa.me/56900000000?text=Hola%20Karen%2C%20quiero%20cotizar%20una%20sesión%20de%20marca%20personal" class="btn-cotizar" target="_blank" rel="noopener">
+        <a href="https://wa.me/56938884018?text=Hola%20Karen%2C%20vi%20tu%20sitio%20web%20y%20me%20interesa%20informaci%C3%B3n%20sobre%20fotograf%C3%ADa%20de%20marca%20personal." class="btn-cotizar" target="_blank" rel="noopener">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Cotiza aquí
+          Desde $29.990 CLP
         </a>
         <div class="slider-nav-controls">
           <button class="slider-btn" data-slider="2" data-dir="-1" aria-label="Anterior">
@@ -1649,12 +1872,27 @@
             <div class="slide-photo-overlay"></div>
             <div class="slide-overlay"></div>
           </div>
+          <div class="slide-item cat-eventos" data-lightbox="true" data-img="https://i.postimg.cc/NjMpTRQV/IMG-9457-JPG-(2).jpg">
+            <img src="https://i.postimg.cc/NjMpTRQV/IMG-9457-JPG-(2).jpg" alt="Eventos 03" loading="lazy" style="object-position:center 20%">
+            <div class="slide-photo-overlay"></div>
+            <div class="slide-overlay"></div>
+          </div>
+          <div class="slide-item cat-eventos" data-lightbox="true" data-img="https://i.postimg.cc/VN0gZ1r7/IMG-7649-JPG-(1).jpg">
+            <img src="https://i.postimg.cc/VN0gZ1r7/IMG-7649-JPG-(1).jpg" alt="Eventos 04" loading="lazy" style="object-position:center 15%">
+            <div class="slide-photo-overlay"></div>
+            <div class="slide-overlay"></div>
+          </div>
+          <div class="slide-item cat-eventos" data-lightbox="true" data-img="https://i.postimg.cc/y6yPbLd0/IMG-7651-JPG-(3).jpg">
+            <img src="https://i.postimg.cc/y6yPbLd0/IMG-7651-JPG-(3).jpg" alt="Eventos 05" loading="lazy" style="object-position:center 10%">
+            <div class="slide-photo-overlay"></div>
+            <div class="slide-overlay"></div>
+          </div>
         </div>
       </div>
       <div class="slider-nav">
-        <a href="https://wa.me/56900000000?text=Hola%20Karen%2C%20quiero%20cotizar%20fotografía%20de%20eventos" class="btn-cotizar" target="_blank" rel="noopener">
+        <a href="https://wa.me/56938884018?text=Hola%20Karen%2C%20vi%20tu%20sitio%20web%20y%20me%20interesa%20informaci%C3%B3n%20sobre%20fotograf%C3%ADa%20de%20eventos." class="btn-cotizar" target="_blank" rel="noopener">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Cotiza aquí
+          Desde $29.990 CLP
         </a>
         <div class="slider-nav-controls">
           <button class="slider-btn" data-slider="3" data-dir="-1" aria-label="Anterior">
@@ -1719,9 +1957,9 @@
         </div>
       </div>
       <div class="slider-nav">
-        <a href="https://wa.me/56900000000?text=Hola%20Karen%2C%20quiero%20cotizar%20una%20sesión%20de%20fotografía" class="btn-cotizar" target="_blank" rel="noopener">
+        <a href="https://wa.me/56938884018?text=Hola%20Karen%2C%20vi%20tu%20sitio%20web%20y%20me%20interesa%20informaci%C3%B3n%20sobre%20fotograf%C3%ADa%20general." class="btn-cotizar" target="_blank" rel="noopener">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Cotiza aquí
+          Desde $29.990 CLP
         </a>
         <div class="slider-nav-controls">
           <button class="slider-btn" data-slider="4" data-dir="-1" aria-label="Anterior">
@@ -1768,9 +2006,9 @@
         </div>
       </div>
       <div class="slider-nav">
-        <a href="https://wa.me/56900000000?text=Hola%20Karen%2C%20quiero%20cotizar%20una%20sesión%20de%20fotografía" class="btn-cotizar" target="_blank" rel="noopener">
+        <a href="https://wa.me/56938884018?text=Hola%20Karen%2C%20vi%20tu%20sitio%20web%20y%20me%20interesa%20informaci%C3%B3n%20sobre%20fotograf%C3%ADa%20de%20productos." class="btn-cotizar" target="_blank" rel="noopener">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Cotiza aquí
+          Desde $29.990 CLP
         </a>
         <div class="slider-nav-controls">
           <button class="slider-btn" data-slider="5" data-dir="-1" aria-label="Anterior">
@@ -1783,10 +2021,191 @@
       </div>
     </div>
 
+
+    <!-- GESTIÓN DE REDES SOCIALES -->
+    <div class="portfolio-category reveal reveal-delay-2">
+      <div class="category-header">
+        <h3 class="category-title"><em>Gestión de</em> Redes Sociales</h3>
+      </div>
+      <div class="slider-wrap">
+        <div class="slider-track" data-slider="6">
+          <div class="slide-item cat-redes" data-lightbox="true" data-img="https://placehold.co/600x800/1a1510/D98A5F?text=Redes+01">
+            <img src="https://placehold.co/600x800/1a1510/D98A5F?text=Redes+01" alt="Redes Sociales 01" loading="lazy">
+            <div class="slide-photo-overlay"></div>
+            <div class="slide-overlay"></div>
+          </div>
+          <div class="slide-item cat-redes" data-lightbox="true" data-img="https://placehold.co/600x800/1a1510/D98A5F?text=Redes+02">
+            <img src="https://placehold.co/600x800/1a1510/D98A5F?text=Redes+02" alt="Redes Sociales 02" loading="lazy">
+            <div class="slide-photo-overlay"></div>
+            <div class="slide-overlay"></div>
+          </div>
+          <div class="slide-item cat-redes" data-lightbox="true" data-img="https://placehold.co/600x800/1a1510/D98A5F?text=Redes+03">
+            <img src="https://placehold.co/600x800/1a1510/D98A5F?text=Redes+03" alt="Redes Sociales 03" loading="lazy">
+            <div class="slide-photo-overlay"></div>
+            <div class="slide-overlay"></div>
+          </div>
+          <div class="slide-item cat-redes" data-lightbox="true" data-img="https://placehold.co/600x800/1a1510/D98A5F?text=Redes+04">
+            <img src="https://placehold.co/600x800/1a1510/D98A5F?text=Redes+04" alt="Redes Sociales 04" loading="lazy">
+            <div class="slide-photo-overlay"></div>
+            <div class="slide-overlay"></div>
+          </div>
+        </div>
+      </div>
+      <div class="slider-nav">
+        <a href="https://wa.me/56938884018?text=Hola%20Karen%2C%20vi%20tu%20sitio%20web%20y%20me%20interesa%20informaci%C3%B3n%20sobre%20gesti%C3%B3n%20de%20redes%20sociales." class="btn-cotizar" target="_blank" rel="noopener">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Desde $29.990 CLP
+        </a>
+        <div class="slider-nav-controls">
+          <button class="slider-btn" data-slider="6" data-dir="-1" aria-label="Anterior">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button class="slider-btn" data-slider="6" data-dir="1" aria-label="Siguiente">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
-<!-- CONTACTO -->
+<section id="paquetes">
+  <div class="paquetes-header">
+    <span class="section-label reveal">Lo que ofrezco</span>
+    <h2 class="section-title reveal reveal-delay-1">Mis <em>Paquetes</em></h2>
+    <p class="reveal reveal-delay-2" style="font-size:0.9rem;color:rgba(244,237,226,0.5);margin-top:0.5rem;">Elige el que mejor se adapta a ti y a tu marca.</p>
+  </div>
+  <div class="paquetes-track-wrap reveal">
+    <div class="paquetes-slider-outer">
+      <div class="paquetes-slider" id="paquetesSlider">
+      <div class="pack-card">
+        <div class="pack-card-img-wrap">
+          <img class="pack-card-img" src="https://i.postimg.cc/gj8C6Qbt/IMG-7817-JPG.jpg" alt="Pack Emprendedor" loading="lazy" style="object-position:center center">
+        </div>
+        <div class="pack-card-body">
+          <span class="pack-badge">Emprendedor</span>
+          <p class="pack-name">Pack<br>Emprendedor</p>
+          <p class="pack-price">$80.000 CLP</p>
+          <ul class="pack-features">
+            <li>1 reel optimizado para redes (máx. 1 min)</li>
+            <li>10 fotos profesionales de producto, espacio o servicio</li>
+            <li>Recomendaciones personalizadas</li>
+            <li>1 hora de trabajo</li>
+            <li>Entrega en 4 a 8 días hábiles</li>
+          </ul>
+          <a href="https://wa.me/56938884018?text=Hola%20Karen%2C%20vi%20tu%20sitio%20web%20y%20me%20interesa%20el%20Pack%20Emprendedor%20%28%2480.000%20CLP%29." class="pack-cta" target="_blank" rel="noopener">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Quiero este pack
+          </a>
+        </div>
+      </div>
+      <div class="pack-card">
+        <div class="pack-card-img-wrap">
+          <img class="pack-card-img" src="https://i.postimg.cc/13jvsBLJ/IMG-7282-JPG.jpg" alt="Pack Básico" loading="lazy" style="object-position:center center">
+        </div>
+        <div class="pack-card-body">
+          <span class="pack-badge">Pack 1</span>
+          <p class="pack-name">Pack<br>Básico</p>
+          <p class="pack-price">$120.000 CLP</p>
+          <ul class="pack-features">
+            <li>2 reels optimizados para redes (máx. 1 min)</li>
+            <li>2 carruseles (5 pág. entre fotos y videos)</li>
+            <li>Recomendaciones personalizadas</li>
+            <li>2 horas de grabación</li>
+            <li>Entrega en 2 a 3 días hábiles</li>
+          </ul>
+          <a href="https://wa.me/56938884018?text=Hola%20Karen%2C%20vi%20tu%20sitio%20web%20y%20me%20interesa%20el%20Pack%201%20B%C3%A1sico%20%28%24120.000%20CLP%29." class="pack-cta" target="_blank" rel="noopener">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Quiero este pack
+          </a>
+        </div>
+      </div>
+      <div class="pack-card">
+        <div class="pack-card-img-wrap">
+          <img class="pack-card-img" src="https://i.postimg.cc/J0VgmxHS/IMG-7805-JPG.jpg" alt="Pack Intermedio" loading="lazy" style="object-position:center center">
+        </div>
+        <div class="pack-card-body">
+          <span class="pack-badge">Pack 2</span>
+          <p class="pack-name">Pack<br>Intermedio</p>
+          <p class="pack-price">$240.000 CLP</p>
+          <ul class="pack-features">
+            <li>3 reels optimizados para redes (máx. 1 min)</li>
+            <li>2 carruseles coherentes a la marca</li>
+            <li>5 fotos profesionales de producto, espacio o servicio</li>
+            <li>Recomendaciones personalizadas</li>
+            <li>3 horas de grabación</li>
+            <li>Entrega en 2 a 3 días hábiles</li>
+          </ul>
+          <a href="https://wa.me/56938884018?text=Hola%20Karen%2C%20vi%20tu%20sitio%20web%20y%20me%20interesa%20el%20Pack%202%20Intermedio%20%28%24240.000%20CLP%29." class="pack-cta" target="_blank" rel="noopener">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Quiero este pack
+          </a>
+        </div>
+      </div>
+      <div class="pack-card">
+        <div class="pack-card-img-wrap">
+          <img class="pack-card-img" src="https://i.postimg.cc/QCJ6D33K/IMG-7285-JPG.jpg" alt="Pack Premium" loading="lazy" style="object-position:center center">
+        </div>
+        <div class="pack-card-body">
+          <span class="pack-badge">Pack 3</span>
+          <p class="pack-name">Pack<br>Premium</p>
+          <p class="pack-price">$330.000 CLP</p>
+          <ul class="pack-features">
+            <li>5 reels optimizados para redes (máx. 1 min)</li>
+            <li>3 carruseles coherentes a la marca</li>
+            <li>10 fotos profesionales de producto, espacio o servicio</li>
+            <li>Recomendaciones personalizadas</li>
+            <li>6 horas de trabajo (2 por día)</li>
+            <li>Entrega en 4 a 8 días hábiles</li>
+          </ul>
+          <a href="https://wa.me/56938884018?text=Hola%20Karen%2C%20vi%20tu%20sitio%20web%20y%20me%20interesa%20el%20Pack%203%20Premium%20%28%24330.000%20CLP%29." class="pack-cta" target="_blank" rel="noopener">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Quiero este pack
+          </a>
+        </div>
+      </div>
+      <div class="pack-card">
+        <div class="pack-card-img-wrap">
+          <img class="pack-card-img" src="https://i.postimg.cc/SsB0Rq3t/IMG-7814-JPG-(1).jpg" alt="Pack Full" loading="lazy" style="object-position:center center">
+        </div>
+        <div class="pack-card-body">
+          <span class="pack-badge">Pack Full</span>
+          <p class="pack-name">Pack<br>Full</p>
+          <p class="pack-price">$450.000 CLP</p>
+          <ul class="pack-features">
+            <li>14 publicaciones (fotos, reels, diseños con promociones)</li>
+            <li>Historias diarias (1 a 3 por día)</li>
+            <li>Recomendaciones personalizadas</li>
+            <li>1 visita a la semana</li>
+            <li>Subida de material en 2 a 4 días</li>
+          </ul>
+          <a href="https://wa.me/56938884018?text=Hola%20Karen%2C%20vi%20tu%20sitio%20web%20y%20me%20interesa%20el%20Pack%20Full%20%28%24450.000%20CLP%29." class="pack-cta" target="_blank" rel="noopener">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Quiero este pack
+          </a>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="paquetes-controls">
+      <button class="pack-nav-btn" id="packPrev" aria-label="Anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div class="pack-dots" id="packDots">
+        <button class="pack-dot active" data-pack="0" aria-label="Pack 1"></button>
+        <button class="pack-dot" data-pack="1" aria-label="Pack 2"></button>
+        <button class="pack-dot" data-pack="2" aria-label="Pack 3"></button>
+        <button class="pack-dot" data-pack="3" aria-label="Pack 4"></button>
+        <button class="pack-dot" data-pack="4" aria-label="Pack 5"></button>
+      </div>
+      <button class="pack-nav-btn" id="packNext" aria-label="Siguiente">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
 <section id="contacto">
   <div class="contacto-inner">
     <span class="section-label reveal">¿Hablamos?</span>
@@ -1796,7 +2215,7 @@
       <span class="contacto-icon">💬</span>
       <h3>Conversemos por WhatsApp</h3>
       <p>Respuesta rápida · Sin formularios · Sin complicaciones</p>
-      <a href="https://wa.me/56900000000?text=Hola%20Karen%2C%20quiero%20agendar%20una%20sesión%20fotográfica" class="btn-whatsapp" target="_blank" rel="noopener">
+      <a href="https://wa.me/56938884018?text=Hola%20Karen%2C%20vi%20tu%20sitio%20web%20y%20quiero%20agendar%20una%20sesi%C3%B3n%20fotogr%C3%A1fica." class="btn-whatsapp" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         Hablemos por WhatsApp
       </a>
@@ -1810,7 +2229,7 @@
 <footer>
   <a href="#inicio" class="footer-logo">Klubvisual <span>by Karen Romero</span></a>
   <p class="footer-copy">© <span id="footerYear"></span> klubvisual.cl — Todos los derechos reservados</p>
-  <a href="https://instagram.com/klubvisual" target="_blank" rel="noopener" style="color: rgba(244,237,226,0.3); transition: color 0.3s; font-size: 0.72rem; letter-spacing: 0.1em; text-decoration: none; text-transform: uppercase;" onmouseover="this.style.color='#D98A5F'" onmouseout="this.style.color='rgba(244,237,226,0.3)'">@klubvisual</a>
+  <a href="https://www.instagram.com/karenvrm?igsh=N2Y2OWhiYnR5emhs" target="_blank" rel="noopener" style="color: rgba(244,237,226,0.3); transition: color 0.3s; font-size: 0.72rem; letter-spacing: 0.1em; text-decoration: none; text-transform: uppercase;" onmouseover="this.style.color='#D98A5F'" onmouseout="this.style.color='rgba(244,237,226,0.3)'">@klubvisual</a>
 </footer>
 
 <!-- LIGHTBOX -->
@@ -1845,18 +2264,6 @@
     });
   });
 
-
-  // ─── DATOS VIDEOS HERO ───
-  const HERO_VIDEO_DATA = [
-    { src: 'https://res.cloudinary.com/duaa18leu/video/upload/f_auto,q_auto/IMG_7279_v86h4y.mp4', poster: 'https://res.cloudinary.com/duaa18leu/video/upload/f_webp,q_auto,so_0/IMG_7279_v86h4y' },
-    { src: 'https://res.cloudinary.com/duaa18leu/video/upload/f_auto,q_auto/IMG_7270_iqevhu.mp4', poster: 'https://res.cloudinary.com/duaa18leu/video/upload/f_webp,q_auto,so_0/IMG_7270_iqevhu' },
-    { src: 'https://res.cloudinary.com/duaa18leu/video/upload/f_auto,q_auto/IMG_7268_w58rbm.mp4', poster: 'https://res.cloudinary.com/duaa18leu/video/upload/f_webp,q_auto,so_0/IMG_7268_w58rbm' },
-    { src: 'https://res.cloudinary.com/duaa18leu/video/upload/f_auto,q_auto/IMG_7269_aftdpv.mp4', poster: 'https://res.cloudinary.com/duaa18leu/video/upload/f_webp,q_auto,so_0/IMG_7269_aftdpv' },
-  ];
-  const heroMobileVideoWrap = document.querySelector('.hero-mobile-video-wrap');
-  const heroMobileVideo     = document.getElementById('heroVideoMobile');
-  const heroMobileVideoSrc  = document.getElementById('heroVideoMobileSrc');
-
   // ─── HERO VIDEO SLIDER ───
   const heroSlides  = document.querySelectorAll('.hero-video-slide');
   const heroDots    = document.querySelectorAll('.hero-dot');
@@ -1867,21 +2274,12 @@
   const HERO_FADE_MS   = 900;    // duración del crossfade
   const desktopHeroMedia = window.matchMedia('(min-width: 992px)');
 
-  // Intentar play — en mobile solo el video único, en desktop todos
+  // Intentar play en todos los videos (silenciados, requerido por autoplay policy)
   function ensureHeroPlayback() {
-    if (!desktopHeroMedia.matches) {
-      // Mobile: iniciar el video único
-      if (heroMobileVideo) {
-        heroMobileVideo.muted = true;
-        heroMobileVideo.play().catch(() => {});
-      }
-    } else {
-      // Desktop: iniciar los 4 videos
-      heroVideos.forEach(v => {
-        v.muted = true;
-        v.play().catch(() => {});
-      });
-    }
+    heroVideos.forEach(v => {
+      v.muted = true;
+      v.play().catch(() => {});
+    });
   }
 
   // Transición a un slide concreto en mobile
@@ -1904,19 +2302,9 @@
     heroSlides[next].classList.add('active');
     heroDots[next]?.classList.add('active');
 
-    // Actualizar video según el modo
-    if (!desktopHeroMedia.matches && heroMobileVideo) {
-      // Mobile: cambiar src del video único al slide entrante
-      const data = HERO_VIDEO_DATA[next];
-      heroMobileVideo.poster = data.poster;
-      heroMobileVideoSrc.src = data.src;
-      heroMobileVideo.load();
-      heroMobileVideo.play().catch(() => {});
-    } else {
-      // Desktop: asegurar play en el video del slide entrante
-      const incomingVid = heroSlides[next].querySelector('video');
-      if (incomingVid) incomingVid.play().catch(() => {});
-    }
+    // Asegurar play en el video entrante (iOS puede haberlo pausado)
+    const incomingVid = heroSlides[next].querySelector('video');
+    if (incomingVid) incomingVid.play().catch(() => {});
 
     // Limpiar clase 'prev' tras completar la transición
     setTimeout(() => {
@@ -1934,35 +2322,14 @@
   function syncHeroMode() {
     const isDesktop = desktopHeroMedia.matches;
 
-    if (isDesktop) {
-      // Desktop: ocultar video mobile, mostrar los 4 slides normales
-      if (heroMobileVideoWrap) heroMobileVideoWrap.style.display = 'none';
-      heroSlides.forEach(slide => {
-        slide.classList.remove('prev');
+    heroSlides.forEach((slide, i) => {
+      slide.classList.remove('prev');
+      if (isDesktop) {
         slide.classList.add('active');
-      });
-    } else {
-      // Mobile: mostrar video único, ocultar video-frames dentro de los slides
-      // (los slides existen para la lógica de dots y clases, pero no muestran video)
-      if (heroMobileVideoWrap) heroMobileVideoWrap.style.display = 'block';
-      heroSlides.forEach((slide, i) => {
-        slide.classList.remove('prev');
+      } else {
         slide.classList.toggle('active', i === currentHeroSlide);
-        // Ocultar el hero-video-frame en mobile — el video lo maneja heroMobileVideo
-        const frame = slide.querySelector('.hero-video-frame');
-        if (frame) frame.style.display = 'none';
-      });
-      // Asegurar poster y src correctos para el slide actual
-      if (heroMobileVideo) {
-        const data = HERO_VIDEO_DATA[currentHeroSlide];
-        heroMobileVideo.poster = data.poster;
-        if (heroMobileVideoSrc.src !== data.src) {
-          heroMobileVideoSrc.src = data.src;
-          heroMobileVideo.load();
-        }
-        heroMobileVideo.play().catch(() => {});
       }
-    }
+    });
 
     heroDots.forEach((dot, i) => {
       dot.classList.toggle('active', i === currentHeroSlide);
@@ -2059,7 +2426,7 @@
     }, 3500 + id * 300);
   }
 
-  [0, 1, 2, 3, 4, 5].forEach(id => {
+  [0, 1, 2, 3, 4, 5, 6].forEach(id => {
     sliderStates[id] = 0;
     startAutoplay(id);
   });
@@ -2163,7 +2530,7 @@
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
-      [0, 1, 2, 3, 4, 5].forEach(id => slideTo(id, sliderStates[id] || 0));
+      [0, 1, 2, 3, 4, 5, 6].forEach(id => slideTo(id, sliderStates[id] || 0));
     }, 200);
   });
 
@@ -2172,9 +2539,86 @@
   if (fyEl) fyEl.textContent = new Date().getFullYear();
 
 
+  // ─── PAQUETES SLIDER ───
+  (function() {
+    const slider  = document.getElementById('paquetesSlider');
+    const outer   = slider ? slider.closest('.paquetes-slider-outer') : null;
+    const prevBtn = document.getElementById('packPrev');
+    const nextBtn = document.getElementById('packNext');
+    // Solo seleccionar .pack-dot (no .pack-dots el contenedor)
+    const dots    = document.querySelectorAll('.pack-dot[data-pack]');
+    const cards   = slider ? Array.from(slider.querySelectorAll('.pack-card')) : [];
+    let current   = 0;
+
+    if (!slider || cards.length === 0) return;
+
+    function getVisible() {
+      if (window.innerWidth >= 900) return 3;
+      if (window.innerWidth >= 601) return 2;
+      return 1;
+    }
+
+    function maxIndex() {
+      return Math.max(0, cards.length - getVisible());
+    }
+
+    function goToPack(idx, animate) {
+      current = Math.max(0, Math.min(idx, maxIndex()));
+
+      // Calcular desplazamiento: ancho de card + gap real
+      const cardW = cards[0].getBoundingClientRect().width;
+      const gapPx = parseFloat(window.getComputedStyle(slider).gap) || 22;
+      const moveX = current * (cardW + gapPx);
+
+      // Aplicar transición solo cuando hay movimiento real (no en init)
+      slider.style.transition = animate === false
+        ? 'none'
+        : 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+      slider.style.transform = `translateX(-${moveX}px)`;
+
+      // Dots
+      dots.forEach((d, i) => d.classList.toggle('active', i === current));
+
+      // Flechas: opacidad reducida en extremos
+      if (prevBtn) prevBtn.style.opacity = current === 0 ? '0.35' : '1';
+      if (nextBtn) nextBtn.style.opacity = current >= maxIndex() ? '0.35' : '1';
+    }
+
+    // Eventos botones
+    if (prevBtn) prevBtn.addEventListener('click', () => goToPack(current - 1, true));
+    if (nextBtn) nextBtn.addEventListener('click', () => goToPack(current + 1, true));
+    dots.forEach((d, i) => d.addEventListener('click', () => goToPack(i, true)));
+
+    // Swipe touch
+    let packTouchStart = 0;
+    slider.addEventListener('touchstart', e => {
+      packTouchStart = e.touches[0].clientX;
+    }, { passive: true });
+    slider.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - packTouchStart;
+      if (Math.abs(dx) > 50) goToPack(dx < 0 ? current + 1 : current - 1, true);
+    });
+
+    // Resize: recalcular sin animación
+    let packResizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(packResizeTimer);
+      packResizeTimer = setTimeout(() => goToPack(Math.min(current, maxIndex()), false), 150);
+    });
+
+    // Init sin animación
+    goToPack(0, false);
+  })();
+
+
 </script>
 </body>
 </html>
+
+
+
+
+
 
 
 
