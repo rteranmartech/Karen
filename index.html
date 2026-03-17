@@ -163,6 +163,9 @@
     overflow: hidden;
     margin-top: 0;
     padding-top: 0;
+    background: #120f0c;  /* evita flash de fondo body antes de que carguen los videos */
+    display: block;
+    font-size: 0;  /* elimina gap de whitespace entre body y section */
   }
 
   .hero-slides {
@@ -299,6 +302,7 @@
     justify-content: flex-end;
     padding: 0 2.5rem clamp(4rem, 8dvh, 7rem);
     max-width: 900px;
+    font-size: 1rem;  /* reset del font-size:0 del #inicio */
   }
 
   .hero-eyebrow {
@@ -1198,7 +1202,7 @@
 
     footer { flex-direction: column; text-align: center; }
 
-    .servicios-header { flex-direction: column; }
+    .servicios-header { flex-direction: column; align-items: center; text-align: center; }
     /* Todo el portafolio en mobile: 80% de ancho */
     .cat-gastro,
     .cat-cumple,
@@ -2031,11 +2035,7 @@
             <div class="slide-photo-overlay"></div>
             <div class="slide-overlay"></div>
           </div>
-          <div class="slide-item cat-redes" data-lightbox="true" data-img="https://i.postimg.cc/yYNzDn80/IMG-9465-JPG.jpg">
-            <img src="https://i.postimg.cc/yYNzDn80/IMG-9465-JPG.jpg" alt="Redes Sociales 01" loading="lazy" style="object-position:center center">
-            <div class="slide-photo-overlay"></div>
-            <div class="slide-overlay"></div>
-          </div>
+
           <div class="slide-item cat-redes" data-lightbox="true" data-img="https://i.postimg.cc/DZh9nPNL/IMG-9460-JPG.jpg">
             <img src="https://i.postimg.cc/DZh9nPNL/IMG-9460-JPG.jpg" alt="Redes Sociales 03" loading="lazy" style="object-position:center center">
             <div class="slide-photo-overlay"></div>
