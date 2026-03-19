@@ -1288,9 +1288,10 @@
   .pack-card-img-wrap {
     position: relative;
     width: 100%;
-    aspect-ratio: 3/2;
+    aspect-ratio: 4/5;    /* más vertical: encaja bien con fotos portrait */
     overflow: hidden;
     flex-shrink: 0;
+    cursor: pointer;
   }
 
   .pack-card-img {
@@ -1299,7 +1300,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center top;
+    object-position: center 20%;  /* mostrar parte superior donde está el sujeto */
     display: block;
     transition: transform 0.4s ease;
   }
@@ -2078,8 +2079,8 @@
     <div class="paquetes-slider-outer">
       <div class="paquetes-slider" id="paquetesSlider">
       <div class="pack-card">
-        <div class="pack-card-img-wrap">
-          <img class="pack-card-img" src="https://i.postimg.cc/gj8C6Qbt/IMG-7817-JPG.jpg" alt="Pack Emprendedor" loading="lazy" style="object-position:center center">
+        <div class="pack-card-img-wrap" data-lightbox="true" data-img="https://i.postimg.cc/bJWG5rtR/IMG-0320-JPG-(1).jpg">
+          <img class="pack-card-img" src="https://i.postimg.cc/bJWG5rtR/IMG-0320-JPG-(1).jpg" alt="Pack Emprendedor" loading="lazy" style="object-position:center 15%">
         </div>
         <div class="pack-card-body">
           <span class="pack-badge">Emprendedor</span>
@@ -2099,8 +2100,8 @@
         </div>
       </div>
       <div class="pack-card">
-        <div class="pack-card-img-wrap">
-          <img class="pack-card-img" src="https://i.postimg.cc/4xrD2TLb/IMG-9485-JPG.jpg" alt="Pack Básico" loading="lazy" style="object-position:center center">
+        <div class="pack-card-img-wrap" data-lightbox="true" data-img="https://i.postimg.cc/4xrD2TLb/IMG-9485-JPG.jpg">
+          <img class="pack-card-img" src="https://i.postimg.cc/4xrD2TLb/IMG-9485-JPG.jpg" alt="Pack Básico" loading="lazy" style="object-position:center 15%">
         </div>
         <div class="pack-card-body">
           <span class="pack-badge">Pack 1</span>
@@ -2120,8 +2121,8 @@
         </div>
       </div>
       <div class="pack-card">
-        <div class="pack-card-img-wrap">
-          <img class="pack-card-img" src="https://i.postimg.cc/J0VgmxHS/IMG-7805-JPG.jpg" alt="Pack Intermedio" loading="lazy" style="object-position:center center">
+        <div class="pack-card-img-wrap" data-lightbox="true" data-img="https://i.postimg.cc/J0VgmxHS/IMG-7805-JPG.jpg">
+          <img class="pack-card-img" src="https://i.postimg.cc/J0VgmxHS/IMG-7805-JPG.jpg" alt="Pack Intermedio" loading="lazy" style="object-position:center 20%">
         </div>
         <div class="pack-card-body">
           <span class="pack-badge">Pack 2</span>
@@ -2142,8 +2143,8 @@
         </div>
       </div>
       <div class="pack-card">
-        <div class="pack-card-img-wrap">
-          <img class="pack-card-img" src="https://i.postimg.cc/QCJ6D33K/IMG-7285-JPG.jpg" alt="Pack Premium" loading="lazy" style="object-position:center center">
+        <div class="pack-card-img-wrap" data-lightbox="true" data-img="https://i.postimg.cc/QCJ6D33K/IMG-7285-JPG.jpg">
+          <img class="pack-card-img" src="https://i.postimg.cc/QCJ6D33K/IMG-7285-JPG.jpg" alt="Pack Premium" loading="lazy" style="object-position:center 10%">
         </div>
         <div class="pack-card-body">
           <span class="pack-badge">Pack 3</span>
@@ -2164,8 +2165,8 @@
         </div>
       </div>
       <div class="pack-card">
-        <div class="pack-card-img-wrap">
-          <img class="pack-card-img" src="https://i.postimg.cc/SsB0Rq3t/IMG-7814-JPG-(1).jpg" alt="Pack Full" loading="lazy" style="object-position:center center">
+        <div class="pack-card-img-wrap" data-lightbox="true" data-img="https://i.postimg.cc/SsB0Rq3t/IMG-7814-JPG-(1).jpg">
+          <img class="pack-card-img" src="https://i.postimg.cc/SsB0Rq3t/IMG-7814-JPG-(1).jpg" alt="Pack Full" loading="lazy" style="object-position:center 20%">
         </div>
         <div class="pack-card-body">
           <span class="pack-badge">Pack Full</span>
@@ -2647,4 +2648,5 @@
 </script>
 </body>
 </html>
+
 
